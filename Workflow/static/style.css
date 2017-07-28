@@ -1,0 +1,26 @@
+
+     @media (max-width: 767px) {
+         .affix-top {
+             width:auto;
+
+         }
+     }
+     @media (max-width: 770px) {
+     .affix-top {
+         position:static;
+        width: auto;
+    }
+        body{
+            font-size: 12px;
+        }
+     
+ }
+
+ .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    /*border-color: #101010;*/
+    border-color: transparent;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: transparent;
+}
+

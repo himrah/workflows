@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ pid.name }} Project | WorkFlow
+{% endblock %}
+
+{% block sidebar %}
+<!--<div class="affix-top hidden-print bs-docs-slidebar hidden-xs">-->
+<div class="affix-top hidden-print bs-docs-slidebar">
+    <h3>Projects</h3>
+    <div class="list-group">
+    <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
+    <div id="demo" class="collapse in">
+        {% if pid == 'home' %}
+        <a class="list-group-item active" href="/">All</a>
+        {% else %}
+        <a class="list-group-item" href="/">All</a>
+        {% endif %}
+        {% for i in project %}
+
+            {% if i.id == pid.id or i.id == task.project_id_id %}
+                <a class="list-group-item active"  href="/project/{{ i.id }}">{{ i.name }}</a>
+            {% else %}
+                <a class="list-group-item"  href="/project/{{ i.id }}">{{ i.name }}</a>
+            {% endif %}
+
+
+        {% endfor %}
+    </div>    
+    </div>
+
+</div>
+{% endblock %}
+
+{% block content %}
+
+    {% if work == 'edit' %}
+
+        <table class="table">
+            <thead>
+            <th>Attribute</th>
+            <th>Value</th>
+            </thead>
+            <tr>
+                <td>Name</td>
+                <td>{{ task.name }}</td>
+            </tr>
+            <tr>
+                <td>Created Date</td>
+                <td>{{ task.created_date }}</td>
+            </tr>
+            <tr>
+                <td>Created By</td>
+                <td>{{ task.created_by }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ task.status }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ task.task_description }}</td>
+            </tr>
+
+            <tr>
+                <td>Comment</td>
+                <td>{{ task.comments }}</td>
+            </tr>
+            <tr>
+                <td>Modify By</td>
+                <td>{{ task.modify_by}}</td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td>{{ task.priority }}</td>
+            </tr>
+            <tr>
+                <td>TAT</td>
+                <td>{{ task.tat}}</td>
+            </tr>
+        </table>
+
+
+
+
+               <table class="table">
+            <thead>
+            <th>Attribute</th>
+            <th>Value</th>
+            </thead>
+            <tr>
+                <td>Name</td>
+                <td>{{ task.name }}</td>
+            </tr>
+            <tr>
+                <td>Created Date</td>
+                <td>{{ task.created_date }}</td>
+            </tr>
+            <tr>
+                <td>Created By</td>
+                <td>{{ task.created_by }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ task.status }}</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>{{ task.task_description }}</td>
+            </tr>
+
+            <tr>
+                <td>Comment</td>
+                <td>{{ task.comments }}</td>
+            </tr>
+            <tr>
+                <td>Modify By</td>
+                <td>{{ task.modify_by}}</td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td>{{ task.priority }}</td>
+            </tr>
+            <tr>
+                <td>TAT</td>
+                <td>{{ task.tat}}</td>
+            </tr>
+        </table>
+
+
+        <input type="button" class="btn-block green btn btn-primary" value="Edit">
+
+
+
+
+    {% else %}
+        <table class="table" id="table">
+            <thead>
+                <th> Name </th>
+                <th> Created Date </th>
+                <th> Created By </th>
+                <th> Priority </th>
+            </thead>
+
+
+            {% for i in task %}
+                <tr >
+                    <td><a href="/task/{{ i.id }}" >{{ i.name }}</a></td>
+                    <td>{{ i.created_date }}</td>
+                    <td>{{ i.created_by }}</td>
+                    <td>{{ i.priority }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+
+
+    {% endif %}
+    <style>
+
+
+
+    th{
+        font-size: 1.2em;
+    }
+    table{
+        margin-top: 5px;
+    }
+
+    .affix-top{
+
+        position: fixed;
+        width: 19.45%;
+    }
+     @media (max-width: 767px) {
+         .affix-top {
+             width:auto;
+         }
+     }
+     @media (max-width: 770px) {
+     .affix-top {
+         position:static;
+        width: auto;
+     }
+ }
+
+
+    .form-control{
+     border-radius: 1px 1px 1px 1px;
+    -moz-border-radius: 1px 1px 15px 15px ;
+    -webkit-border: 15px 15px 15px 15px;
+    /*-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;*/
+
+    }
+
+    form-control:focus {
+  border-color: snow;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0, 0, 0, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0, 0, 0, .6);
+}
+
+
+    </style>
+
+{% endblock %}
+
+{% block script %}
+
+
+
+{% endblock %}

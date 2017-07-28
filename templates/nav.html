@@ -1,0 +1,131 @@
+{% load staticfiles %}
+{% include 'css.html' %}
+{% include 'js.html' %}
+<!--
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-light " style="background-color: orange;" id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sss">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="navbar-collapse collapse move-me navbar-right" id="sss">
+                <ul class="nav navbar-nav">
+                    <li ><a href="/index">Home</a></li>
+                    {% if user.groups.get.name == 'Associate' %}
+                        {% else %}
+                     <li><a href="/create">Create</a></li>
+                    {% endif %}
+                    <li><a href="/accounts/profile">{{ user.first_name }}{{ name.first_name }}</a></li>
+                     <li><a href="/accounts/logout">Logout</a></li>
+                </ul>
+            </div>
+            <form class="navbar-search col-sm-5 docs-search" ng-submit="submit()" action="/search">
+
+                <input type="text"
+                        name="srch"
+                        class="form-control"
+                        placeholder="Search issue name"
+                        autocomplete="off">
+            </form>
+
+        </div>
+    </div>
+    <div class="navbar hide-text" id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sss">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+
+            <div class="navbar-collapse collapse move-me navbar-right" id="sss">
+                <ul class="nav navbar-nav">
+                    <li ><a href="/">HOME</a></li>
+                     <li><a href="/new">CREATE</a></li>
+                    <li><a href="#faculty-sec">FACULTY</a></li>
+                     <li><a href="#course-sec">COURSES</a></li>
+                     <li><a href="#contact-sec">CONTACT</a></li>
+                </ul>
+            </div>
+            <form class="navbar-search col-sm-5 docs-search" ng-submit="submit()">
+                <span class="glyphicon glyphicon-search search-icon "></span>
+                <input type="text"
+                        name="q"
+                        class="search-query"
+                        placeholder="search"
+                       doc-search-input
+                        autocomplete="off">
+            </form>
+
+        </div>
+    </div>
+-->
+
+
+
+
+
+
+
+
+    <nav class="nav navbar-inverse navbar-fixed-top navbar-light" style="background-color: orange">
+      <div class="container-fluid">
+        <div class="navbar-header" >
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" style="color: white" href="/">Workflows</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" >Dashboard</a></li>
+            <li><a href="/email">Email</a></li>
+            <li><a href="#">Report</a></li>
+            <li><a href="#">Profile</a></li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <input class="form-control" placeholder="Search..." type="text">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="nav navbar-inverse  ">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" style="color: white" href="#">Workflows</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Email</a></li>
+            <li><a href="#">Report</a></li>
+            <li><a href="#">Profile</a></li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <input class="form-control" placeholder="Search..." type="text">
+          </form>
+        </div>
+      </div>
+    </nav>
+<style>
+    .navbar-inverse .navbar-nav > li > a{
+    color: white;
+}
+</style>
