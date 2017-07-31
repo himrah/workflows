@@ -1,7 +1,27 @@
 from Workflow.models import *
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.models import User
+from ckeditor.widgets import CKEditorWidget
 from django.forms import Textarea,CharField,TextInput
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label="Username", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
+    password = forms.CharField(label="Password", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'password','type':'password'}))
+
+    def clean(self,*args,**kwargs):
+        username =self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        if username and password:
+            user = authenticate(username=username,password=password)
+            if not user:
+                raise forms.ValidationError("this user doest not exist")
+        return super(LoginForm,self).clean(*args,**kwargs)
+
+
 
 class UserMail(User):
     class Meta:
@@ -12,6 +32,7 @@ class UserMail(User):
 
 class InboxForm(forms.ModelForm):
     content = Inbox
+    content = forms.CharField(widget=CKEditorWidget())
     receiver_id=forms.ModelChoiceField(queryset=UserMail.objects.all())
     #subject = CharField(widget={'class':'subject'})
     class Meta:
@@ -21,3 +42,4 @@ class InboxForm(forms.ModelForm):
             'content' : Textarea(attrs={'class':'texarea'}),
             'subject' : TextInput(attrs={'class':'subject'})
         }
+

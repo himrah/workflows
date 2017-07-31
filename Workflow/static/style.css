@@ -7,6 +7,7 @@
      }
      @media (max-width: 770px) {
      .affix-top {
+         
          position:static;
         width: auto;
     }
@@ -16,11 +17,33 @@
      
  }
 
+.marker{
+    background-color: yellow;
+    font-size: 2em;    
+}
+
+
  .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     /*border-color: #101010;*/
     border-color: transparent;
 }
 .navbar-inverse .navbar-toggle {
     border-color: transparent;
+}
+
+blockquote
+{
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	padding: 2px 0;
+	border-left: solid;
+    font-size: 15px;
+    border-left-width: 10px;
+	border-color: #ccc;
+	border-width: 3px;
+    
+    padding-left: 8px;
+	padding-right: 20px;
+	border-right-width: 5px;
 }
 

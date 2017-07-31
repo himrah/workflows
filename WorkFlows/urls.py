@@ -26,4 +26,9 @@ urlpatterns = [
     url(r'^email/(?P<pk>\d+)$', EmailDetail, name='ProjectTask'),
     url(r'^compose/',Compose,name='compose'),
     url(r'^sending/',sending,name='sending'),
+    url(r'^isread/(?P<pk>\d+)$',Isread,name='isread'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^accounts/login/$',login,name='login'),
+    url(r'^accounts/logout/$',logout,name='logout'),
+    url(r'^auth/$',auth_view,name='auth'),
 ]

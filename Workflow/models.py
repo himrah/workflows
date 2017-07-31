@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 
@@ -76,7 +77,9 @@ class Inbox(models.Model):
     id = models.AutoField(primary_key=True)
     sender_id = models.CharField(max_length=20,null=True)
     subject = models.CharField(max_length=150,null=True)
-    content = models.TextField()
+    
+    #content = models.TextField()
+    content = RichTextField()
     receiver_id = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     date = models.DateTimeField(default=datetime.now,blank=True)
     is_read = models.BooleanField(default=False)

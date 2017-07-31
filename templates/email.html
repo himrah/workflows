@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ mail.subject }} | WorkFlow
+{% if compose %}
+Compose | WorkFlows
+{% endif %}
+{% if inbox %}
+Inbox | WorkFlows
+{% endif %}
 {% endblock %}
 
 {% block sidebar %}
@@ -11,10 +16,28 @@
     <div class="list-group">
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
         <div id="demo" class="collapse in">
+        {% if compose %}    
+        <a class="list-group-item active"  href="/compose">Compose</a>
+        {% else %}
+
         <a class="list-group-item"  href="/compose">Compose</a>
-        <a class="list-group-item active"  href="/email">Index</a>
+        {% endif %}
+
+        {% if inbox %}        
+        <a class="list-group-item active"  href="/email">Inbox</a>
+        {% else %}
+        <a class="list-group-item"  href="/email">Index</a>
+        {% endif %}
+        {% if sent %}
+        <a class="list-group-item action"  href="/sent">Sent Items</a>
+        {% else %}
         <a class="list-group-item"  href="/sent">Sent Items</a>
+        {% endif %}
+        {% if trans %}
+        <a class="list-group-item active"  href="/trans">Trans</a>
+        {% else %}
         <a class="list-group-item"  href="/trans">Trans</a>
+        {% endif %}
         </div>
     </div>
 
@@ -46,7 +69,13 @@
             </div>
             <hr>
 
-        {% elif flag %}
+         <style>
+        .marker{
+            background: yellow
+        }
+
+        </style>
+        {% elif compose %}
             <!--
         <div>
             <h3>New Message</h3>
@@ -83,20 +112,23 @@
                 <b>Message</b>
                  </div>
                 <div class="col-sm-10">
+                    <div class="editor" id="editor">
                 {{form.content}}
+                    </div>
                 <div class="submit-button">
                     <input type="submit" class="btn btn-primary btn-block" value="Send" id="submit">
                 </div>
 
                 </div>
             </div>
-        <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" style="height: 30px !important;overflow: hidden;resize: none;" rows="1" cols="25" aria-label="To" aria-autocomplete="list"  tabindex="1" role="combobox"></textarea>
+<!--        <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" style="height: 30px !important;overflow: hidden;resize: none;" rows="1" cols="25" aria-label="To" aria-autocomplete="list"  tabindex="1" role="combobox"></textarea>-->
 
 
 
         </form>
 
          <style>
+
          .messages{
              margin-top: 25px;
          }
@@ -123,29 +155,31 @@
             </div>
             <table class="table" id="table">/home/rahul
                 <thead>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" id="all" ></th>
                     <th> Name </th>
                     <th> Subject </th>
                     <th> Time </th>
                     <th> Receiver </th>
                 </thead>
-
                 {% for i in email %}
                     {% if i.is_read %}
-                        <tr onclick="window.document.location='{{ i.id }}'" class="rowlink" draggable="true">
+                        
+                        <tr draggable="true">
                      {% else %}
-                        <tr onclick="window.document.location='{{ i.id }}'"  style="background: rgba(243,243,243,.85);font-weight: bold;draggable="true">
+                        
+                        <tr id="{{ i.id }}"  class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
                     {% endif %}
                         <td><input  onclick="not()" class="check" value="5" type="checkbox"></td>
                     <!--    <div onclick="window.document.location='{{ i.id }}'">-->
-                            <td style="cursor:pointer"><a href="/email/{{ i.id }}" >{{ i.sender_id }}</a></td>
-                            <td style="cursor:pointer">{{ i.subject }}</td>
-                            <td style="cursor:pointer">{{ i.date.date }}</td>
-                            <td style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+                            <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.sender_id }}</td>
+                            <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.subject }}</td>
+                            <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.date.date }}</td>
+                            <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
                         </div>
                     </tr>
-
+                        
                 {% endfor %}
+                
             </table>
         {% endif %}
 
@@ -163,6 +197,25 @@
         margin-left: 15px;
         text-align : justify;
     }
+
+    .affix-top{
+
+        position: fixed;
+        width: 19.45%;
+}
+
+     @media (max-width: 767px) {
+         .affix-top {
+             width:auto;
+         }
+     }
+     @media (max-width: 770px) {
+     .affix-top {
+         position:static;
+        width: auto;
+     }
+ }
+
 
 
 
@@ -189,8 +242,74 @@
 {% endblock %}
 
 {% block script %}
-    <script type="javascript">
-        console.log("sdlfkjs")
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#cke_id_content').addClass('cke_focus')
+        })
+
+
+        $(document).ready(function () {
+        console.log("sdlfkjs")    
+        });
+        
+
+
+         $("#all").click(function () {
+                if ($("#all").is(':checked')) {
+                    $(".check").prop("checked", true);
+                } else {
+                    $(".check").prop("checked", false);
+                }
+            });
+
+
+
+
+
+
+/*        $(document).on('click','#all',function(){
+            $('.check').prop("checked", true);
+            //$('.row_data').attr('class','selected')
+        })*/
+
+//        $(document).ready(function(){
+  //          if($('#all').is(':checked')){
+                //$('.check').attr('checked','true')
+    //        }
+     //       else{
+       //         $('.check').attr('checked','false')   
+       //     }
+        //})
+
+        $(document).on('click','.rowlink',function(e){
+           console.log($('.rowlink').attr('id'))      
+        });
+
+        function func(e){
+            console.log(e);
+        }
+        function myfunction(e){
+            console.log(e)
+            vars=e
+        $.ajax({
+            type:'GET',
+            url : '/isread/'+e,
+            data :{
+               pk:e
+               //csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(e){
+                if(e=='OK'){
+                console.log('success')
+                console.log(vars)
+                }
+                else{
+                console.log('Not')}
+                window.location=vars
+            }
+
+        })    
+        }
     </script>
 
 

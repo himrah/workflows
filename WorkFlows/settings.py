@@ -27,6 +27,24 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CKEDITOR_UPLOAD_PATH = "upload/"
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 'auto',
+        'toolbarCanCollapse': True,
+        'filebrowserWindowHeight': 725,
+        'filebrowserWindowWidth': 940,
+        'maxwidth':600,
+        'width':'700',
+        
+        'resize_maxWidth' :1000,
+    },
+}
+
+
 
 # Application definition
 
@@ -38,6 +56,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Workflow',
+    'ckeditor_uploader',
+    'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
