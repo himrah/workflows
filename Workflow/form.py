@@ -23,11 +23,36 @@ class LoginForm(AuthenticationForm):
 
 
 
+
+
+
 class UserMail(User):
     class Meta:
         proxy = True
     def __str__(self):
         return self.first_name+'<'+self.email+'>'
+
+
+class UserName(User):
+    class Meta:
+        proxy = True
+    def __str__(self):
+        return self.first_name+' '+self.last_name
+
+
+class TaskEditForm(forms.ModelForm):
+    assign=forms.ModelChoiceField(queryset=UserName.objects.all())
+    class Meta:
+        model = Task
+        fields = ['name','status','created_date','created_by','task_description','comments','priority','tat','assign']
+        widgets ={
+            'created_date' : TextInput(attrs={'class':'disabled,form-control'}),
+            'name' : TextInput(attrs={'class':'form-control'}),
+            'task_description':Textarea(attrs={'class':'form-control'})
+        }
+
+
+
 
 
 class InboxForm(forms.ModelForm):

@@ -1,4 +1,4 @@
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render,render_to_response,get_object_or_404
 from .models import *
 from .form import *
 from django.core.context_processors import csrf
@@ -11,6 +11,21 @@ def Home(request):
     p=Project.objects.all()
     t=Task.objects.all()
     return render_to_response('home.html',{'project':p,'task':t,'pid':'home'})
+
+
+
+def Edit(request,pk):
+    #form=TaskEditForm()
+    task=get_object_or_404(Task,id=pk)
+    form=TaskEditForm(request.POST or None,instance=task)
+    user=request.user
+    if request.POST and form.is_valid():
+        name=request.user.first_name+" "+request.user.last_name
+        task.modify_by=name
+        task.save()
+        form.save()
+        return HttpResponseRedirect('/')
+    return render(request,'home.html',{'form':form,'work':'taskedit'})
 
 
 def login(request):
