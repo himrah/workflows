@@ -1,18 +1,82 @@
 from django.shortcuts import render,render_to_response,get_object_or_404
 from .models import *
 from .form import *
+from chartjs.views.lines import BaseLineChartView
+from django.views.generic import TemplateView
 from django.core.context_processors import csrf
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponse
 # Create your views here.
+
+
+
+#line_chart = TemplateView.as_view(template_name='reports.html')
+#line_chart_json = LineChartJSONView.as_view()
+
+
+
 def Home(request):
     p=Project.objects.all()
     t=Task.objects.all()
     return render_to_response('home.html',{'project':p,'task':t,'pid':'home'})
 
 
+
+def prj_data(request,what):
+    
+    if what == 'priority':
+        l_count=Task.objects.filter(priority='Low').count()
+        h_count=Task.objects.filter(priority='High').count()
+        n_count=Task.objects.filter(priority='Normal').count()
+        
+        label=['Hight','Low','Normal']
+        count=[h_count,l_count,n_count]
+        data={
+            'label':label,
+            'count':count
+        }
+        return JsonResponse(data)
+    elif what == 'status':
+        c_count=Task.objects.filter(status='Complete').count()
+        i_count=Task.objects.filter(status='In Process').count()
+        n_count=Task.objects.filter(status='New').count()
+        label=['Complete','In Process','New']
+        count=[c_count,i_count,n_count]
+        data={
+            'label':label,
+            'count':count
+        }
+        return JsonResponse(data)
+
+    #p=Project.objects.filter()
+
+def project_data(request):
+    p=Project.objects.all()
+    project=[i.name for i in p]
+    print(project)
+    count=[p[0].task_set.count(),p[1].task_set.count(),p[2].task_set.count()]
+    data={
+        'project':project,
+        'count':count
+    }
+    return JsonResponse(data)
+
+
+def Reports(request):
+    
+    #p=Project.objects.all()
+    #project=[i.name for i in p]
+    #print(project)
+    #count=[p[0].task_set.count(),p[1].task_set.count(),p[2].task_set.count()]
+    #['CMS', 'Scraping', 'Audit']
+    #data = ModelDataSource(p,fields=['name'])
+    #chart=flot.LineChart(data)
+    return render_to_response('reports.html')
+ #   line_chart = TemplateView.as_view(template_name='reports.html')
+ #   line_chart_json = LineChartJSONView.as_view()
+#    return HttpResponse(line_chart_json)
 
 def Edit(request,pk):
     #form=TaskEditForm()

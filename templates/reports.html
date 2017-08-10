@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+
+{% block sidebar %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js">
+</script>
+<div class="affix-top hidden-print bs-docs-slidebar">
+    <h3>Reports</h3>
+    
+
+        
+    
+    <div class="list-group">
+        <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
+        <div id="demo"><!--  class="collapse in">-->
+        {% if project %}
+
+        <a class="list-group-item active tree-toggler nav-header">Projects</a>
+        <ul style="display: none;" class="nav nav-list tree">
+            <li><a href="#">Status</a></li>
+            <li><a href="#">Priority</a></li>
+        </ul>
+        
+        {% else %}
+        <label class="list-group-item tree-toggler ">Projects</label>
+
+        <ul style="display: none; margin-left: 50px;" class="tree nav nav-list">
+            <li href="#" onclick="ajaxcl('priority')" class="list-group-item">Priority</li>
+            <li href="#" onclick="ajaxcl('status')" class="list-group-item">Status</li>
+        </ul>
+
+        {% endif %}
+
+        {% if emp %}
+        <a class="list-group-item active"  href="/employee">Employee</a>
+        {% else %}
+        <a class="list-group-item"  href="/employee">Employee</a>
+        {% endif %}
+
+        {% if department %}
+        <a class="list-group-item action"  href="/department">Department</a>
+        {% else %}
+        <a class="list-group-item"  href="/department">Department</a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+{{project}}
+<div class="col-sm-12">
+    <span class="coldata"></span>
+</div>
+<div class="col-sm-6">
+    <div class="ch1">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+<div class="col-sm-6">
+    <div class="ch2">
+        <canvas id="myChart2"></canvas>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+
+function ajaxcl(par){
+    //console.log(par)
+    point='/api/project_data/'+par+'/'
+    $.ajax({
+        method:'GET',
+        url:point,
+        success:function(data){
+            console.log(data)
+            project=data.label
+            count = data.count
+            $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
+            $('canvas').remove()
+            html='<canvas id="myChart"></canvas>'
+            html2='<canvas id="myChart2"></canvas>'
+            $('.ch1').html(html)
+            $('.ch2').html(html2)
+            //var ctx = document.getElementById("myChart").getContext('2d'); 
+            
+            showchart();
+        }
+    })
+    
+}
+
+
+
+pont='/api/project_data'
+$.ajax({
+    method:'GET',
+    url:pont,
+    success:function(data){
+        console.log(data)
+        project=data.project
+        count = data.count
+        
+        showchart();
+
+
+
+
+
+    },
+    error:function(error_data){
+        console.log('errro')
+        console.log(error_data)
+    }
+})
+
+
+function showchart(){
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: project,
+                datasets: [{
+                    label: '#sd',
+                    data: count,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+        var ctx2 = document.getElementById("myChart2").getContext('2d');
+        var myChart = new Chart(ctx2, {
+            type: 'polarArea',
+            data: {
+                labels: project,
+                datasets: [{
+                    label: '#sd',
+                    data: count,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });        
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ 	$(document).ready(function () {
+    $('label.tree-toggler').click(function () {
+        $(this).parent().children('ul.tree').toggle(300);
+    });
+});
+
+
+/*var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['abc'],
+        datasets: [{
+            label: ['red'],
+            data: ['sdf','sdf','sd'],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});*/
+
+</script>
+
+
+{% endblock %}

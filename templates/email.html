@@ -15,7 +15,7 @@ Inbox | WorkFlows
     <h3>Email</h3>
     <div class="list-group">
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
-        <div id="demo" class="collapse in">
+        <div id="demo"><!--  class="collapse in">-->
         {% if compose %}    
         <a class="list-group-item active"  href="/compose">Compose</a>
         {% else %}
@@ -212,8 +212,10 @@ Inbox | WorkFlows
      @media (max-width: 770px) {
      .affix-top {
          position:static;
-        width: auto;
+         width: auto;
+
      }
+
  }
 
 
@@ -243,15 +245,47 @@ Inbox | WorkFlows
 
 {% block script %}
     <script type="text/javascript">
+
+
+/*    function resize(){
+        if($(window).width<770){
+//            $('#demo').addClass('collapse in')
+
+        }else{
+  //          $('#demo').removeClass('collapse in')
+            //$('#demo').addClass('collapse in')
+        }
+    }*/
+
+
+        $(window).on('resize',function(){
+            var win = $(this);
+            if(win.width()<770){
+                $('#demo').removeClass('collapse in')
+                $('#demo').addClass('collapse')
+            }
+            else if(win.width()>770){
+                $('#demo').removeClass('collapse')
+                $('#demo').addClass('collapse in')
+            }
+        });
+
+
+
         $(document).ready(function(){
-            $('#cke_id_content').addClass('cke_focus')
-        })
+            //$('#cke_id_content').addClass('cke_focus')
+            if($(window).width()<770){
+                $('#demo').addClass('collapse')
+            }
+
+        });
 
 
         $(document).ready(function () {
         console.log("sdlfkjs")    
         });
         
+
 
 
          $("#all").click(function () {
