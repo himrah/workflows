@@ -23,13 +23,14 @@ Reports
         </ul>
         
         {% else %}
+        <!--
         <label class="list-group-item tree-toggler " onclick="ajaxcl('Project')" style="cursor:pointer">Projects</label>
 
         <ul style="display: none; margin-left: 50px;" class="tree nav nav-list">
             <li href="#" onclick="ajaxcl('Priority')" style="cursor:pointer" class="list-group-item">Priority</li>
             <li href="#" onclick="ajaxcl('Status')" style="cursor:pointer" class="list-group-item">Status</li>
-        </ul>
-
+        </ul>-->
+                <a class="list-group-item" onclick="ajaxcl('Project')">Projects</a>
         {% endif %}
 
         {% if emp %}
@@ -95,6 +96,8 @@ function ajaxcl(par){
             success:function(data){
                 project =[]
                 count =[]
+                stat=[]
+                option=[]
                 var json = $.parseJSON(data)
                 console.log(json.label)
                 
@@ -109,9 +112,12 @@ function ajaxcl(par){
                     //console.log('sdfs')
                     //console.log(json.label[i].fields.name)
                     count.push(json.count[i])
+                    stat.push(json.status[i])
+                    option.push(json.option[i])
                 }
                 console.log(project)
                 console.log(count)
+                console.log(stat)
 
                 //console.log(count.fields)
                 $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
@@ -122,7 +128,7 @@ function ajaxcl(par){
                 $('.ch2').html(html2)
                 //var ctx = document.getElementById("myChart").getContext('2d'); 
                 
-                showchart(par);
+                showcharts(par);
             }
         })
 
@@ -141,7 +147,7 @@ $.ajax({
         project=data.project
         count = data.count
         
-        showchart();
+        showchart('Projects');
 
     },
     error:function(error_data){
@@ -202,6 +208,118 @@ function dpt(department){
 
     })
 }
+
+
+
+
+
+function showcharts(par){
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data:{
+                labels : project,
+                datasets:loop(),
+            },
+            
+
+/*
+            {
+                label: option[0],
+                backgroundColor:'rgba(255, 99, 132, 0.2)',
+                data:stat[0]
+
+            }, {
+                label: option[1],
+                backgroundColor:'rgba(205, 199, 32, 0.2)',
+                data:stat[1] 
+            }, 
+            {
+                label: option[2],
+                backgroundColor:'rgba(155, 166, 12, 0.2)',
+                data:stat[2]
+
+            }*/
+            options: {
+                scales: {
+                    yAxes: [{
+                        scaleLabel:{
+                            display:true,
+                            labelString:'Task'
+                        },
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel:{
+                            display:true,
+                            labelString:par
+                        },
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+}
+
+
+function loop(){
+    var d=[]
+    var min=1
+    var max=255
+
+    co=['rgba(255, 99, 132,',
+    'rgba(54, 162, 235,',
+    'rgba(255, 206, 86,',
+    'rgba(120, 190, 80,'
+    ]
+
+
+    for (i=0;i<option.length;i++){
+        nu='rgba('+randomNumberFromRange(1,255)+','+randomNumberFromRange(1,255)+','+randomNumberFromRange(1,255)+','
+        
+        //bnu='rgba('+randomNumberFromRange(1,255)+', 99, 132,'
+        d.push(
+        {
+        label: option[i],
+        //backgroundColor:stat[i],
+         //highlightFill: "rgba(220,220,220,0.75)",
+
+        backgroundColor:co[i]+0.2+')',
+        borderColor:co[i]+1+')',
+        //backgroundColor:nu+0.5+')',
+        //borderColor:nu+1+')',
+        //fillColor:'rgba('+getRandomColor()+','+getRandomColor()+','+getRandomColor()+','+0.2+')',
+        borderWidth:1,
+        data:stat[i]
+    
+        }
+        )
+    }
+    return d
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+function randomNumberFromRange(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+
 
 
 

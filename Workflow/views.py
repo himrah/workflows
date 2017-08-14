@@ -8,6 +8,10 @@ from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponse
+import json
+import re
+from django.core import serializers
+
 # Create your views here.
 
 
@@ -23,9 +27,8 @@ def Home(request):
     return render_to_response('home.html',{'project':p,'task':t,'pid':'home'})
 
 
-import json
-import re
-from django.core import serializers
+
+
 def prj_data(request,what):
     
     model = globals()[what]
@@ -38,13 +41,30 @@ def prj_data(request,what):
     c=[]
     #sets=str(re.search('Workflow.(.*?)>',str(pp)).group(1))+'_set'
     sets=(str(pp)+'_set')
+    s_m=globals()[pp.capitalize()]
+    option=[i[0] for i in s_m.objects.all()[0].choices]
+    status=[]
     for i in d:
-        c.append(i.serializable_value(sets).values().count())
+        l=i.serializable_value(sets).values()
+        c.append(l.count())
+        #[ i['status'] for i in range(l)]
+        temp=[]
+        for j in option:
+            cn=[i['status'] for i in l]
+            #cn.count(j)
+            temp.append(cn.count(j))
+        status.append(temp)    
+
+        #status.append([i['status'] for i in l])
         #c.append(i.'project_set'.count())
         #c.append(i.project_set.count())
+
     js={
     'label':json.loads(p),
-    'count':c
+    'count':c,
+    'option':option,
+    'status':status
+
 
     }    
     return JsonResponse(js)
