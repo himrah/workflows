@@ -56,7 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Workflow',
-    'chartjs',
+    #'chartjs',
     'ckeditor_uploader',
     'ckeditor',
 )

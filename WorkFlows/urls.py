@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^reports/',Reports,name='reports'),
     url(r'^api/project_data$',project_data,name='project-data'),
     url(r'^api/project_data/(?P<what>.*)/$',prj_data,name='prj-data'),
+    url(r'^api/employee/$',emp_data,name='emp-data'),
+    #url(r'^api/pro')
     url(r'^sending/',sending,name='sending'),
     url(r'^isread/(?P<pk>\d+)$',Isread,name='isread'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

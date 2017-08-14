@@ -1,7 +1,7 @@
 from django.shortcuts import render,render_to_response,get_object_or_404
 from .models import *
 from .form import *
-from chartjs.views.lines import BaseLineChartView
+#from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
 from django.core.context_processors import csrf
 from django.http.response import HttpResponseRedirect,JsonResponse
@@ -23,9 +23,46 @@ def Home(request):
     return render_to_response('home.html',{'project':p,'task':t,'pid':'home'})
 
 
-
+import json
+import re
+from django.core import serializers
 def prj_data(request,what):
     
+    model = globals()[what]
+    pp=model._meta.related_objects[0].name
+    #d._meta.get_all_related_objects()[0].name
+    #print(what)
+    #l=what.objects.all()
+    d=model.objects.all()
+    p=serializers.serialize('json',d)
+    c=[]
+    #sets=str(re.search('Workflow.(.*?)>',str(pp)).group(1))+'_set'
+    sets=(str(pp)+'_set')
+    for i in d:
+        c.append(i.serializable_value(sets).values().count())
+        #c.append(i.'project_set'.count())
+        #c.append(i.project_set.count())
+    js={
+    'label':json.loads(p),
+    'count':c
+
+    }    
+    return JsonResponse(js)
+
+def emp_data(request):
+    user=User.objects.all()
+    related=User._meta.get_all_related_objects()[1:]
+    c=[]
+    p=serializers.serialize('json',user[1:])
+    for i in user[1:]:
+        c.append(i.serializable_value('task_set').values().count())
+
+    js={
+        'label':json.loads(p),
+        'count':c
+    }    
+    return JsonResponse(js)    
+
     if what == 'priority':
         l_count=Task.objects.filter(priority='Low').count()
         h_count=Task.objects.filter(priority='High').count()
@@ -38,6 +75,21 @@ def prj_data(request,what):
             'count':count
         }
         return JsonResponse(data)
+
+    elif what == 'department': 
+        t=Department.objects.all()
+        count=[i.project_set.all().count() for i in t]
+        label=[i.name for i in t]
+        data={
+
+        'label' : label,
+        #'label' : str(label).replace('[','').replace(']',''),
+        'count' : count
+        }
+        return JsonResponse(data)
+
+
+
     elif what == 'status':
         c_count=Task.objects.filter(status='Complete').count()
         i_count=Task.objects.filter(status='In Process').count()

@@ -76,6 +76,7 @@ Inbox | WorkFlows
 
         </style>
         {% elif compose %}
+        {% include 'ck.html' %}
             <!--
         <div>
             <h3>New Message</h3>
@@ -163,24 +164,31 @@ Inbox | WorkFlows
                 </thead>
                 {% for i in email %}
                     {% if i.is_read %}
-                        
                         <tr draggable="true">
+                        <td><input  onclick="not()" class="check" value="5" type="checkbox"></td>
+                    <!--    <div onclick="window.document.location='{{ i.id }}'">-->
+                            <td onclick="window.document.location='{{ i.id }}'"  style="cursor:pointer">{{ i.sender_id }}</td>
+                            <td onclick="window.document.location='{{ i.id }}'"  style="cursor:pointer">{{ i.subject }}</td>
+                            <td onclick="window.document.location='{{ i.id }}'"  style="cursor:pointer">{{ i.date.date }}</td>
+                            <td onclick="window.document.location='{{ i.id }}'"  style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+                        </tr>
                      {% else %}
-                        
                         <tr id="{{ i.id }}"  class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
-                    {% endif %}
+
                         <td><input  onclick="not()" class="check" value="5" type="checkbox"></td>
                     <!--    <div onclick="window.document.location='{{ i.id }}'">-->
                             <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.sender_id }}</td>
                             <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.subject }}</td>
                             <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.date.date }}</td>
                             <td onclick="myfunction({{ i.id }})"  style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
-                        </div>
+
                     </tr>
+                    {% endif %}
                         
                 {% endfor %}
                 
             </table>
+            </div>
         {% endif %}
 
 
