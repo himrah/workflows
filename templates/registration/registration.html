@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+<meta name="theme-color" content="orange" />
+<head>
+    {% include 'css.html' %}
+    {% include 'js.html' %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div class="cols-sm-8">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -87,7 +87,7 @@ function ajaxcl(par){
             }
         })
     }
-    else{
+    else if(par=='Project'){
         point='/api/project_data/'+par+'/'
         $.ajax({
             method:'GET',
@@ -128,9 +128,41 @@ function ajaxcl(par){
                 $('.ch2').html(html2)
                 //var ctx = document.getElementById("myChart").getContext('2d'); 
                 
-                showcharts(par);
+                showchart(par);
             }
         })
+
+    }
+    else{
+
+        point='/api/project_data/'+par+'/',    
+        $.ajax({
+            method:'GET',
+            url:point,
+            dataType:'text',
+            success:function(data){
+                project=[]
+                count=[]
+                var json = $.parseJSON(data)
+                //console.log(json.label[0])
+                for(i=0;i<json.label.length;i++){
+                    project.push(json.label[i].fields.name)
+                    count.push(json.count[i])
+
+                }
+                console.log(project)
+                console.log(count)
+                $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
+                $('canvas').remove()
+                html='<canvas id="myChart"></canvas>'
+                html2='<canvas id="myChart2"></canvas>'
+                $('.ch1').html(html)
+                $('.ch2').html(html2)
+                showchart(par)
+                //console.log(data)
+            }
+        })
+
 
     }
     
@@ -158,15 +190,15 @@ $.ajax({
 
 
 function sch(data,par){
-    console.log(data)
+    //console.log(data)
     project =[]
     count =[]
     var json = $.parseJSON(data)
-    console.log(json.label)
+//    console.log(json.label)
 
     //project=data.labesl
     //count = data
-    console.log(json.count)
+   // console.log(json.count)
     for (var i=0;i<json.label.length;i++)
     {
     //console.log(json[i].label.fields.name)
@@ -177,8 +209,8 @@ function sch(data,par){
     //console.log(json.label[i].fields.name)
     count.push(json.count[i])
     }
-    console.log(project)
-    console.log(count)
+    //console.log(project)
+    //console.log(count)
 
     //console.log(count.fields)
     $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')

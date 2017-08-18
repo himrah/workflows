@@ -15,7 +15,7 @@ Inbox | WorkFlows
     <h3>Email</h3>
     <div class="list-group">
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
-        <div id="demo"><!--  class="collapse in">-->
+        <div id="demo" class="collapse in"><!--  class="collapse in">-->
         {% if compose %}    
         <a class="list-group-item active"  href="/compose">Compose</a>
         {% else %}
@@ -255,17 +255,6 @@ Inbox | WorkFlows
     <script type="text/javascript">
 
 
-/*    function resize(){
-        if($(window).width<770){
-//            $('#demo').addClass('collapse in')
-
-        }else{
-  //          $('#demo').removeClass('collapse in')
-            //$('#demo').addClass('collapse in')
-        }
-    }*/
-
-
         $(window).on('resize',function(){
             var win = $(this);
             if(win.width()<770){
@@ -304,24 +293,6 @@ Inbox | WorkFlows
                 }
             });
 
-
-
-
-
-
-/*        $(document).on('click','#all',function(){
-            $('.check').prop("checked", true);
-            //$('.row_data').attr('class','selected')
-        })*/
-
-//        $(document).ready(function(){
-  //          if($('#all').is(':checked')){
-                //$('.check').attr('checked','true')
-    //        }
-     //       else{
-       //         $('.check').attr('checked','false')   
-       //     }
-        //})
 
         $(document).on('click','.rowlink',function(e){
            console.log($('.rowlink').attr('id'))      

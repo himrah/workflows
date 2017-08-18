@@ -10,7 +10,7 @@
     <h3>Projects</h3>
     <div class="list-group">
     <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
-    <div id="demo">
+    <div id="demo" class="collapse in">
         {% if pid == 'home' %}
         <a class="list-group-item active" href="/">All</a>
         {% else %}
@@ -148,13 +148,14 @@
             <h5><a href='/'> Workflow</a>>><a href="/project/{{pid.id}}">{{pid.name}}</a></h5>
     </div>
 
-
+    {% if task %}
         <table class="table" id="table">
             <thead>
                 <th> Name </th>
                 <th> Created Date </th>
                 <th> Created By </th>
                 <th> Priority </th>
+                <th> Status </th>
             </thead>
 
 
@@ -164,9 +165,14 @@
                     <td>{{ i.created_date }}</td>
                     <td>{{ i.created_by }}</td>
                     <td>{{ i.priority }}</td>
+                    <td>{{ i.status }}</td>
                 </tr>
             {% endfor %}
         </table>
+      {% else %}
+      <h3 align=center> There is no task </h3>
+      
+      {% endif %}  
 
 
 
@@ -236,7 +242,7 @@
             }
         });
 
-
+        //$(document).click('')
 
         $(document).ready(function(){
             //$('#cke_id_content').addClass('cke_focus')

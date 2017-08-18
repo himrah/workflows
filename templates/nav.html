@@ -91,7 +91,11 @@
             <li><a href="/" >Dashboard</a></li>
             <li><a href="/email">Email</a></li>
             <li><a href="/reports">Report</a></li>
-            <li><a href="#">{{ request.username }}</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/accounts/profile">{{ user.first_name }}</a></li>
+            {% else %}
+                <li><a href="/accounts/login">Login</a></li>    
+            {% endif %}    
           </ul>
           <form class="navbar-form navbar-left">
             <input class="form-control" placeholder="Search..." type="text">
