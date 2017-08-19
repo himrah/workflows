@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     #'chartjs',
     'ckeditor_uploader',
     'ckeditor',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

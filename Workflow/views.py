@@ -3,6 +3,7 @@ from .models import *
 from .form import *
 #from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
+from rest_framework import viewsets
 from django.core.context_processors import csrf
 from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -11,11 +12,15 @@ from django.contrib.auth.models import Group,User
 from django.contrib.auth.views import logout
 from django.http import HttpResponse
 import json
+from .serializer import *
 import re
 from django.core import serializers
 
 # Create your views here.
 
+class Projectset(viewsets.ModelViewSet):
+    project = Project.objects.all()
+    serializer_class = Projectserializer
 
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
@@ -25,6 +30,13 @@ def Logout(request):
     logout(request)
     return render_to_response('registration/logout.html')
 #    request.user.logout()
+
+
+def Single(request,prj):
+    f=Task.objects.filter()
+    option = [i[0] for i in Task.objects.all()[0].choices]
+    for i in option:
+        l=Task.objects.filter(project_id=Project.objects.get(name=prj),status=i)
 
 
 

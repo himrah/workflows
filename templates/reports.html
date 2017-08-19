@@ -99,11 +99,11 @@ function ajaxcl(par){
                 stat=[]
                 option=[]
                 var json = $.parseJSON(data)
-                console.log(json.label)
+                //console.log(json.label)
                 
                 //project=data.labesl
                 //count = data
-                console.log(json.count)
+                //console.log(json.count)
                 for (var i=0;i<json.label.length;i++)
                 {
                     //console.log(json[i].label.fields.name)
@@ -115,9 +115,9 @@ function ajaxcl(par){
                     stat.push(json.status[i])
                     option.push(json.option[i])
                 }
-                console.log(project)
-                console.log(count)
-                console.log(stat)
+                //console.log(project)
+                //console.log(count)
+                //console.log(stat)
 
                 //console.log(count.fields)
                 $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
@@ -353,11 +353,30 @@ function randomNumberFromRange(min,max)
 
 
 
+function graphClickEvent(evt,array){
+    var activePoints = myChart.getElementAtEvent(evt);
+    var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
+
+    console.log(activePoints)
+//    var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data;
+    var name = activePoints[0]._model.label
+    //console.log(name)
+    //console.log(theElement)
+
+        GetJsonByName(name)
+}
+
+function GetJsonByName(par){
+    console.log(par)
+
+}
 
 
+
+var myChart
 function showchart(par){
         var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {                
                 labels: project,
@@ -389,6 +408,7 @@ function showchart(par){
                 }]
             },
             options: {
+                onClick : graphClickEvent,
                 scales: {
                     yAxes: [{
                         scaleLabel:{
@@ -414,7 +434,7 @@ function showchart(par){
 
 
         var ctx2 = document.getElementById("myChart2").getContext('2d');
-        var myChart = new Chart(ctx2, {
+        var myCharts = new Chart(ctx2, {
             type: 'polarArea',
             data: {
                 labels: project,
@@ -456,24 +476,22 @@ function showchart(par){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
  	$(document).ready(function () {
     $('label.tree-toggler').click(function () {
         $(this).parent().children('ul.tree').toggle(300);
     });
 });
+//$(document).click('#myChart',function(e){
+  //  console.log(e)
+    //var activepoint = myChart.getElementAtEvent(e)
+    //var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index];
+    //console.log(activepoint)
+    //console.log(theElement)
+    //console.log(theChart.config.data.datakeys[activePoints[0]._index]);
+    //document.getElementById("lbltheClickedOne").innerText = myChart.config.data.datakeys[activePoints[0]._index];
+    //console.log(theChart.config.type);
 
+//});
 
 /*var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {

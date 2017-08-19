@@ -17,9 +17,14 @@ from django.conf.urls import include, url
 from django.contrib.auth.views import logout,login
 from django.views.generic import TemplateView
 from django.contrib import admin
-from Workflow.views import *
+from Workflow.views import *    
+from rest_framework import routers
+
+router=routers.DefaultRouter()
+#router.register('project',Projectset)
 
 urlpatterns = [
+    url(r'^api/',include(router.urls)),
     url(r'^accounts/logout/$',Logout,name='logout'),
 #    url(r'^accounts/logout/',logout,{'template_name':'registration/logout.html'}),
     url(r'^admin/', include(admin.site.urls)),
