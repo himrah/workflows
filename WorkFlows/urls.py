@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^reports/',Reports,name='reports'),
     url(r'^api/project_data$',project_data,name='project-data'),
     url(r'^api/project_data/(?P<what>.*)/$',prj_data,name='prj-data'),
+    url(r'^api/single_project/(?P<project>.*)/$',Single,name='single-project'),
     url(r'^api/employee/$',emp_data,name='emp-data'),
     #url(r'^api/pro')
     url(r'^sending/',sending,name='sending'),

@@ -32,12 +32,19 @@ def Logout(request):
 #    request.user.logout()
 
 
-def Single(request,prj):
+def Single(request,project):
     f=Task.objects.filter()
     option = [i[0] for i in Task.objects.all()[0].choices]
+    dataset={}
     for i in option:
-        l=Task.objects.filter(project_id=Project.objects.get(name=prj),status=i)
+        l=Task.objects.filter(project_id=Project.objects.get(name=project).id,status=i)
+        dataset.update({i:json.loads(serializers.serialize('json',l))})
+    js={
+        'option':option,
+        'label':dataset
+    }
 
+    return JsonResponse(js)
 
 
 def profile(request):
@@ -70,7 +77,6 @@ def TaskDetail(request,pk):
 
 
 def prj_data(request,what):
-    
     model = globals()[what]
     pp=model._meta.related_objects[0].name
     #d._meta.get_all_related_objects()[0].name

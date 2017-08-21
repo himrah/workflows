@@ -2,31 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5bc76a6e-6bba-4c43-8a77-1f7725fcc6d6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/WorkFlows.iml" afterPath="$PROJECT_DIR$/.idea/WorkFlows.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WorkFlows/settings.py" afterPath="$PROJECT_DIR$/WorkFlows/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WorkFlows/urls.py" afterPath="$PROJECT_DIR$/WorkFlows/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/build-config.js" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/build-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/contents.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/contents.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/lang/en.js" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/lang/en.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_ie.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_ie.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_ie8.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_ie8.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_iequirks.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/dialog_iequirks.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_gecko.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_gecko.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_ie.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_ie.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_ie8.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_ie8.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_iequirks.css" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/editor_iequirks.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/readme.md" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/skins/moono-lisa/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/ckeditor/styles.js" afterPath="$PROJECT_DIR$/Workflow/static/ckeditor/styles.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/static/style.css" afterPath="$PROJECT_DIR$/Workflow/static/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Workflow/views.py" afterPath="$PROJECT_DIR$/Workflow/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/home.html" afterPath="$PROJECT_DIR$/templates/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/registration/profile.html" afterPath="$PROJECT_DIR$/templates/registration/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/reports.html" afterPath="$PROJECT_DIR$/templates/reports.html" />
     </list>
     <ignored path="WorkFlows.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,8 +32,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Workflow/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
+            <state relative-caret-position="-748">
+              <caret line="46" column="28" selection-start-line="46" selection-start-column="28" selection-end-line="46" selection-end-column="28" />
               <folding>
                 <element signature="e#0#72#0" expanded="true" />
               </folding>
@@ -101,8 +79,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="317">
+              <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
               <folding>
                 <element signature="e#618#659#0" expanded="true" />
               </folding>
@@ -155,13 +133,13 @@
         <option value="$PROJECT_DIR$/templates/registration/login.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="G:/../Softwares/html/Examples/texteditr/editor.html" />
-        <option value="$PROJECT_DIR$/WorkFlows/urls.py" />
         <option value="$PROJECT_DIR$/WorkFlows/settings.py" />
         <option value="$PROJECT_DIR$/Workflow/models.py" />
         <option value="$PROJECT_DIR$/templates/ck.html" />
         <option value="$PROJECT_DIR$/templates/email.html" />
         <option value="$PROJECT_DIR$/templates/js.html" />
         <option value="$PROJECT_DIR$/templates/reports.html" />
+        <option value="$PROJECT_DIR$/WorkFlows/urls.py" />
         <option value="$PROJECT_DIR$/Workflow/views.py" />
       </list>
     </option>
@@ -558,11 +536,19 @@
       <option name="presentableId" value="Default" />
       <updated>1500637485228</updated>
     </task>
+    <task id="LOCAL-00001" summary="update">
+      <created>1503136452016</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1503136452016</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31185943" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -594,6 +580,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1001,16 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#659#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/reports.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -1019,10 +999,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
+          <folding>
+            <element signature="e#618#659#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Workflow/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
+        <state relative-caret-position="-748">
+          <caret line="46" column="28" selection-start-line="46" selection-start-column="28" selection-end-line="46" selection-end-column="28" />
           <folding>
             <element signature="e#0#72#0" expanded="true" />
           </folding>

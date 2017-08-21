@@ -66,6 +66,12 @@ Reports
     </div>
 </div>
 
+<div class="col-sm-6">
+        <div class="ch3">
+            <canvas id="myChart3"></canvas>
+        </div>
+    </div>
+
 
 
 {% endblock %}
@@ -134,7 +140,6 @@ function ajaxcl(par){
 
     }
     else{
-
         point='/api/project_data/'+par+'/',    
         $.ajax({
             method:'GET',
@@ -167,7 +172,6 @@ function ajaxcl(par){
     }
     
 }
-
 
 
 pont='/api/project_data'
@@ -254,24 +258,6 @@ function showcharts(par){
                 datasets:loop(),
             },
             
-
-/*
-            {
-                label: option[0],
-                backgroundColor:'rgba(255, 99, 132, 0.2)',
-                data:stat[0]
-
-            }, {
-                label: option[1],
-                backgroundColor:'rgba(205, 199, 32, 0.2)',
-                data:stat[1] 
-            }, 
-            {
-                label: option[2],
-                backgroundColor:'rgba(155, 166, 12, 0.2)',
-                data:stat[2]
-
-            }*/
             options: {
                 scales: {
                     yAxes: [{
@@ -362,13 +348,108 @@ function graphClickEvent(evt,array){
     var name = activePoints[0]._model.label
     //console.log(name)
     //console.log(theElement)
-
         GetJsonByName(name)
 }
+/*
+$('#myChart').click(function(evt){
+    var activePoints = myChart.getElementAtEvent(evt)
+    //var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
+    var name = activePoints[0]._model.label
+    GetJsonByName(name)
+    //console.log(activePoints[0]._model.label)
+})
+*/
+
 
 function GetJsonByName(par){
-    console.log(par)
+    //console.log(par)
+    $.ajax({
+        method : 'GET',
+        url : '/api/single_project/'+par,
+        success : function(data){
+            //console.log(data)
+            //console.log(data.Complete)
+            //var json = $.parseJSON(data)
+            //var json = $.parseJSON(data)
+            var project=data.option
+            var count =[]
+            for(var i=0;i<project.length;i++){
+                count.push(data.label[project[i]].length)
+                //console.log(data.label[op[i]].length)
 
+
+        //$('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
+        $('#myChart3').remove()
+        html='<canvas id="myChart3"></canvas>'
+        //html2='<canvas id="myChart2"></canvas>'
+        $('.ch3').html(html)
+        //$('.ch2').html(html2)    
+            singlechart(par,project,count)    
+            }
+        }
+    })
+
+}
+
+
+function singlechart(par,project,count){
+       var ctxx = document.getElementById("myChart3").getContext('2d');
+        myChartss = new Chart(ctxx, {
+            type: 'bar',
+            data: {                
+                labels: project,
+                datasets: [{
+//                    xAxisID:'emp',
+  //                  yAxisID:'task',
+                    label: 'sdf',
+                    data: count,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(120, 190, 80, 0.2)',
+                        'rgba(54, 216, 186, 0.2)',
+                        'rgba(100, 129, 100, 0.2)',
+                        'rgba(200, 109, 180, 0.2)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(120, 190, 80, 1)',
+                        'rgba(200, 216, 186, 1)',
+                        'rgba(100, 129, 100, 1)',  
+                        'rgba(200, 109, 180, 1)',                      
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            
+            options: {
+                //onClick : graphClickEvent,
+                scales: {
+                    yAxes: [{
+                        scaleLabel:{
+                            display:true,
+                            labelString:'Task'
+                        },
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel:{
+                            display:true,
+                            labelString:par
+                        },
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
 }
 
 
@@ -464,6 +545,7 @@ function showchart(par){
                 }]
             },
             options: {
+                onClick : graphClickEvent,
                 scales: {
                     yAxes: [{
                         ticks: {
