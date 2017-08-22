@@ -20,11 +20,24 @@ from django.contrib import admin
 from Workflow.views import *    
 from rest_framework import routers
 
+
+
 router=routers.DefaultRouter()
+#router=routers.DefaultRouter()
+router.register('task',Taskset)
+router.register('project',Projectset)
+router.register('user',Userset)
+#router.register('task',Taskset,)
+#router.register('user',Userset,'user-detail')
+#router.register('department',Departmentset)
+#router.register('project',Projectset)
+
 #router.register('project',Projectset)
 
 urlpatterns = [
+#    url(r'^api/',include('rest_framework.urls',namespace='rest_framework'))
     url(r'^api/',include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^accounts/logout/$',Logout,name='logout'),
 #    url(r'^accounts/logout/',logout,{'template_name':'registration/logout.html'}),
     url(r'^admin/', include(admin.site.urls)),

@@ -2,8 +2,28 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
+#from django.contrib.auth.models import Use
 # Create your models here.
 
+
+"""class Profile(User):
+    class Meta:
+        proxy = True
+        ordering = (first_name,)
+
+        def last_seen(self):
+                return cache.get('seen_%s' % user.username)
+
+        def online(self):
+            if self.last_seen():
+                now = datetime.datetime.now()
+                if now > self.last_seen() + datetime.timedelta(
+                                seconds=settings.USER_ONLINE_TIMEOUT):
+                    return False
+                else:
+                    return True
+            else:
+                return False       """ 
 
 
 class Department(models.Model):

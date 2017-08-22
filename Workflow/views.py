@@ -18,10 +18,23 @@ from django.core import serializers
 
 # Create your views here.
 
-class Projectset(viewsets.ModelViewSet):
-    project = Project.objects.all()
-    serializer_class = Projectserializer
+class Taskset(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = Taskserializer
 
+class Projectset(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSeralizer
+
+
+class Userset(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+"""class Departmentset(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = Departmentserializer"""
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
 #line_chart_json = LineChartJSONView.as_view()

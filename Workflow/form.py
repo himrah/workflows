@@ -33,6 +33,14 @@ class UserMail(User):
         return self.first_name+'<'+self.email+'>'
 
 
+class UserFullName(User):
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        return self.get_full_name()
+
+
 class UserName(User):
     class Meta:
         proxy = True
