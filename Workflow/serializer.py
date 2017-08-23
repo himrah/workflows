@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from Workflow.models import *
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
 from rest_framework.reverse import  reverse
 from django.contrib.auth.models import User
 from .form import UserName,UserFullName
@@ -13,7 +13,7 @@ from django import forms
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username','first_name','last_name','email')
+        fields = ('id','username','first_name','last_name','email','inbox_set')
 
 
 class Taskserializer(serializers.HyperlinkedModelSerializer):
@@ -27,6 +27,30 @@ class ProjectSeralizer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Project
         fields=('id','name','task_set','description')
+
+
+class DepartmentSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Department
+        fields = ('id','name','head','project_set')
+
+
+class InboxSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Inbox
+        fields = ('id','subject','content','sender_id','receiver_id','is_read','date')
+
+class PermissionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Permission
+        fields = '__all__'
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id','name','user_set')
+
+
 
 """class Departmentserializer(serializers.HyperlinkedModelSerializer):
     head = Userserializer()

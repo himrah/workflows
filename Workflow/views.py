@@ -8,33 +8,65 @@ from django.core.context_processors import csrf
 from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from django.contrib.auth.models import Group,User
+from django.contrib.auth.models import Group,User,Permission
 from django.contrib.auth.views import logout
 from django.http import HttpResponse
+
 import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .serializer import *
 import re
 from django.core import serializers
 
 # Create your views here.
 
-class Taskset(viewsets.ModelViewSet):
+class TaskSet(viewsets.ModelViewSet):   
+ #   queryset = Task.objects.all()
     queryset = Task.objects.all()
     serializer_class = Taskserializer
+"""    def get_serializer_class(request):
+        query = Task.objects.all()
+        serializer = Taskserializer(query, many=True)
+        return (serializer)
 
-class Projectset(viewsets.ModelViewSet):
+    def post(self, request, format=None):
+        serializer = Taskserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) """   
+
+class ProjectSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSeralizer
 
 
-class Userset(viewsets.ModelViewSet):
+class UserSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-"""class Departmentset(viewsets.ModelViewSet):
+class DepartmentSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
-    serializer_class = Departmentserializer"""
+    serializer_class = DepartmentSerializer
+
+
+class InboxSet(viewsets.ModelViewSet):
+    queryset = Inbox.objects.all()
+    serializer_class = InboxSerializer
+
+
+class GroupSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class PermissionSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
+
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
 #line_chart_json = LineChartJSONView.as_view()
@@ -76,8 +108,8 @@ def Home(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
-    t=Task.objects.filter(assign_id=user.id)
-    
+    #t=Task.objects.filter(assign_id=user.id)
+    t=Task.objects.all()
     return render_to_response('home.html',{'project':p,'task':t,'pid':'home','user':user})
 
 def TaskDetail(request,pk):
@@ -293,8 +325,8 @@ def ProjectTask(request,pk):
 
     p = Project.objects.all()
     pi = Project.objects.get(id=pk)
-    t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
-    
+    #t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
+    t=Task.objects.filter(project_id=pk)
     return render_to_response('home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
 
 
