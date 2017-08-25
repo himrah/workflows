@@ -226,7 +226,9 @@
     }
 </style>
 
-{% endblock %} {% block script %}
+{% endblock %}
+
+{% block script %}
 <script type="text/javascript">
     $(window).on('resize', function() {
         var win = $(this);
@@ -248,5 +250,7 @@
         }
 
     });
+
 </script>
+
 {% endblock %}

@@ -49,6 +49,17 @@ class UserName(User):
         return self.first_name+' '+self.last_name
 
 
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        head = forms.ModelChoiceField(queryset=UserName.objects.all())
+        fields = ('name','description','head')
+        widgets = {
+            'name':TextInput(attrs={'class':'form-control'}),
+            'description':TextInput(attrs={'class':'form-control'})
+        }
+
+
 class TaskEditForm(forms.ModelForm):
     assign=forms.ModelChoiceField(queryset=UserName.objects.all())
     class Meta:

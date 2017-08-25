@@ -6,23 +6,39 @@
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
         <div id="demo">
             {% if pid == 'home' %}
-            <a class="list-group-item active" href="/">All</a> {% else %}
-            <a class="list-group-item" href="/">All</a> {% endif %} {% for i in project %} {% if i.id == pid.id or i.id == task.project_id_id %}
-            <a class="list-group-item active" href="/project/{{ i.id }}">{{ i.name }}</a> {% else %}
-            <a class="list-group-item" href="/project/{{ i.id }}">{{ i.name }}</a> {% endif %} {% endfor %} {% if 'Workflow.add_project' in user.get_all_permissions %}
-            <a class="list-group-item" href="/project/create">Create New</a> {% endif %}
+                <a class="list-group-item active" href="/">All</a>
+             {% else %}
+                <a class="list-group-item" href="/">All</a>
+            {% endif %} 
+            {% for i in project %} 
+            
+            {% if i.id == pid.id or i.id == task.project_id_id %}
+                <a class="list-group-item active" href="#project/{{ i.id }}">{{ i.name }}</a>
+             {% else %}
+                <a class="list-group-item" href="#project/{{ i.id }}">{{ i.name }}</a> 
+                {% endif %} 
+            {% endfor %} 
+            {% if 'Workflow.add_project' in user.get_all_permissions %}
+                <a class="list-group-item" href="create">Create New</a> 
+            {% endif %}
+            
+
         </div>
     </div>
 
 </div>
-{% endblock %} {% block content %}
+{% endblock %}
+
+{% block content %}
 
 <div>
     <h5><a href='/'> Workflow</a>>><a href="/project/{{pid.id}}">{{pid.name}}</a></h5>
 </div>
 <div>
     <h4 align='center'>Create a new Task</h4>
+    <div class='cont'></div>
 </div>
+<!--
 {% if task %}
 <table class="table" id="table">
     <thead>
@@ -47,7 +63,7 @@
 {% else %}
 <h3 align=center> There is no task </h3>
 
-{% endif %}
+{% endif %}-->
 <style>
     th {
         font-size: 1.2em;
@@ -114,4 +130,212 @@
 
     });
 </script>
+{% endblock %}
+
+{% block BackboneScript %}
+<script type="text/template" id="task-list-template">
+    <table class='table'>
+        <thead>
+                <th> Name </th>
+                <th> Created Date </th>
+                <th> Created By </th>
+                <th> Priority </th>
+                <th> Status </th>
+        </thead>
+        <% _.each(project,function(p) { %>
+            <tr>
+                <td><a href="#task/<%=p.id %>"><%= p.name %></a></td>
+                <td><%= p.created_date %></td>
+                <td><%= p.created_by %></td>
+                <td><%= p.priority %></td>
+                <td><%= p.status %></td>
+            </tr>
+        <% }); %>
+    </table>                
+</script>
+
+<script type="text/template" id="task-all-list-template">
+    <table class='table'>
+        <thead>
+                <th> Name </th>
+                <th> Created Date </th>
+                <th> Created By </th>
+                <th> Priority </th>
+                <th> Status </th>
+        </thead>
+        <% _.each(task,function(p) { %>
+            <tr>
+                <td><a href="#task/<%=p.attributes.id %>"><%= p.attributes.name %></a></td>
+                <td><%= p.attributes.created_date %></td>
+                <td><%= p.attributes.created_by %></td>
+                <td><%= p.attributes.priority %></td>
+                <td><%= p.attributes.status %></td>
+            </tr>
+        <% }); %>
+    </table>                
+</script>
+
+<script type='text/template' id='task-show'>
+    <table class="table">
+            <thead>
+                <th>Attribute</th>
+                <th>Value</th>
+            </thead>
+            <tr>
+                <td>Name</td>
+                <td><%=task.name%></td>
+            </tr>
+            <tr>
+                <td>Created Date</td>
+                <td><%=task.created_date%></td>
+            </tr>
+            <tr>
+                <td>Created By</td>
+                <td><%=task.created_by%></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td><%=task.status%></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><%=task.task_description%></td>
+            </tr>
+        
+            <tr>
+                <td>Comment</td>
+                <td><%=task.comments%></td>
+            </tr>
+            <tr>
+                <td>Modify By</td>
+                <td><%=task.modify_by%></td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td><%=task.priority%></td>
+            </tr>
+            <tr>
+                <td>TAT</td>
+                <td><%=task.tat%></td>
+            </tr>
+            <tr>
+                <td colspan=2><a href='#task/<%=task.id%>/edit/'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
+                
+        </table>
+</script>
+
+
+
+<script>
+        $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+    
+          options.url = 'http://localhost:8000/api' + options.url;
+    
+        });
+    
+        var Projects=Backbone.Collection.extend({
+            url:'/project/'
+        })
+
+        var Tasks=Backbone.Collection.extend({
+            url:'/task/'
+        })
+
+        var Task = Backbone.Model.extend({
+            urlRoot:'/task/'
+        })
+
+        var Project = Backbone.Model.extend({
+            urlRoot:'/project'
+        })
+
+        var ProjectView = Backbone.View.extend({
+            el:'.cont',
+            render:function(option){
+                var that = this;
+                if(option.id){
+                    that.project = new Project({id:option.id})
+                    that.project.fetch({
+                        success : function(e) {
+                        var data = e.attributes.task_set
+                        var template = _.template($('#task-list-template').html())
+                        $('.cont').html(template({'project':data}))
+                            
+                        }
+                    })    
+                }
+            },
+            home:function(){
+                var task = new Tasks();
+                task.fetch({
+                    success : function (e) {
+                        var data = e.models
+                        var template = _.template($('#task-all-list-template').html())
+                        $('.cont').html(template({'task':data}))
+                    }
+                })
+
+            },
+            task:function(option){
+                var that = this;
+                if(option.id){
+                    var task = new Task({id:option.id})
+                    task.fetch({
+                        success : function(e){
+                            var data = e.attributes    
+                            console.log(data)
+                            var template = _.template($('#task-show').html())
+                            $('.cont').html(template({'task':data}))
+                            
+                        }
+                    })
+                }
+            }
+
+        })
+
+
+/*
+                var that = this;
+                var project = new Projects();
+                project.fetch({
+                    success:function(e){
+                        var data = e.models[0].attributes.task_set
+                        console.log(data)
+                        var template = _.template($('#task-list-template').html())
+                        $('.cont').html(template({'project':data}))
+                        //that.$el.html('heres')
+                    }
+                })*/
+                //this.$el.html('content here')
+
+        var pview = new ProjectView()
+        var Router = Backbone.Router.extend({
+            routes:{
+                '':'home',
+                'project/:id':'project',
+                'task/:id':'task'
+            }
+        });
+        var router = new Router()
+        router.on('route:home',function(){
+            console.log('here')
+            pview.home()
+            //pview.render()
+        });
+
+        router.on('route:project',function(id){
+            console.log(id)
+            pview.render({id:id});
+        });
+
+        router.on('route:task',function(id){
+            pview.task({id:id})
+        });
+
+        Backbone.history.start();
+
+    
+    </script>
+
 {% endblock %}

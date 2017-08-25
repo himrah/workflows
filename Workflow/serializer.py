@@ -18,17 +18,24 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id','username','first_name','last_name','email','inbox_set','user_permissions')
 
 
+
 class Taskserializer(serializers.HyperlinkedModelSerializer):
-    assign=forms.ModelChoiceField(queryset=UserName.objects.all())
+    assign_name = serializers.CharField(source='assign.get_full_name',read_only=True)
+    #assign=forms.ModelChoiceField(queryset=UserName.objects.all())
     class Meta:
         model = Task
-        fields = ('id','name','created_date','created_by','status','comments','modify_by','priority','tat','assign')
+        fields = ('id','name','created_date','created_by','status','task_description','comments','modify_by','priority','tat','assign_name')
+
 
 
 class ProjectSeralizer(serializers.HyperlinkedModelSerializer):
+    task_set = Taskserializer(many=True)
     class Meta:
         model = Project
         fields=('id','name','task_set','description')
+
+
+
 
 
 class DepartmentSerializer(serializers.HyperlinkedModelSerializer):

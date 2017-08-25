@@ -114,14 +114,14 @@ def Home(request):
     user = request.user
     #t=Task.objects.filter(assign_id=user.id)
     t=Task.objects.all()
-    return render_to_response('home.html',{'project':p,'task':t,'pid':'home','user':user})
+    return render_to_response('rest_home.html',{'project':p,'task':t,'pid':'home','user':user})
 
 def TaskDetail(request,pk):
     p = Project.objects.all()
     #pi = Project.objects.get(id=pid)
     t=Task.objects.get(id=pk)
     user = request.user
-    return render_to_response('home.html',{'task':t,'project':p,'work':'edit','user':user})
+    return render_to_response('rest_home.html',{'task':t,'project':p,'work':'edit','user':user})
 
 
 
@@ -320,7 +320,7 @@ def ProjectTask(request,pk):
     pi = Project.objects.get(id=pk)
     #t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
     t=Task.objects.filter(project_id=pk)
-    return render_to_response('home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
+    return render_to_response('rest_home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
 
 
 
@@ -363,6 +363,17 @@ def sending(request):
             f.save()
             s.save()
             return HttpResponseRedirect('/email/')
+
+
+def CreateProject(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POSt)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = ProjectForm()
+        return render(request,'home.html',{'form':form,'user':request.user})        
 
 
 def Edit(request,pk):
