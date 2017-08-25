@@ -8,10 +8,9 @@ from django.core.context_processors import csrf
 from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from django.contrib.auth.models import Group,User,Permission
+from django.contrib.auth.models import Group,User,Permission,ContentType
 from django.contrib.auth.views import logout
 from django.http import HttpResponse
-
 import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -41,6 +40,11 @@ class TaskSet(viewsets.ModelViewSet):
 class ProjectSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSeralizer
+
+
+class ContentTypeSet(viewsets.ModelViewSet):
+    queryset = ContentType.objects.all()
+    serializer_class = ContentTypeSerialzier
 
 
 class UserSet(viewsets.ModelViewSet):
@@ -256,18 +260,7 @@ def Reports(request):
  #   line_chart_json = LineChartJSONView.as_view()
 #    return HttpResponse(line_chart_json)
 
-def Edit(request,pk):
-    #form=TaskEditForm()
-    task=get_object_or_404(Task,id=pk)
-    form=TaskEditForm(request.POST or None,instance=task)
-    user=request.user
-    if request.POST and form.is_valid():
-        name=request.user.first_name+" "+request.user.last_name
-        task.modify_by=name
-        task.save()
-        form.save()
-        return HttpResponseRedirect('/')
-    return render(request,'home.html',{'form':form,'work':'taskedit','user':request.user})
+
 
 
 def login(request):
@@ -345,18 +338,58 @@ from .form import InboxForm
 from django.template import RequestContext
 def Compose(request):
     form = InboxForm()
-    return render(request,'email.html',{'compose':True,'form':form,'user':request.user})
+    sform = SentForm()
+    return render(request,'email.html',{'compose':True,'form':form,'user':request.user,'sform':sform})
 
 from django.http.response import HttpResponse,HttpResponseRedirect
 
 
+def SentView(request):
+    d=Sent_item.objects.all()
+    #return HttpResponse(d)
+    return render_to_response('email.html',{'email':d,'inbox':True,'user':request.user})
+    #return HttpResponse(serializers.serialize('json',d))
 
 
 def sending(request):
     if request.method=='POST':
         form=InboxForm(request.POST)
+        sent_form = SentForm(request.POST)
         if form.is_valid():
             f=form.save(commit=False)
-            f.sender_id="Admin"
+            s=sent_form.save(commit=False)
+            f.sender_id = str(request.user.first_name)+'<'+str(request.user.email)+'>'
+            s.sender_id = str(request.user.first_name)+'<'+str(request.user.email)+'>'
             f.save()
+            s.save()
             return HttpResponseRedirect('/email/')
+
+
+def Edit(request,pk):
+    #form=TaskEditForm()
+    if request.method =='POST':
+        task=get_object_or_404(Task,id=pk)
+        form = TaskEditForm(request.POST or None,instance=task)
+        if form.is_valid():
+            name=request.user.first_name+" "+request.user.last_name
+            task.modify_by=name
+            task.save()
+            form.save()
+            return HttpResponseRedirect('/')
+        else:
+            return render(request,'home.html',{'form':form,'work':'taskedit','user':request.user})
+    else:
+        task=get_object_or_404(Task,id=pk)
+        form = TaskEditForm(instance=task)   
+        return render(request,'home.html',{'form':form,'work':'taskedit','user':request.user}) 
+                
+"""    task=get_object_or_404(Task,id=pk)
+    form=TaskEditForm(request.POST or None,instance=task)
+    user=request.user
+    if request.POST and form.is_valid():
+        name=request.user.first_name+" "+request.user.last_name
+        task.modify_by=name
+        task.save()
+        form.save()
+        return HttpResponseRedirect('/')
+    return render(request,'home.html',{'form':form,'work':'taskedit','user':request.user})        """

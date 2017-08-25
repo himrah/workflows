@@ -26,6 +26,7 @@ class LoginForm(AuthenticationForm):
 
 
 
+
 class UserMail(User):
     class Meta:
         proxy = True
@@ -75,4 +76,11 @@ class InboxForm(forms.ModelForm):
             'content' : Textarea(attrs={'class':'texarea'}),
             'subject' : TextInput(attrs={'class':'subject'})
         }
+
+class SentForm(forms.ModelForm):
+    #content = Sent_item
+    receiver_id=forms.ModelChoiceField(queryset=UserMail.objects.all())
+    class Meta:
+        model = Sent_item
+        fields = ['subject','content','receiver_id']
 

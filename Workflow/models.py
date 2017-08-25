@@ -80,11 +80,11 @@ class Task(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=50)
     created_date=models.DateTimeField(default=datetime.now,blank=True)
-    created_by=models.CharField(max_length=20)
+    created_by=models.CharField(max_length=20,blank=True)
     status=models.CharField(max_length=10,choices=choices,default=nothing)
     task_description=models.TextField()
     comments=models.TextField(blank=True)
-    modify_by=models.CharField(max_length=20)
+    modify_by=models.CharField(max_length=20,blank=True)
     priority=models.CharField(max_length=10,choices=p_choice,default=nothing)
     tat=models.IntegerField()
     assign=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
@@ -123,7 +123,7 @@ class Sent_item(models.Model):
     sender_id = models.CharField(max_length=20)
     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     subject = models.TextField(blank=True)
-    content = models.TextField(blank=True)
+    content = RichTextField()
     date = models.DateTimeField(default=datetime.now,blank=True)
     def __str__(self):
         return self.subject

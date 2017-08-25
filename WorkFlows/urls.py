@@ -31,6 +31,7 @@ router.register('user',UserSet)
 router.register('department',DepartmentSet)
 router.register('email',InboxSet)
 router.register('group',GroupSet)
+router.register('contenttype',ContentTypeSet)
 router.register('permission',PermissionSet)
 #router.register('task',Taskset,)
 #router.register('user',Userset,'user-detail')
@@ -59,8 +60,8 @@ urlpatterns = [
     url(r'^api/project_data/(?P<what>.*)/$',prj_data,name='prj-data'),
     url(r'^api/single_project/(?P<project>.*)/$',Single,name='single-project'),
     url(r'^api/employee/$',emp_data,name='emp-data'),
-    #url(r'^api/pro')
     url(r'^sending/',sending,name='sending'),
+    url(r'^sent/',SentView,name='sent-view'),
     url(r'^isread/(?P<pk>\d+)$',Isread,name='isread'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^accounts/login/$',login,name='login'),
