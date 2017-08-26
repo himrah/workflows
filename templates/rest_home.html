@@ -257,7 +257,6 @@
 <script type='text/template' id='task-edit'>
     <form class='task-edit-form' id='<%=task.id%>'>
             {% csrf_token %}
-        {{ taskform.as_ul }}
         <table class='table borderless'>
             <tr>
                 <td>Name</td>
@@ -479,20 +478,6 @@
         })
 
 
-/*
-                var that = this;
-                var project = new Projects();
-                project.fetch({
-                    success:function(e){
-                        var data = e.models[0].attributes.task_set
-                        console.log(data)
-                        var template = _.template($('#task-list-template').html())
-                        $('.cont').html(template({'project':data}))
-                        //that.$el.html('heres')
-                    }
-                })*/
-                //this.$el.html('content here')
-
         var pview = new ProjectView()
         var Router = Backbone.Router.extend({
             routes:{
@@ -530,11 +515,9 @@
 /*        router.on('taskupdate',function(id){
             pview.taskupdate({id:id})
         })*/
-
         router.on('route:task',function(id){
             pview.task({id:id})
         });
-
         Backbone.history.start();
 
     
