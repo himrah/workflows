@@ -19,7 +19,7 @@
                 {% endif %} 
             {% endfor %} 
             {% if 'Workflow.add_project' in user.get_all_permissions %}
-                <a class="list-group-item" href="create">Create New</a> 
+                <a class="list-group-item" href="#createproject">Create New</a> 
             {% endif %}
             
 
@@ -65,6 +65,12 @@
 
 {% endif %}-->
 <style>
+
+    .borderless tr td{
+        border:none ;  
+        padding: 3px;              
+    }
+
     th {
         font-size: 1.2em;
     }
@@ -175,6 +181,30 @@
     </table>                
 </script>
 
+<script type="text/template" id='project-form'>    
+    <form id='prj-form'>
+        {% csrf_token %}
+        <table class='table'>
+            <tr>
+                <td>Name : </td>
+                <td><input type='text' name='name' class='form-control'></td>
+            </tr>
+            <tr>
+                <td>Description : </td>
+                <td><textarea class='form-control' name='description' cols="30" rows="10"></textarea></td>
+            </tr> 
+            <tr>
+                <td>Head : </td>
+                <td><input type='text' head='head' class='form-control'></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type='submit' class='btn btn-block btn-primary' value='Create'/>
+            </tr>
+        </table>
+    </form>
+</script>
+
 <script type='text/template' id='task-show'>
     <table class="table">
             <thead>
@@ -219,14 +249,72 @@
                 <td><%=task.tat%></td>
             </tr>
             <tr>
-                <td colspan=2><a href='#task/<%=task.id%>/edit/'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
+                <td colspan=2><a href='#task/edit/<%=task.id%>'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
                 
         </table>
+</script>
+
+<script type='text/template' id='task-edit'>
+    <form class='task-edit-form' id='<%=task.id%>'>
+            {% csrf_token %}
+        {{ taskform.as_ul }}
+        <table class='table borderless'>
+            <tr>
+                <td>Name</td>
+                <td><input type='text'  class='form-control' name='name' value='<%=task.name%>'/></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td><input type='text'  class='form-control' name='status'  value='<%=task.status%>'/></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><input type='text'  class='form-control' name='task_description'  value='<%=task.task_description%>'/></td>
+            </tr>
+        
+            <tr>
+                <td>Comment</td>
+                <td><input type='text'  class='form-control' name='comments'  value='<%=task.comments%>'/></td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td><input type='text'  class='form-control' name='priority'  value='<%=task.priority%>'/></td>
+            </tr>
+            <tr>
+                <td>TAT</td>
+                <td><input type='text'  class='form-control' name='tat'  value='<%=task.tat%>'/></td>
+            </tr>
+            <tr>
+                <td>Assign</td>
+                <td><input type='text'  class='form-control' name='assign_name'  value='<%=task.assign_name%>'/></td>
+            </tr>
+            <tr>
+                <td colspan=2><input type=submit class='btn btn-primary btn-block' value='Update'/></a></td>
+        </table>
+    </form>
+
 </script>
 
 
 
 <script>
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name] !== undefined) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+        };
+
+
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     
           options.url = 'http://localhost:8000/api' + options.url;
@@ -251,6 +339,83 @@
 
         var ProjectView = Backbone.View.extend({
             el:'.cont',
+            events:{
+                'submit .task-edit-form':'updateTask',
+                'submit #prj-form':'newproject'
+            },
+            updateTask:function(ev){
+//                var taskDetail = $(ev.currentTarget).serializeObject();
+                ev.preventDefault()
+                id = $('.task-edit-form').attr('id')
+                var api = '/task/'+$('.task-edit-form').attr('id')+'/'
+                var task = new Task({id:id})
+                this.form = $(ev.currentTarget);
+                dt={}
+                csrftoken =  $('input[name=csrfmiddlewaretoken]').val()
+
+                $('input',this.form).each(function(){
+                    var val=$(this).val()
+                    var key=$(this).attr('name')
+                    dt[key]=val
+                    })
+                $.ajax({
+                    type:'PUT',
+                    url:api,
+                    data : JSON.stringify(dt),
+                    beforeSend:function(xhr,settings){
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                    },
+                    crossDomain:false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(d)
+                     { 
+                        var t='task/'+id
+                        router.navigate(t, {trigger:true});
+                         //console.log("Success!"); 
+                    
+                     },
+
+                })
+                //console.log(url)
+            },
+            newproject:function(e){
+                console.log('click')
+                var api = '/project/'
+                var project = new Project()
+                var form = $(e.currentTarget)
+                console.log(form)
+                e.preventDefault()
+                csrftoken =  $('input[name=csrfmiddlewaretoken]').val()
+                console.log($('input[name=name]').val())
+                var dt={
+                        'name':$('input[name=name]').val(),
+                        'description':$('textarea[name=description]').val(),
+                        'head':$('input[name=head]').val()
+                    }
+                $.ajax({
+                    type:'POST',
+                    url:api,
+                    /*data:{
+                        name:$('input[name=name]').val(),
+                        task_description:$('textarea[name=description]').val(),
+                        head:$('input[name=head]').val()
+                    },*/
+                    data:JSON.stringify(dt),
+                    beforeSend:function(xhr,settings){
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                    },
+                    crossDomain:false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(d)
+                     { 
+                        //var t='task/'+id
+                        router.navigate('', {trigger:true});
+                         //console.log("Success!"); 
+                    
+                     },                    
+                })
+                
+            },
             render:function(option){
                 var that = this;
                 if(option.id){
@@ -264,6 +429,10 @@
                         }
                     })    
                 }
+            },
+            CreateProject:function(e){
+                var template = _.template($('#project-form').html())
+                $('.cont').html(template())
             },
             home:function(){
                 var task = new Tasks();
@@ -283,11 +452,26 @@
                     task.fetch({
                         success : function(e){
                             var data = e.attributes    
-                            console.log(data)
+                            //console.log(data)
                             var template = _.template($('#task-show').html())
                             $('.cont').html(template({'task':data}))
                             
                         }
+                    })
+                }
+            },
+            taskedit:function(option){
+                var that = this;
+                if(option.id){
+                    var task = new Task({id:option.id})
+                    task.fetch({
+                        success : function(e){
+                            var data = e.attributes    
+                            //console.log(data)
+                            var template = _.template($('#task-edit').html())
+                            $('.cont').html(template({'task':data}))
+                            
+                        }                        
                     })
                 }
             }
@@ -314,20 +498,38 @@
             routes:{
                 '':'home',
                 'project/:id':'project',
-                'task/:id':'task'
+                'task/:id':'task',
+                'task/edit/:id':'taskedit',
+                'task/update/:id':'taskupdate',
+                'createproject':'createproject',
             }
         });
         var router = new Router()
-        router.on('route:home',function(){
+
+        router.on('route:createproject',function(){
             console.log('here')
+            pview.CreateProject()
+            
+        });
+        router.on('route:home',function(){
+            //console.log('here')
             pview.home()
             //pview.render()
         });
 
         router.on('route:project',function(id){
-            console.log(id)
+            //console.log(id)
             pview.render({id:id});
         });
+
+        router.on('route:taskedit',function(id){
+            //console.log(id)
+            pview.taskedit({id:id})
+        })
+
+/*        router.on('taskupdate',function(id){
+            pview.taskupdate({id:id})
+        })*/
 
         router.on('route:task',function(id){
             pview.task({id:id})

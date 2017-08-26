@@ -48,6 +48,15 @@ class UserName(User):
     def __str__(self):
         return self.first_name+' '+self.last_name
 
+import json
+def Alluser(User):
+    dic={}
+    user=User.objects.all()
+    for i in user:
+        dic.update({i.get_full_name():str(i.id)})
+        #dict.update({'name':i.get_full_name})
+    return json.loads(json.dumps(dic))
+
 
 class ProjectForm(forms.ModelForm):
     class Meta:

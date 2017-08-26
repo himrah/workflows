@@ -25,6 +25,15 @@ class TaskSet(viewsets.ModelViewSet):
  #   queryset = Task.objects.all()
     queryset = Task.objects.all()
     serializer_class = Taskserializer
+
+    def post(self, request, pk):
+        serializer = Taskserializer(data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 """    def get_serializer_class(request):
         query = Task.objects.all()
         serializer = Taskserializer(query, many=True)
@@ -40,7 +49,12 @@ class TaskSet(viewsets.ModelViewSet):
 class ProjectSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSeralizer
-
+    def post(self, request,format=None):
+        serializer = Taskserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ContentTypeSet(viewsets.ModelViewSet):
     queryset = ContentType.objects.all()
@@ -114,7 +128,9 @@ def Home(request):
     user = request.user
     #t=Task.objects.filter(assign_id=user.id)
     t=Task.objects.all()
-    return render_to_response('rest_home.html',{'project':p,'task':t,'pid':'home','user':user})
+    
+    form = TaskEditForm()
+    return render(request,'rest_home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
 def TaskDetail(request,pk):
     p = Project.objects.all()

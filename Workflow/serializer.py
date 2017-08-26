@@ -3,7 +3,7 @@ from Workflow.models import *
 from django.contrib.auth.models import User, Group, Permission,ContentType
 from rest_framework.reverse import  reverse
 from django.contrib.auth.models import User
-from .form import UserName,UserFullName
+from .form import UserName,UserFullName,Alluser
 
 
 
@@ -18,10 +18,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id','username','first_name','last_name','email','inbox_set','user_permissions')
 
 
-
+import json
 class Taskserializer(serializers.HyperlinkedModelSerializer):
     assign_name = serializers.CharField(source='assign.get_full_name',read_only=True)
+    #assign = serializers.ChoiceField(choices=UserName.objects.all())
     #assign=forms.ModelChoiceField(queryset=UserName.objects.all())
+    #assign = serializers.ChoiceField(choices=({'sdf':'sdf'}))
     class Meta:
         model = Task
         fields = ('id','name','created_date','created_by','status','task_description','comments','modify_by','priority','tat','assign_name')
@@ -29,7 +31,8 @@ class Taskserializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProjectSeralizer(serializers.HyperlinkedModelSerializer):
-    task_set = Taskserializer(many=True)
+#    task_set = Taskserializer(many=True)
+    task_set = Taskserializer(required=False,many=True)
     class Meta:
         model = Project
         fields=('id','name','task_set','description')
