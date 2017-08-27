@@ -1,57 +1,38 @@
-{% extends 'base.html' %}
-
-
-{% block title %}
-Reports
-{% endblock %}
-
-{% block sidebar %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js">
-</script>
+{% extends 'base.html' %} {% block title %} Reports {% endblock %} {% block sidebar %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <div class="affix-top hidden-print bs-docs-slidebar">
     <h3>Reports</h3>
 
     <div class="list-group">
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
-        <div id="demo"><!--  class="collapse in">-->
-        {% if project %}
+        <div id="demo">
+            <!--  class="collapse in">-->
+            {% if project %}
 
-        <a class="list-group-item active tree-toggler nav-header">Projects</a>
-        <ul style="display: none;" class="nav nav-list tree">
-            <li><a href="#" style="cursor:pointer">Status</a></li>
-            <li><a href="#" style="cursor:pointer">Priority</a></li>
-        </ul>
-        
-        {% else %}
-        <!--
+            <a class="list-group-item active tree-toggler nav-header">Projects</a>
+            <ul style="display: none;" class="nav nav-list tree">
+                <li><a href="#" style="cursor:pointer">Status</a></li>
+                <li><a href="#" style="cursor:pointer">Priority</a></li>
+            </ul>
+
+            {% else %}
+            <!--
         <label class="list-group-item tree-toggler " onclick="ajaxcl('Project')" style="cursor:pointer">Projects</label>
 
         <ul style="display: none; margin-left: 50px;" class="tree nav nav-list">
             <li href="#" onclick="ajaxcl('Priority')" style="cursor:pointer" class="list-group-item">Priority</li>
             <li href="#" onclick="ajaxcl('Status')" style="cursor:pointer" class="list-group-item">Status</li>
         </ul>-->
-                <a class="list-group-item" onclick="ajaxcl('Project')">Projects</a>
-        {% endif %}
-
-        {% if emp %}
-        <a class="list-group-item active"  href="/employee">Employee</a>
-        {% else %}
-        <a class="list-group-item" onclick="ajaxcl('Employees')">Employee</a>
-        {% endif %}
-
-        {% if department %}
-        <a class="list-group-item action"  href="/department">Department</a>
-        {% else %}
-        <a class="list-group-item" onclick="ajaxcl('Department')">Department</a>
-        {% endif %}
+            <a class="list-group-item" onclick="ajaxcl('Project')">Projects</a> {% endif %} {% if emp %}
+            <a class="list-group-item active" href="/employee">Employee</a> {% else %}
+            <a class="list-group-item" onclick="ajaxcl('Employees')">Employee</a> {% endif %} {% if department %}
+            <a class="list-group-item action" href="/department">Department</a> {% else %}
+            <a class="list-group-item" onclick="ajaxcl('Department')">Department</a> {% endif %}
         </div>
     </div>
 </div>
 
-{% endblock %}
-
-{% block content %}
-{{project}}
+{% endblock %} {% block content %} {{project}}
 <div class="col-sm-12">
     <span class="coldata"></span>
 </div>
@@ -67,215 +48,220 @@ Reports
 </div>
 
 <div class="col-sm-6">
-        <div class="ch3">
-            <canvas id="myChart3"></canvas>
-        </div>
+    <div class="ch3">
+        <canvas id="myChart3"></canvas>
     </div>
+</div>
 
 
 
-{% endblock %}
-
-{% block script %}
+{% endblock %} {% block script %}
 <script type="text/javascript">
+    function ajaxcl(par) {
+        //console.log(par)
+        if (par == 'Employees') {
+            point = '/api/employee/',
+                $.ajax({
+                    method: 'GET',
+                    url: point,
+                    dataType: 'text',
+                    success: function(data) {
+                        sch(data, par)
+                            //console.log(data)
+                    }
+                })
+        } else if (par == 'Project') {
+            point = '/api/project_data/' + par + '/'
+            $.ajax({
+                method: 'GET',
+                url: point,
+                dataType: 'text',
+                success: function(data) {
+                    project = []
+                    count = []
+                    stat = []
+                    option = []
+                    var json = $.parseJSON(data)
+                    for (var i = 0; i < json.label.length; i++) {
+                        project.push(json.label[i].fields.name)
+                        count.push(json.count[i])
+                        stat.push(json.status[i])
+                        option.push(json.option[i])
+                    }
 
-function ajaxcl(par){
-    //console.log(par)
-    if(par=='Employees'){
-        point='/api/employee/',    
-        $.ajax({
-            method:'GET',
-            url:point,
-            dataType:'text',
-            success:function(data){
-                sch(data,par)
-                //console.log(data)
-            }
-        })
-    }
-    else if(par=='Project'){
-        point='/api/project_data/'+par+'/'
-        $.ajax({
-            method:'GET',
-            url:point,
-            dataType:'text',
-            success:function(data){
-                project =[]
-                count =[]
-                stat=[]
-                option=[]
-                var json = $.parseJSON(data)
-                //console.log(json.label)
-                
-                //project=data.labesl
-                //count = data
-                //console.log(json.count)
-                for (var i=0;i<json.label.length;i++)
-                {
-                    //console.log(json[i].label.fields.name)
-                    
-                    project.push(json.label[i].fields.name)
-                    //console.log('sdfs')
-                    //console.log(json.label[i].fields.name)
-                    count.push(json.count[i])
-                    stat.push(json.status[i])
-                    option.push(json.option[i])
+                    $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+                    $('canvas').remove()
+                    html = '<canvas id="myChart"></canvas>'
+                    html2 = '<canvas id="myChart2"></canvas>'
+                    $('.ch1').html(html)
+                    $('.ch2').html(html2)
+                    showchart(par);
                 }
-                //console.log(project)
-                //console.log(count)
-                //console.log(stat)
+            })
 
-                //console.log(count.fields)
-                $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
-                $('canvas').remove()
-                html='<canvas id="myChart"></canvas>'
-                html2='<canvas id="myChart2"></canvas>'
-                $('.ch1').html(html)
-                $('.ch2').html(html2)
-                //var ctx = document.getElementById("myChart").getContext('2d'); 
-                
-                showchart(par);
-            }
-        })
+        } else {
+            point = '/api/project_data/' + par + '/',
+                $.ajax({
+                    method: 'GET',
+                    url: point,
+                    dataType: 'text',
+                    success: function(data) {
+                        project = []
+                        count = []
+                        var json = $.parseJSON(data)
+                            //console.log(json.label[0])
+                        for (i = 0; i < json.label.length; i++) {
+                            project.push(json.label[i].fields.name)
+                            count.push(json.count[i])
 
-    }
-    else{
-        point='/api/project_data/'+par+'/',    
-        $.ajax({
-            method:'GET',
-            url:point,
-            dataType:'text',
-            success:function(data){
-                project=[]
-                count=[]
-                var json = $.parseJSON(data)
-                //console.log(json.label[0])
-                for(i=0;i<json.label.length;i++){
-                    project.push(json.label[i].fields.name)
-                    count.push(json.count[i])
+                        }
+                        console.log(project)
+                        console.log(count)
+                        $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+                        $('canvas').remove()
+                        html = '<canvas id="myChart"></canvas>'
+                        html2 = '<canvas id="myChart2"></canvas>'
+                        $('.ch1').html(html)
+                        $('.ch2').html(html2)
+                        showchart(par)
+                            //console.log(data)
+                    }
+                })
 
-                }
-                console.log(project)
-                console.log(count)
-                $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
-                $('canvas').remove()
-                html='<canvas id="myChart"></canvas>'
-                html2='<canvas id="myChart2"></canvas>'
-                $('.ch1').html(html)
-                $('.ch2').html(html2)
-                showchart(par)
-                //console.log(data)
-            }
-        })
-
-
-    }
-    
-}
-
-
-pont='/api/project_data'
-$.ajax({
-    method:'GET',
-    url:pont,
-    success:function(data){
-        console.log(data)
-        project=data.project
-        count = data.count
-        
-        showchart('Projects');
-
-    },
-    error:function(error_data){
-        console.log('errro')
-        console.log(error_data)
-    }
-});
-
-
-function sch(data,par){
-    //console.log(data)
-    project =[]
-    count =[]
-    var json = $.parseJSON(data)
-//    console.log(json.label)
-
-    //project=data.labesl
-    //count = data
-   // console.log(json.count)
-    for (var i=0;i<json.label.length;i++)
-    {
-    //console.log(json[i].label.fields.name)
-
-    nm=json.label[i].fields
-    project.push(nm.first_name)
-    //console.log('sdfs')
-    //console.log(json.label[i].fields.name)
-    count.push(json.count[i])
-    }
-    //console.log(project)
-    //console.log(count)
-
-    //console.log(count.fields)
-    $('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
-    $('canvas').remove()
-    html='<canvas id="myChart"></canvas>'
-    html2='<canvas id="myChart2"></canvas>'
-    $('.ch1').html(html)
-    $('.ch2').html(html2)
-    //var ctx = document.getElementById("myChart").getContext('2d'); 
-    showchart(par);
-}
-
-
-
-function dpt(department){
-    point='/api/project_data/'+department+'/'
-
-    $.ajax({
-        method : 'GET',
-        url :point,
-        success:function(data){
-            console.log(data)
-            console.log(data.count)
-            console.log(data.label)
 
         }
 
-    })
-}
+    }
+
+
+    pont = '/api/project_data/Project'
+    $.ajax({
+        method: 'GET',
+        url: pont,
+        success: function(data) {
+            /*            project = []
+                        count = []
+                        console.log(data)
+
+                        var json = $.parseJSON(data);
+
+                        for (var i = 0; i < json.label.length; i++) {
+                            project.push(json.label[i].fields.name)
+                            count.push(json.count[i])
+                            showchart('Projects');
+
+                        }*/
+
+            project = []
+            count = []
+            stat = []
+            option = []
+            var json = data
+                //var json = $.parseJSON(data)
+            for (var i = 0; i < json.label.length; i++) {
+                project.push(json.label[i].fields.name)
+                count.push(json.count[i])
+                stat.push(json.status[i])
+                option.push(json.option[i])
+            }
+
+            $('.coldata').html('<h3>' + 'project'.toUpperCase() + '<h4>')
+            $('canvas').remove()
+            html = '<canvas id="myChart"></canvas>'
+            html2 = '<canvas id="myChart2"></canvas>'
+            $('.ch1').html(html)
+            $('.ch2').html(html2)
+            showchart('Project');
+        },
+        error: function(error_data) {
+            console.log('errro')
+            console.log(error_data)
+        }
+    });
+
+
+    function sch(data, par) {
+        //console.log(data)
+        project = []
+        count = []
+        var json = $.parseJSON(data)
+            //    console.log(json.label)
+
+        //project=data.labesl
+        //count = data
+        // console.log(json.count)
+        for (var i = 0; i < json.label.length; i++) {
+            //console.log(json[i].label.fields.name)
+
+            nm = json.label[i].fields
+            project.push(nm.first_name)
+                //console.log('sdfs')
+                //console.log(json.label[i].fields.name)
+            count.push(json.count[i])
+        }
+        //console.log(project)
+        //console.log(count)
+
+        //console.log(count.fields)
+        $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+        $('canvas').remove()
+        html = '<canvas id="myChart"></canvas>'
+        html2 = '<canvas id="myChart2"></canvas>'
+        $('.ch1').html(html)
+        $('.ch2').html(html2)
+            //var ctx = document.getElementById("myChart").getContext('2d'); 
+        showchart(par);
+    }
+
+
+
+    function dpt(department) {
+        point = '/api/project_data/' + department + '/'
+
+        $.ajax({
+            method: 'GET',
+            url: point,
+            success: function(data) {
+                console.log(data)
+                console.log(data.count)
+                console.log(data.label)
+
+            }
+
+        })
+    }
 
 
 
 
 
-function showcharts(par){
+    function showcharts(par) {
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
-            data:{
-                labels : project,
-                datasets:loop(),
+            data: {
+                labels: project,
+                datasets: loop(),
             },
-            
+
             options: {
                 scales: {
                     yAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:'Task'
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Task'
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }],
                     xAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:par
+                        scaleLabel: {
+                            display: true,
+                            labelString: par
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -283,124 +269,121 @@ function showcharts(par){
         });
 
 
-}
+    }
 
 
-function loop(){
-    var d=[]
-    var min=1
-    var max=255
+    function loop() {
+        var d = []
+        var min = 1
+        var max = 255
 
-    co=['rgba(255, 99, 132,',
-    'rgba(54, 162, 235,',
-    'rgba(255, 206, 86,',
-    'rgba(120, 190, 80,'
-    ]
+        co = ['rgba(255, 99, 132,',
+            'rgba(54, 162, 235,',
+            'rgba(255, 206, 86,',
+            'rgba(120, 190, 80,'
+        ]
 
 
-    for (i=0;i<option.length;i++){
-        nu='rgba('+randomNumberFromRange(1,255)+','+randomNumberFromRange(1,255)+','+randomNumberFromRange(1,255)+','
-        
-        //bnu='rgba('+randomNumberFromRange(1,255)+', 99, 132,'
-        d.push(
-        {
-        label: option[i],
-        //backgroundColor:stat[i],
-         //highlightFill: "rgba(220,220,220,0.75)",
+        for (i = 0; i < option.length; i++) {
+            nu = 'rgba(' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ','
 
-        backgroundColor:co[i]+0.2+')',
-        borderColor:co[i]+1+')',
-        //backgroundColor:nu+0.5+')',
-        //borderColor:nu+1+')',
-        //fillColor:'rgba('+getRandomColor()+','+getRandomColor()+','+getRandomColor()+','+0.2+')',
-        borderWidth:1,
-        data:stat[i]
-    
+            //bnu='rgba('+randomNumberFromRange(1,255)+', 99, 132,'
+            d.push({
+                label: option[i],
+                //backgroundColor:stat[i],
+                //highlightFill: "rgba(220,220,220,0.75)",
+
+                backgroundColor: co[i] + 0.2 + ')',
+                borderColor: co[i] + 1 + ')',
+                //backgroundColor:nu+0.5+')',
+                //borderColor:nu+1+')',
+                //fillColor:'rgba('+getRandomColor()+','+getRandomColor()+','+getRandomColor()+','+0.2+')',
+                borderWidth: 1,
+                data: stat[i]
+
+            })
         }
-        )
+        return d
     }
-    return d
-}
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
-    return color;
-}
 
 
-function randomNumberFromRange(min,max)
-{
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
+    function randomNumberFromRange(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
 
 
 
-function graphClickEvent(evt,array){
-    var activePoints = myChart.getElementAtEvent(evt);
-    var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
+    function graphClickEvent(evt, array) {
+        var activePoints = myChart.getElementAtEvent(evt);
+        var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
 
-    console.log(activePoints)
-//    var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data;
-    var name = activePoints[0]._model.label
-    //console.log(name)
-    //console.log(theElement)
+        console.log(activePoints)
+            //    var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data;
+        var name = activePoints[0]._model.label
+            //console.log(name)
+            //console.log(theElement)
         GetJsonByName(name)
-}
-/*
-$('#myChart').click(function(evt){
-    var activePoints = myChart.getElementAtEvent(evt)
-    //var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
-    var name = activePoints[0]._model.label
-    GetJsonByName(name)
-    //console.log(activePoints[0]._model.label)
-})
-*/
-
-
-function GetJsonByName(par){
-    //console.log(par)
-    $.ajax({
-        method : 'GET',
-        url : '/api/single_project/'+par,
-        success : function(data){
-            //console.log(data)
-            //console.log(data.Complete)
-            //var json = $.parseJSON(data)
-            //var json = $.parseJSON(data)
-            var project=data.option
-            var count =[]
-            for(var i=0;i<project.length;i++){
-                count.push(data.label[project[i]].length)
-                //console.log(data.label[op[i]].length)
-
-
-        //$('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
-        $('#myChart3').remove()
-        html='<canvas id="myChart3"></canvas>'
-        //html2='<canvas id="myChart2"></canvas>'
-        $('.ch3').html(html)
-        //$('.ch2').html(html2)    
-            singlechart(par,project,count)    
-            }
-        }
+    }
+    /*
+    $('#myChart').click(function(evt){
+        var activePoints = myChart.getElementAtEvent(evt)
+        //var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index]
+        var name = activePoints[0]._model.label
+        GetJsonByName(name)
+        //console.log(activePoints[0]._model.label)
     })
+    */
 
-}
+
+    function GetJsonByName(par) {
+        //console.log(par)
+        $.ajax({
+            method: 'GET',
+            url: '/api/single_project/' + par,
+            success: function(data) {
+                //console.log(data)
+                //console.log(data.Complete)
+                //var json = $.parseJSON(data)
+                //var json = $.parseJSON(data)
+                var project = data.option
+                var count = []
+                for (var i = 0; i < project.length; i++) {
+                    count.push(data.label[project[i]].length)
+                        //console.log(data.label[op[i]].length)
 
 
-function singlechart(par,project,count){
-       var ctxx = document.getElementById("myChart3").getContext('2d');
+                    //$('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
+                    $('#myChart3').remove()
+                    html = '<canvas id="myChart3"></canvas>'
+                        //html2='<canvas id="myChart2"></canvas>'
+                    $('.ch3').html(html)
+                        //$('.ch2').html(html2)    
+                    singlechart(par, project, count)
+                }
+            }
+        })
+
+    }
+
+
+    function singlechart(par, project, count) {
+        var ctxx = document.getElementById("myChart3").getContext('2d');
         myChartss = new Chart(ctxx, {
             type: 'bar',
-            data: {                
+            data: {
                 labels: project,
                 datasets: [{
-//                    xAxisID:'emp',
-  //                  yAxisID:'task',
+                    //                    xAxisID:'emp',
+                    //                  yAxisID:'task',
                     label: 'sdf',
                     data: count,
                     backgroundColor: [
@@ -419,51 +402,52 @@ function singlechart(par,project,count){
                         'rgba(255, 206, 86, 1)',
                         'rgba(120, 190, 80, 1)',
                         'rgba(200, 216, 186, 1)',
-                        'rgba(100, 129, 100, 1)',  
-                        'rgba(200, 109, 180, 1)',                      
+                        'rgba(100, 129, 100, 1)',
+                        'rgba(200, 109, 180, 1)',
                     ],
                     borderWidth: 1
                 }]
             },
-            
+
             options: {
                 //onClick : graphClickEvent,
                 scales: {
                     yAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:'Task'
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Task'
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }],
                     xAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:par
+                        scaleLabel: {
+                            display: true,
+                            labelString: par
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
             }
         });
-}
+    }
 
 
 
-var myChart
-function showchart(par){
+    var myChart
+
+    function showchart(par) {
         var ctx = document.getElementById("myChart").getContext('2d');
         myChart = new Chart(ctx, {
             type: 'bar',
-            data: {                
+            data: {
                 labels: project,
                 datasets: [{
-//                    xAxisID:'emp',
-  //                  yAxisID:'task',
+                    //                    xAxisID:'emp',
+                    //                  yAxisID:'task',
                     label: 'sdf',
                     data: count,
                     backgroundColor: [
@@ -482,31 +466,31 @@ function showchart(par){
                         'rgba(255, 206, 86, 1)',
                         'rgba(120, 190, 80, 1)',
                         'rgba(200, 216, 186, 1)',
-                        'rgba(100, 129, 100, 1)',  
-                        'rgba(200, 109, 180, 1)',                      
+                        'rgba(100, 129, 100, 1)',
+                        'rgba(200, 109, 180, 1)',
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
-                onClick : graphClickEvent,
+                onClick: graphClickEvent,
                 scales: {
                     yAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:'Task'
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Task'
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }],
                     xAxes: [{
-                        scaleLabel:{
-                            display:true,
-                            labelString:par
+                        scaleLabel: {
+                            display: true,
+                            labelString: par
                         },
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -538,33 +522,33 @@ function showchart(par){
                         'rgba(255, 206, 86, 1)',
                         'rgba(120, 190, 80, 1)',
                         'rgba(200, 216, 186, 1)',
-                        'rgba(100, 129, 100, 1)',  
-                        'rgba(200, 109, 180, 1)',                      
+                        'rgba(100, 129, 100, 1)',
+                        'rgba(200, 109, 180, 1)',
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
-                onClick : graphClickEvent,
+                //onClick: graphClickEvent,
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero:true
+                            beginAtZero: true
                         }
                     }]
                 }
             }
-        });        
+        });
 
 
-}
- 	$(document).ready(function () {
-    $('label.tree-toggler').click(function () {
-        $(this).parent().children('ul.tree').toggle(300);
+    }
+    $(document).ready(function() {
+        $('label.tree-toggler').click(function() {
+            $(this).parent().children('ul.tree').toggle(300);
+        });
     });
-});
-//$(document).click('#myChart',function(e){
-  //  console.log(e)
+    //$(document).click('#myChart',function(e){
+    //  console.log(e)
     //var activepoint = myChart.getElementAtEvent(e)
     //var theElement = myChart.config.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index];
     //console.log(activepoint)
@@ -573,40 +557,39 @@ function showchart(par){
     //document.getElementById("lbltheClickedOne").innerText = myChart.config.data.datakeys[activePoints[0]._index];
     //console.log(theChart.config.type);
 
-//});
+    //});
 
-/*var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['abc'],
-        datasets: [{
-            label: ['red'],
-            data: ['sdf','sdf','sd'],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
+    /*var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['abc'],
+            datasets: [{
+                label: ['red'],
+                data: ['sdf','sdf','sd'],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
         }
-    }
-});*/
-
+    });*/
 </script>
 
 

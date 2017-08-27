@@ -1,12 +1,10 @@
+{% extends 'base.html' %}
 {% block title %}Profile{% endblock %}
 
-{% block content %}
 
-    <link rel="stylesheet" href='/track/static/style/bootstrap.min.css'>
-
-    <div class="container">
-
-        <div class="col-md-4">
+            {% block content %}
+            
+        <div class="col-md-6">
             <div>
             <h3>Welcome {{  user.first_name }} to you profile</h3>
             </div>
@@ -31,6 +29,6 @@
             </div>
                 </div>
         </div>
-    </div>
+    
 
 {% endblock %}

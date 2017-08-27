@@ -1,11 +1,12 @@
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-<meta name="theme-color" content="orange" />
-{% include 'nav.html' %}
-<div class="container">
-	<div class="col-sm-12">
-		<h3 align="center">Welcome to Login</h3>
-		<div class="container">
-			<div class="auth-form-body mt-3">	
+{% extends 'registration/l_base.html' %} 
+
+{% block content %}
+		<div class="col-sm-12">
+			<h2 align=center>Welcome to WorkFlows</h4>
+		</div>	
+
+		<div class="col-sm-5 col-sm-offset-3">
+			<div class="auth-form-body mt-3" id='login'>	
 				<form action='/auth/' method="post">
 				{% csrf_token %}
 					<div>
@@ -18,10 +19,33 @@
 						{{ form.password }}
 
 					</div>
-				<input type="submit" class="btn" name="submit" value="submit">
+					<div id='btn'>
+						<input type="submit" class="btn btn-block btn-primary" name="submit" value="submit">
+					</div>
+
 				</form>
 			</div>
 		</div>
-			
-</div>
-</div>
+		<style>
+		#btn{
+			margin-top: 10px;
+		}	
+		#login{
+			margin-left: 4cm;
+		}
+		.form-control{
+        border-radius: 1px 1px 1px 1px;
+        -moz-border-radius: 1px 1px 15px 15px;
+        -webkit-border: 15px 15px 15px 15px;
+        /*-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;*/
+    }
+	.btn{
+        border-radius: 1px 1px 1px 1px;
+        -moz-border-radius: 1px 1px 15px 15px;
+        -webkit-border: 15px 15px 15px 15px;
+
+
+
+		</style>
+{% endblock %}

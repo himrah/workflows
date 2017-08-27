@@ -10,8 +10,7 @@
              {% else %}
                 <a class="list-group-item" href="/">All</a>
             {% endif %} 
-            {% for i in project %} 
-            
+            {% for i in project %}            
             {% if i.id == pid.id or i.id == task.project_id_id %}
                 <a class="list-group-item active" href="#project/{{ i.id }}">{{ i.name }}</a>
              {% else %}
