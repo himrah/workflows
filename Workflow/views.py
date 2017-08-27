@@ -85,6 +85,9 @@ class PermissionSet(viewsets.ModelViewSet):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
 
+class SentItemset(viewsets.ModelViewSet):
+    queryset = Sent_item.objects.all()
+    serializer_class = SentItemSerializer
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
 #line_chart_json = LineChartJSONView.as_view()
@@ -343,7 +346,9 @@ def ProjectTask(request,pk):
 def Email(request):
     #e = Inbox.objects.filter(receiver_id_id=request.user.id)
     e = Inbox.objects.all()
-    return render(request,'email.html',{'email':e,'inbox':True})
+    cform = InboxForm()
+
+    return render(request,'email_rest.html',{'email':e,'inbox':True,'cform':cform})
 
 def EmailDetail(request,pk):
     e=Inbox.objects.get(id=pk)

@@ -1,0 +1,539 @@
+{% extends 'base.html' %} 
+{% load staticfiles %}
+
+{% block title %}
+{% if compose %} Compose | WorkFlows {% endif %} {% if inbox %} Inbox | WorkFlows {% endif %} {% endblock %} {% block sidebar %}
+<!--<div class="affix-top hidden-print bs-docs-slidebar hidden-xs">-->
+<script src="{% static 'ckeditor/ckeditor.js' %}" ></script>
+<script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <div class="affix-top hidden-print bs-docs-slidebar">
+    <h3>Email</h3>
+    <div class="list-group">
+        <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
+        <div id="demo" class="collapse in">
+            <!--  class="collapse in">-->
+            {% if compose %}
+            <a class="list-group-item active" href="#compose">Compose</a> {% else %}
+
+            <a class="list-group-item" href="#compose">Compose</a> {% endif %} {% if inbox %}
+            <a class="list-group-item active" href="#">Inbox</a> {% else %}
+            <a class="list-group-item" href="#">Inbox</a> {% endif %} {% if sent %}
+            <a class="list-group-item action" href="#sent">Sent Items</a> {% else %}
+            <a class="list-group-item" href="#sent">Sent Items</a> {% endif %} {% if trans %}
+            <a class="list-group-item active" href="#trans">Trans</a> {% else %}
+            <a class="list-group-item" href="#trans">Trans</a> {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %} 
+
+{% block content %} 
+
+{% if mail %}
+<div class="cont">
+    <div style="margin-top: 15px;">
+        <h3>{{ mail.subject }}</h3>
+    </div>
+    <hr>
+    <div>
+        <div style="float: left">
+            <span style="font-weight: bold">From : </span> {{ mail.sender_id }}
+        </div>
+        <div style="float: right">
+            <span><b>{{ mail.date }}</b></span>
+        </div>
+    </div>
+    <br><br>
+    <div>
+        <p>{{ mail.content |safe }}</p>
+    </div>
+</div>
+<hr>
+
+<style>
+    .marker {
+        background: yellow
+    }
+</style>
+{% elif compose %} 
+{% include 'ck.html' %}
+<!--
+        <div>
+            <h3>New Message</h3>
+        </div>
+        <div>
+            <input type="text" name="subject" placeholder="Subject"/>
+        </div>
+            <br>
+        <div>
+            <textarea style="width: 100%" class="form-control" rows="10" placeholder="Message"></textarea>
+        </div>
+-->
+
+<form action="/sending/" method="POST">
+    {% csrf_token %}
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>To</b>
+        </div>
+        <div class="col-sm-7">
+            {{form.receiver_id}}
+        </div>
+    </div>
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>Subject</b>
+        </div>
+        <div class="col-sm-10">
+            {{form.subject}}
+        </div>
+    </div>
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>Message</b>
+        </div>
+        <div class="col-sm-10">
+            <div class="editor" id="editor">
+                {{form.content}}
+            </div>
+            <div class="submit-button">
+                <input type="submit" class="btn btn-primary btn-block" value="Send" id="submit">
+            </div>
+
+        </div>
+    </div>
+    <!--        <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" style="height: 30px !important;overflow: hidden;resize: none;" rows="1" cols="25" aria-label="To" aria-autocomplete="list"  tabindex="1" role="combobox"></textarea>-->
+
+</form>
+
+<style>
+    .messages {
+        margin-top: 25px;
+    }
+    
+    .texarea {
+        min-height: 50%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    
+    .subject {
+        width: 100%;
+    }
+    
+    .submit-button {
+        margin-top: 5px;
+    }
+</style>
+
+
+{% else %}
+<div class="cont-here">
+    <table class="table" id="table">
+        <thead>
+            <th><input type="checkbox" id="all"></th>
+            <th> Name </th>
+            <th> Subject </th>
+            <th> Time </th>
+            <th> Receiver </th>
+        </thead>
+        {% for i in email %} {% if i.is_read %}
+            <a href='#email/{{i.id}}'>
+        <tr href='#email/{{i.id}}'>
+            <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+            <!--    <div onclick="window.document.location='{{ i.id }}'">-->
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><a href="#email/{{i.id}}">{{ i.sender_id }}</a></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.subject }}</td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.date.date }}</td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+        </tr>
+            </a>
+        {% else %}
+        <a href='#email/{{i.id}}'>
+        <tr id="#email/{{i.id}}" class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
+
+            <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+            <!--    <div onclick="window.document.location='{{ i.id }}'">-->
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><a href="#email/{{i.id}}">{{i.sender_id }}</a></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.subject }}</td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.date.date }}</td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+
+        </tr>
+        </a>
+        {% endif %} {% endfor %}
+
+    </table>
+</div>
+{% endif %}
+
+<style>
+    th {
+        font-size: 1.2em;
+    }
+    
+    table {
+        margin-top: 5px;
+    }
+    
+    .cont {
+        margin-left: 15px;
+        text-align: justify;
+    }
+    
+    .affix-top {
+        position: fixed;
+        width: 19.45%;
+    }
+    
+    @media (max-width: 767px) {
+        .affix-top {
+            width: auto;
+        }
+    }
+    
+    @media (max-width: 770px) {
+        .affix-top {
+            position: static;
+            width: auto;
+        }
+    }
+    
+    .form-control {
+        border-radius: 1px 1px 1px 1px;
+        -moz-border-radius: 1px 1px 15px 15px;
+        -webkit-border: 15px 15px 15px 15px;
+        /*-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;*/
+    }
+    
+    form-control:focus {
+        border-color: snow;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(0, 0, 0, .6);
+    }
+</style>
+
+{% endblock %} {% block script %}
+{% include 'ck.html' %}
+<script type="text/javascript">
+    $(window).on('resize', function() {
+        var win = $(this);
+        if (win.width() < 770) {
+            $('#demo').removeClass('collapse in')
+            $('#demo').addClass('collapse')
+        } else if (win.width() > 770) {
+            $('#demo').removeClass('collapse')
+            $('#demo').addClass('collapse in')
+        }
+    });
+
+
+
+    $(document).ready(function() {
+        //$('#cke_id_content').addClass('cke_focus')
+        if ($(window).width() < 770) {
+            $('#demo').addClass('collapse')
+        }
+
+    });
+
+
+    $(document).ready(function() {
+        console.log("sdlfkjs")
+    });
+
+
+
+
+    $("#all").click(function() {
+        if ($("#all").is(':checked')) {
+            $(".check").prop("checked", true);
+        } else {
+            $(".check").prop("checked", false);
+        }
+    });
+
+    $(document).on('click', '.rowlink', function(e) {
+        console.log($('.rowlink').attr('id'))
+    });
+
+    function func(e) {
+        console.log(e);
+    }
+
+/*    function myfunction(e) {
+        console.log(e)
+        vars = e
+        $.ajax({
+            type: 'GET',
+            url: '/isread/' + e,
+            data: {
+                pk: e
+                    //csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(e) {
+                if (e == 'OK') {
+                    console.log('success')
+                    console.log(vars)
+                } else {
+                    console.log('Not')
+                }
+                window.location = vars
+            }
+
+        })
+    }*/
+</script>
+{% endblock %}
+
+{% block BackboneScript %}
+
+<script type="text/template" id='mail-here'>
+
+<table class="table">
+        <th><input type="checkbox" id="all"></th>
+        <th> Name </th>
+        <th> Subject </th>
+        <th> Time </th>
+         <% _.each(mail,function(i) { %>
+         <tr>
+             <td>
+             <input onclick="not()" class="check" value="5" type="checkbox"></td>
+             <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
+             <td><%=i.subject%></td>
+             <td><%=i.date%></td>
+          </td>      
+        <% }); %>
+
+</table>
+
+
+</script>
+
+<!--    <table class="table" id="table">
+        <thead>
+            <th><input type="checkbox" id="all"></th>
+            <th> Name </th>
+            <th> Subject </th>
+            <th> Time </th>
+            <th> Receiver </th>
+        </thead>
+
+
+<!--        <% _.each(mail,function(i) { %>    
+        <% if i.is_read == 'True' %>
+            <a href='#email/<%=i.id%>'>
+        <tr href='#email/<%=i.id%>'>
+            <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+            
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><a href="#email/<%=i.id%>"><%=i.sender_id%></a></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%=i.subject %></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%= i.date.date %></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%= i.receiver_id.first_name %></td>
+        </tr>
+            </a>
+        <% else %>
+        <a href='#email/{{i.id}}'>
+        <tr id="#email/{{i.id}}" class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
+
+            <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><a href="#email/{{i.id}}"><%=i.sender_id%></a></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%= i.subject %></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%= i.date.date%></td>
+            <td href="#email/{{ i.id }}" style="cursor:pointer"><%= i.receiver_id.first_name %></td>
+
+        </tr>
+        </a>
+     <% }); %>-->
+
+
+<script type='text/template' id='msg-show'>
+
+    <div style="margin-top: 15px;">
+        <h3><%=mail.subject%></h3>
+    </div>
+    <hr>
+    <div>
+        <div style="float: left">
+            <span style="font-weight: bold">From : </span> <%=mail.sender_id%>
+        </div>
+        <div style="float: right">
+            <span><b><%=mail.date%></b></span>
+        </div>
+    </div>
+    <br><br>
+    <div>
+        <p><%=mail.content%></p>
+    </div>
+<hr>
+<style>
+    .marker {
+        background: yellow
+    }
+</style>
+</script>    
+{% load staticfiles %}
+<script type='text/template' id='compose-msg'>
+<style>
+    .messages {
+        margin-top: 25px;
+    }
+    
+    .texarea {
+        min-height: 50%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    
+    .subject {
+        width: 100%;
+    }
+    
+    .submit-button {
+        margin-top: 5px;
+    }
+</style>    
+    
+    <form action="/sending/" method="POST">
+    {% csrf_token %}
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>To</b>
+        </div>
+        <div class="col-sm-7">
+            {{cform.receiver_id}}
+        </div>
+    </div>
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>Subject</b>
+        </div>
+        <div class="col-sm-10">
+            {{cform.subject}}
+        </div>
+    </div>
+
+    <div class="row messages">
+        <div class="col-sm-1">
+            <b>Message</b>
+        </div>
+        <div class="col-sm-10">
+            <div class="editor" id="editor">
+                {{cform.content}}
+            </div>
+            <div class="submit-button">
+                <input type="submit" class="btn btn-primary btn-block" value="Send" id="submit">
+            </div>
+
+        </div>
+    </div>
+    <!--        <textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" style="height: 30px !important;overflow: hidden;resize: none;" rows="1" cols="25" aria-label="To" aria-autocomplete="list"  tabindex="1" role="combobox"></textarea>-->
+
+
+
+</form>
+
+</script>
+
+
+
+<script>
+        //var pview = new ProjectView()
+
+    $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+        options.url = 'http://localhost:8000/api' + options.url;
+    });
+
+
+    var Email = Backbone.Model.extend({
+        urlRoot:'/email/'
+    });
+
+    var Emails = Backbone.Model.extend({
+        url:'/email/'
+    })    
+
+
+    var EmailView = Backbone.View.extend({
+        render:function(){
+            var that = this;
+            var email = new Emails()
+            email.fetch({
+                success:function(data){
+                    var d = data.attributes
+                    var template = _.template($('#mail-here').html())
+                    $('.cont-here').html(template({'mail':data.attributes}))                    
+                    
+                    console.log(d)
+                }
+            })
+        },
+        single:function(option){
+            var that=this
+            if(option.id){
+                that.email = new Email({id:option.id})
+                that.email.fetch({
+                    success:function(data){
+                        console.log(data.attributes)
+                        var template = _.template($('#msg-show').html())
+                        $('.cont-here').html(template({'mail':data.attributes}))                    
+                    }
+                })
+            }
+        },
+        compose:function(){
+            console.log('hsdjflkdjfsd')
+                var template = _.template($('#compose-msg').html())
+                $('.cont-here').html(template())                    
+
+        }
+    })
+
+    var eview = new EmailView()
+    var Router = Backbone.Router.extend({
+        routes:{
+            '':'home',
+            'project/:id':'project',
+            'email/:id':'email',
+            'compose':'compose',
+            'task/edit/:id':'taskedit',
+            'task/update/:id':'taskupdate',
+            'createproject':'createproject',
+        }
+    });
+    var router = new Router()
+    router.on('route:createproject',function(){
+        console.log('here')
+        //pview.CreateProject()
+        
+    });
+    router.on('route:home',function(){
+        //console.log('here')
+        eview.render()
+        //pview.home()
+        //pview.render()
+    });
+    router.on('route:project',function(id){
+        //console.log(id)
+        //pview.render({id:id});
+    });
+    router.on('route:compose',function(){
+        //console.log(id)
+        //pview.taskedit({id:id})
+        eview.compose()
+    })
+/*        router.on('taskupdate',function(id){
+        pview.taskupdate({id:id})
+    })*/
+    router.on('route:email',function(id){
+        eview.single({id:id})
+    });
+    Backbone.history.start();
+
+</script>
+{% endblock %}
