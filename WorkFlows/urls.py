@@ -25,6 +25,7 @@ from rest_framework import routers
 
 router=routers.DefaultRouter()
 #router=routers.DefaultRouter()
+#router.register('task',TaskSet.as_view({'put':'update','post':'post'}))
 router.register('task',TaskSet)
 router.register('project',ProjectSet)
 router.register('user',UserSet)
@@ -44,12 +45,15 @@ router.register('permission',PermissionSet)
 urlpatterns = [
 #    url(r'^api/',include('rest_framework.urls',namespace='rest_framework'))
     url(r'^api/',include(router.urls)),
+    url(r'^api/task/',TaskSet.as_view({'put':'update','post':'post','get':'get'})),
+    #url(r'^api/user/',UserSet.as_view({'get':'get'})),    
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #url(r'^api-token-auth/', authtoken_views.obtain_auth_token),
     url(r'^accounts/logout/$',Logout,name='logout'),
 #    url(r'^accounts/logout/',logout,{'template_name':'registration/logout.html'}),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$',Home,name='home'),
+    url(r'^rest/',include('Workflow.url',namespace='rest-workflow')),
     url(r'^project/(?P<pk>\d+)$',ProjectTask,name='ProjectTask'),
     url(r'^task/(?P<pk>\d+)$',TaskDetail,name='TaskDetail'),
     url(r'^task/(?P<pk>.*)/edit/$',Edit,name='Edit'),

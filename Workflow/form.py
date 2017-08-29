@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.models import User
 from ckeditor.widgets import CKEditorWidget
-from django.forms import Textarea,CharField,TextInput
+from django.forms import Textarea,CharField,TextInput,ChoiceField
 
 
 class LoginForm(AuthenticationForm):
@@ -70,14 +70,22 @@ class ProjectForm(forms.ModelForm):
 
 
 class TaskEditForm(forms.ModelForm):
-    assign=forms.ModelChoiceField(queryset=UserName.objects.all())
+    assign=forms.ModelChoiceField(UserName.objects.all(),widget=forms.Select(attrs={'class': 'form-control'}))
     class Meta:
         model = Task
         fields = ['name','status','created_date','created_by','task_description','comments','priority','tat','assign']
         widgets ={
-            'created_date' : TextInput(attrs={'class':'disabled,form-control'}),
+            'created_date' : TextInput(attrs={'class':'form-control','disabled':'true'}),
+            'created_by' : TextInput(attrs={'disabled':'true','class':'form-control'}),
             'name' : TextInput(attrs={'class':'form-control'}),
-            'task_description':Textarea(attrs={'class':'form-control'})
+            'task_description':Textarea(attrs={'class':'form-control','style':'height: 3cm !important;overflow: hidden;max-width:100%;min-width:100%'}),#,style="height: 30px !important;overflow: hidden;resize: none;"
+            'comments':Textarea(attrs={'class':'form-control','style':'height: 3cm !important;overflow: hidden;max-width:100%;min-width:100%'}),
+            'priority':forms.Select(attrs={'class':'form-control'}),
+            'tat':forms.NumberInput(attrs={'class':'form-control'}),
+            'status':forms.Select(attrs={'class':'form-control'}),
+            'assign':forms.Select(attrs={'class':'form-control'}),
+            #'assign':CharField(attrs={'class':'form-control'}),
+            #,widget=forms.Select(attrs={'class':'hidden'})
         }
 
 

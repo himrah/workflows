@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import *
+from django.contrib.auth.decorators import login_required
 import re
 from django.core import serializers
 
@@ -26,7 +27,17 @@ class TaskSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = Taskserializer
 
+    
+
+    def get(self,request):
+        queryset = Task.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        #serializer_class = Taskserializer
+        return Response(serializer.data)    
+
+
     def post(self, request, pk):
+        #queryset = Task.objects.all()
         serializer = Taskserializer(data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -65,6 +76,13 @@ class UserSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def get(self,request,pk):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        #serializer_class = Taskserializer
+        return Response(serializer.data)
+
+
 
 class DepartmentSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
@@ -91,13 +109,13 @@ class SentItemset(viewsets.ModelViewSet):
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
 #line_chart_json = LineChartJSONView.as_view()
-
+@login_required(login_url='/accounts/login')
 def Logout(request):
     logout(request)
     return render_to_response('registration/logout.html')
 #    request.user.logout()
 
-
+@login_required(login_url='/accounts/login')
 def Single(request,project):
     f=Task.objects.filter()
     option = [i[0] for i in Task.objects.all()[0].choices]
@@ -112,7 +130,7 @@ def Single(request,project):
 
     return JsonResponse(js)
 
-
+@login_required(login_url='/accounts/login')
 def profile(request):
     email=request.user.email
     #group=Group.objects.get(user=request.user.id)
@@ -125,7 +143,9 @@ def profile(request):
            }
     return render_to_response('registration/profile.html',argus)    
 
-def Home(request):
+
+@login_required(login_url='/accounts/login')
+def Home_rest(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
@@ -135,15 +155,28 @@ def Home(request):
     form = TaskEditForm()
     return render(request,'rest_home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
+def Home(request):
+    p=Project.objects.all()
+    #t=Task.objects.all()
+    user = request.user
+    #t=Task.objects.filter(assign_id=user.id)
+    t=Task.objects.all()
+    
+    form = TaskEditForm()
+    return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+
+
+
+@login_required(login_url='/accounts/login')
 def TaskDetail(request,pk):
     p = Project.objects.all()
     #pi = Project.objects.get(id=pid)
     t=Task.objects.get(id=pk)
     user = request.user
-    return render_to_response('rest_home.html',{'task':t,'project':p,'work':'edit','user':user})
+    return render_to_response('home.html',{'task':t,'project':p,'work':'edit','user':user})
 
 
-
+@login_required(login_url='/accounts/login')
 def prj_data(request,what):
     model = globals()[what]
     pp=model._meta.related_objects[0].name
@@ -198,6 +231,7 @@ def prj_data(request,what):
         }    
     return JsonResponse(js)
 
+@login_required(login_url='/accounts/login')
 def emp_data(request):
     user=User.objects.all()
     related=User._meta.get_all_related_objects()[1:]
@@ -252,7 +286,7 @@ def emp_data(request):
         return JsonResponse(data)
 
     #p=Project.objects.filter()
-
+@login_required(login_url='/accounts/login')
 def project_data(request):
     p=Project.objects.all()
     project=[i.name for i in p]
@@ -264,7 +298,7 @@ def project_data(request):
     }
     return JsonResponse(data)
 
-
+@login_required(login_url='/accounts/login')
 def Reports(request):
     
     #p=Project.objects.all()
@@ -290,7 +324,7 @@ def login(request):
         c={'form':form}
         c.update(csrf(request))
         return render(request,'registration/login.html',c)
-
+@login_required(login_url='/accounts/login')
 def logout(request):
     auth.logout(request)
     return render_to_response('registration/logged_out.html')
@@ -333,6 +367,7 @@ def Isread(request,pk):
     e.save()
     return HttpResponse('OK')
 
+@login_required(login_url='/accounts/login')
 def ProjectTask(request,pk):
 
     p = Project.objects.all()
@@ -342,7 +377,7 @@ def ProjectTask(request,pk):
     return render_to_response('rest_home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
 
 
-
+@login_required(login_url='/accounts/login')
 def Email(request):
     #e = Inbox.objects.filter(receiver_id_id=request.user.id)
     e = Inbox.objects.all()
@@ -364,6 +399,7 @@ def Compose(request):
 
 from django.http.response import HttpResponse,HttpResponseRedirect
 
+@login_required(login_url='/accounts/login')
 
 def SentView(request):
     d=Sent_item.objects.all()
@@ -385,7 +421,7 @@ def sending(request):
             s.save()
             return HttpResponseRedirect('/email/')
 
-
+@login_required(login_url='/accounts/login')
 def CreateProject(request):
     if request.method == 'POST':
         form = ProjectForm(request.POSt)
@@ -396,7 +432,7 @@ def CreateProject(request):
         form = ProjectForm()
         return render(request,'home.html',{'form':form,'user':request.user})        
 
-
+@login_required(login_url='/accounts/login')
 def Edit(request,pk):
     #form=TaskEditForm()
     if request.method =='POST':

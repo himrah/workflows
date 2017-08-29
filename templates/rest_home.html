@@ -34,7 +34,6 @@
     <h5><a href='/'> Workflow</a>>><a href="/project/{{pid.id}}">{{pid.name}}</a></h5>
 </div>
 <div>
-    <h4 align='center'>Create a new Task</h4>
     <div class='cont'></div>
 </div>
 <!--
@@ -139,6 +138,8 @@
 
 {% block BackboneScript %}
 <script type="text/template" id="task-list-template">
+    
+   <h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> 
     <table class='table'>
         <thead>
                 <th> Name </th>
@@ -160,6 +161,7 @@
 </script>
 
 <script type="text/template" id="task-all-list-template">
+    <!--<h4 align='center'>Create a new Task</h4>-->  
     <table class='table'>
         <thead>
                 <th> Name </th>
@@ -248,9 +250,68 @@
                 <td><%=task.tat%></td>
             </tr>
             <tr>
+                <td>Assign</td>
+                <td><%=task.assign_name%></td>
+            </tr>            
+            <tr>
                 <td colspan=2><a href='#task/edit/<%=task.id%>'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
                 
         </table>
+</script>
+
+<script type='text/template' id='creation-task'>
+    
+    <table class="table">
+        <thead>
+            <th>Attribute</th>
+            <th>Value</th>
+        </thead>
+        <tr>
+            <td>Name</td>
+            <td>{{taskform.name}}</td>
+        </tr>
+<!--        <tr>
+            <td>Created Date</td>
+            <td>{{taskform.created_date}}</td>
+        </tr>
+        <tr>
+            <td>Created By</td>
+            <td>{{taskform.created_by}}</td>
+        </tr>
+        <tr>-->
+            <td>Status</td>
+            <td>{{taskform.status}}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{taskform.task_description}}</td>
+        </tr>
+    
+        <tr>
+            <td>Comment</td>
+            <td>{{taskform.comments}}</td>
+        </tr>
+<!--        <tr>
+            <td>Modify By</td>
+            <td>{{taskform.modify_by}}</td>
+        </tr>-->
+        <tr>
+            <td>Priority</td>
+            <td>{{taskform.priority}}</td>
+        </tr>
+        <tr>
+            <td>TAT</td>
+            <td>{{taskform.tat}}</td>
+        </tr>
+        <tr>
+            <td>Assign</td>
+            <td>{{taskform.assign}}</td>
+        </tr>        
+        <tr>
+            <td colspan=2><a href='#task/edit/{{taskform.id}}'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
+            
+    </table>    
+
 </script>
 
 <script type='text/template' id='task-edit'>
@@ -284,12 +345,15 @@
             </tr>
             <tr>
                 <td>Assign</td>
-                <td><input type='text'  class='form-control' name='assign_name'  value='<%=task.assign_name%>'/></td>
+                <td>{{ taskform.assign }}
+                <!--<td><input type='text'  class='form-control' name='assign_name'  value='<%=task.assign_name%>'/></td>-->
+
             </tr>
             <tr>
                 <td colspan=2><input type=submit class='btn btn-primary btn-block' value='Update'/></a></td>
         </table>
     </form>
+
 
 </script>
 
@@ -315,7 +379,7 @@
 
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     
-          options.url = 'http://localhost:8000/api' + options.url;
+          options.url = 'http://localhost:8000/api' + options.url + '/';
     
         });
     
@@ -356,6 +420,8 @@
                     var key=$(this).attr('name')
                     dt[key]=val
                     })
+                //dt['assign_id']=4
+                //dt['assign_id']=($('#id_assign :selected').attr('value')).toString();  
                 $.ajax({
                     type:'PUT',
                     url:api,
@@ -432,6 +498,12 @@
                 var template = _.template($('#project-form').html())
                 $('.cont').html(template())
             },
+
+            CreateTask:function(e){
+                var template = _.template($('#creation-task').html())
+                $('.cont').html(template())
+            },    
+
             home:function(){
                 var task = new Tasks();
                 task.fetch({
@@ -486,10 +558,15 @@
                 'task/edit/:id':'taskedit',
                 'task/update/:id':'taskupdate',
                 'createproject':'createproject',
+                'createtask/':'createtask'
             }
         });
         var router = new Router()
 
+        router.on('route:createtask',function(){
+            console.log('create')
+            pview.CreateTask()
+        });
         router.on('route:createproject',function(){
             console.log('here')
             pview.CreateProject()
