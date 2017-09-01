@@ -7,6 +7,7 @@ from django.contrib.auth.models import *
 
 urlpatterns = [
     url(r'^$',Home_rest,name='home'),
+    url(r'^email',Email_rest,name='rest-email'),
 ]    
 
 """class Departmentset(serializers.HyperlinkedModelSerializer):

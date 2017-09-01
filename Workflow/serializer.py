@@ -21,13 +21,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 import json
 class Taskserializer(serializers.HyperlinkedModelSerializer):
     assign_name = serializers.CharField(source='assign.get_full_name',required=False)
-    assign_id = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all(), write_only=True)
+    #assign_id = serializers.PrimaryKeyRelatedField(queryset=Task.objects.all(), write_only=True)
+    #assign_id = serializers.SlugRelatedField(slug_field='id')
     #assign = serializers.ChoiceField(choices=UserName.objects.all())
     #assign=forms.ModelChoiceField(queryset=UserName.objects.all())
     #assign = serializers.ChoiceField(choices=({'sdf':'sdf'}))
     class Meta:
         model = Task
-        fields = ('id','name','created_date','created_by','status','task_description','comments','modify_by','priority','tat','assign_name','assign_id')
+        fields = ('id','name','created_date','created_by','status','task_description','comments','modify_by','priority','tat','assign_name','assign')
 
 
 

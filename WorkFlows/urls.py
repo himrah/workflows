@@ -45,7 +45,7 @@ router.register('permission',PermissionSet)
 urlpatterns = [
 #    url(r'^api/',include('rest_framework.urls',namespace='rest_framework'))
     url(r'^api/',include(router.urls)),
-    url(r'^api/task/',TaskSet.as_view({'put':'update','post':'post','get':'get'})),
+#    url(r'^api/task/',TaskSet.as_view({'put':'update','post':'post','get':'get'})),
     #url(r'^api/user/',UserSet.as_view({'get':'get'})),    
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #url(r'^api-token-auth/', authtoken_views.obtain_auth_token),

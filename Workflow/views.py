@@ -29,7 +29,7 @@ class TaskSet(viewsets.ModelViewSet):
 
     
 
-    def get(self,request):
+"""    def get(self,request):
         queryset = Task.objects.all()
         serializer = UserSerializer(queryset, many=True)
         #serializer_class = Taskserializer
@@ -42,7 +42,7 @@ class TaskSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)"""
 
 
 """    def get_serializer_class(request):
@@ -374,16 +374,25 @@ def ProjectTask(request,pk):
     pi = Project.objects.get(id=pk)
     #t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
     t=Task.objects.filter(project_id=pk)
-    return render_to_response('rest_home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
+    return render_to_response('home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
 
 
 @login_required(login_url='/accounts/login')
-def Email(request):
+def Email_rest(request):
     #e = Inbox.objects.filter(receiver_id_id=request.user.id)
     e = Inbox.objects.all()
     cform = InboxForm()
 
     return render(request,'email_rest.html',{'email':e,'inbox':True,'cform':cform})
+
+def Email(request):
+    #e = Inbox.objects.filter(receiver_id_id=request.user.id)
+    e = Inbox.objects.all()
+    cform = InboxForm()
+
+    return render(request,'email.html',{'email':e,'inbox':True,'cform':cform})
+
+
 
 def EmailDetail(request,pk):
     e=Inbox.objects.get(id=pk)

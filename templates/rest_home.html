@@ -379,7 +379,7 @@
 
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     
-          options.url = 'http://localhost:8000/api' + options.url + '/';
+          options.url = 'http://localhost:8000/api' + options.url;
     
         });
     
@@ -420,7 +420,7 @@
                     var key=$(this).attr('name')
                     dt[key]=val
                     })
-                //dt['assign_id']=4
+                dt['assign_id']=($('#id_assign :selected').attr('value')).toString()
                 //dt['assign_id']=($('#id_assign :selected').attr('value')).toString();  
                 $.ajax({
                     type:'PUT',
