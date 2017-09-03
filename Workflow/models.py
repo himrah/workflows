@@ -37,6 +37,11 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
                 return False       """ 
 
 
+def upload_path_handler(instance, filename):
+    #return "user_{id}/{file}".format(id=instance.user.id, file=filename)
+    return "photos/{t}".format(t)
+
+
 class Department(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
@@ -80,13 +85,15 @@ class Task(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=50)
     created_date=models.DateTimeField(default=datetime.now,null=True)
-    created_by=models.CharField(max_length=20,blank=True)
+    created_by=models.CharField(max_length=20,blank=True,null=True)
     status=models.CharField(max_length=10,choices=choices,default=nothing)
     task_description=models.TextField()
     comments=models.TextField(blank=True)
     modify_by=models.CharField(max_length=20,blank=True)
     priority=models.CharField(max_length=10,choices=p_choice,default=nothing)
     tat=models.IntegerField()
+    #file=models.ImageField(upload_to='photos/%d/',blank=True,null=True)
+    #file=models.ImageField(upload_to=upload_path_handler, blank=True,null=True)
     assign=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     project_id=models.ForeignKey(Project,on_delete=models.CASCADE,null=True)
     def __str__(self):

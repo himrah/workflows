@@ -37,16 +37,16 @@
 <div class="col-sm-12">
     <span class="coldata"></span>
 </div>
-<div class="col-sm-6">
+<div class="col-sm-10">
     <div class="ch1">
         <canvas id="myChart"></canvas>
     </div>
 </div>
-<div class="col-sm-6">
+<!--<div class="col-sm-6">
     <div class="ch2">
         <canvas id="myChart2"></canvas>
     </div>
-</div>
+</div>-->
 
 <div class="col-sm-6">
     <div class="ch3">
@@ -133,8 +133,6 @@
         }
 
     }
-
-
     pont = '/api/project_data/Project'
     $.ajax({
         method: 'GET',
@@ -179,7 +177,6 @@
             console.log(error_data)
         }
     });
-
 
     function sch(data, par) {
         //console.log(data)
@@ -377,7 +374,52 @@
 
 
     function singlechart(par, project, count) {
-        var ctxx = document.getElementById("myChart3").getContext('2d');
+        var ctx2 = document.getElementById("myChart3").getContext('2d');
+        var myChartss = new Chart(ctx2, {
+            type: 'polarArea',
+            data: {
+                labels: project,
+                //data: {
+                //labels: ["HTML/CSS","jQuery","PHP/MYSQL","PS/AI","PR/AE","Processing","Arduino"],
+                datasets: [
+                    {
+                    label: project,
+                    data: count,
+                     //data : '[95, 80, 30, 70, 60, 50, 50]',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(120, 190, 80, 0.2)',
+                        'rgba(54, 216, 186, 0.2)',
+                        'rgba(100, 129, 100, 0.2)',
+                        'rgba(200, 109, 180, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(120, 190, 80, 1)',
+                        'rgba(200, 216, 186, 1)',
+                        'rgba(100, 129, 100, 1)',
+                        'rgba(200, 109, 180, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive : true,
+/*                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }*/
+            }
+        });
+
+/*        var ctxx = document.getElementById("myChart3").getContext('2d');
         myChartss = new Chart(ctxx, {
             type: 'bar',
             data: {
@@ -433,8 +475,8 @@
                     }]
                 }
             }
-        });
-    }
+        });*/
+    };
 
 
 
@@ -499,7 +541,7 @@
         });
 
 
-        var ctx2 = document.getElementById("myChart2").getContext('2d');
+        /*var ctx2 = document.getElementById("myChart2").getContext('2d');
         var myCharts = new Chart(ctx2, {
             type: 'polarArea',
             data: {
@@ -539,7 +581,7 @@
                     }]
                 }
             }
-        });
+        });*/
 
 
     }

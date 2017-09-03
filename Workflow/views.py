@@ -109,6 +109,12 @@ class SentItemset(viewsets.ModelViewSet):
 
 #line_chart = TemplateView.as_view(template_name='reports.html')
 #line_chart_json = LineChartJSONView.as_view()
+
+
+    
+
+
+
 @login_required(login_url='/accounts/login')
 def Logout(request):
     logout(request)
@@ -431,15 +437,17 @@ def sending(request):
             return HttpResponseRedirect('/email/')
 
 @login_required(login_url='/accounts/login')
+
 def CreateProject(request):
     if request.method == 'POST':
-        form = ProjectForm(request.POSt)
+        form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
     else:
         form = ProjectForm()
-        return render(request,'home.html',{'form':form,'user':request.user})        
+        #project=True
+        return render(request,'home.html',{'form':form,'user':request.user,'project_c':True})        
 
 @login_required(login_url='/accounts/login')
 def Edit(request,pk):

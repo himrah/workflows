@@ -21,7 +21,6 @@
                 <a class="list-group-item" href="#createproject">Create New</a> 
             {% endif %}
             
-
         </div>
     </div>
 
@@ -260,7 +259,8 @@
 </script>
 
 <script type='text/template' id='creation-task'>
-    
+<form method='POST' class='task-creation'>   
+    {% csrf_token %}  
     <table class="table">
         <thead>
             <th>Attribute</th>
@@ -270,15 +270,15 @@
             <td>Name</td>
             <td>{{taskform.name}}</td>
         </tr>
-<!--        <tr>
+        <tr>
             <td>Created Date</td>
             <td>{{taskform.created_date}}</td>
         </tr>
         <tr>
             <td>Created By</td>
-            <td>{{taskform.created_by}}</td>
+            <td><input type=text id={{user.id}} name='created_by' value="{{user.get_full_name}}" class='form-control' disabled=true></td>
         </tr>
-        <tr>-->
+        <tr>
             <td>Status</td>
             <td>{{taskform.status}}</td>
         </tr>
@@ -308,10 +308,10 @@
             <td>{{taskform.assign}}</td>
         </tr>        
         <tr>
-            <td colspan=2><a href='#task/edit/{{taskform.id}}'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
+            <td colspan=2><input type=submit class='btn btn-primary btn-block' value='Create'/></td>
             
     </table>    
-
+    </form>        
 </script>
 
 <script type='text/template' id='task-edit'>
@@ -345,7 +345,8 @@
             </tr>
             <tr>
                 <td>Assign</td>
-                <td>{{ taskform.assign }}
+                
+                <td>{{taskform.assign}}</td>
                 <!--<td><input type='text'  class='form-control' name='assign_name'  value='<%=task.assign_name%>'/></td>-->
 
             </tr>
@@ -353,6 +354,18 @@
                 <td colspan=2><input type=submit class='btn btn-primary btn-block' value='Update'/></a></td>
         </table>
     </form>
+    <script type='text/javascript'>
+        var $inputProduct = $("select[id='id_assign']")
+        
+        //document.getElementById("id_assign").append()
+//        $(inputProduct).each(function(i, v){ 
+            //$inputProduct.append($("<option>", { value: v, html: v }));
+  //              console.log(i)
+   //             console.log(v)
+        //});
+        
+        //$('#id_assign')    
+    </script>
 
 
 </script>
@@ -403,7 +416,8 @@
             el:'.cont',
             events:{
                 'submit .task-edit-form':'updateTask',
-                'submit #prj-form':'newproject'
+                'submit #prj-form':'newproject',
+                'submit .task-creation':'createtask',
             },
             updateTask:function(ev){
 //                var taskDetail = $(ev.currentTarget).serializeObject();
@@ -420,7 +434,7 @@
                     var key=$(this).attr('name')
                     dt[key]=val
                     })
-                dt['assign_id']=($('#id_assign :selected').attr('value')).toString()
+                dt['assign']='http://localhost:8000/api/user/'+($('#id_assign :selected').attr('value')).toString()+'/'
                 //dt['assign_id']=($('#id_assign :selected').attr('value')).toString();  
                 $.ajax({
                     type:'PUT',
@@ -442,6 +456,64 @@
                 })
                 //console.log(url)
             },
+
+            createtask:function(ev)
+            {
+                ev.preventDefault()
+                console.log(project_id)
+                var api = '/task/'
+                var task = new Task()
+                this.form = $(ev.currentTarget)
+                csrftoken =  $('input[name=csrfmiddlewaretoken]').val()
+                dt={}
+/*                $('input',this.form).each(function(){
+                    var val=$(this).val()
+                    var key=$(this).attr('name')
+                    dt[key]=val
+                    })*/
+                //dt['name']=
+                dt['name']=this.form.context.elements.name.value
+                dt['status']=this.form.context.elements.status.value
+                dt['task_description']=this.form.context.elements.task_description.value
+                dt['comments']=this.form.context.elements.comments.value
+                dt['priority']=this.form.context.elements.priority.value
+                dt['tat']=this.form.context.elements.tat.value
+                dt['assign']='http://localhost:8000/api/user/'+this.form.context.elements.assign.value+'/'  
+                dt['id_created_date']=this.form.context.elements.created_date.value
+                dt['created_by']=this.form.context.elements.created_by.value 
+                dt['project_id']=project_id
+                console.log(dt) 
+
+                $.ajax({
+                    type:'POST',
+                    url:api,
+                    /*data:{
+                        name:$('input[name=name]').val(),
+                        task_description:$('textarea[name=description]').val(),
+                        head:$('input[name=head]').val()
+                    },*/
+                    data:JSON.stringify(dt),
+                    beforeSend:function(xhr,settings){
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                    },
+                    crossDomain:false,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(d)
+                     { 
+                        //var t='task/'+id
+                        console.log('succ')
+                        router.navigate('', {trigger:true});
+                         //console.log("Success!"); 
+                    
+                     },                    
+                })
+
+                //console.log(this.form.context.elements.comments.value)
+                //console.log(this.form.context.elements.assign.value)                
+                
+                
+                //console.log('here')
+            },            
             newproject:function(e){
                 console.log('click')
                 var api = '/project/'
@@ -483,6 +555,7 @@
             render:function(option){
                 var that = this;
                 if(option.id){
+                    project_id=option.id;
                     that.project = new Project({id:option.id})
                     that.project.fetch({
                         success : function(e) {
@@ -595,8 +668,6 @@
             pview.task({id:id})
         });
         Backbone.history.start();
-
-    
     </script>
 
 {% endblock %}

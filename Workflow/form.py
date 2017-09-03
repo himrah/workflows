@@ -64,8 +64,9 @@ class ProjectForm(forms.ModelForm):
         head = forms.ModelChoiceField(queryset=UserName.objects.all())
         fields = ('name','description','head')
         widgets = {
-            'name':TextInput(attrs={'class':'form-control'}),
-            'description':TextInput(attrs={'class':'form-control'})
+            'name':TextInput(attrs={'class':'form-ctr'}),
+            'description':Textarea(attrs={'class':'form-control'}),
+            'head':forms.Select(attrs={'class':'form-ctr'})
         }
 
 
@@ -76,7 +77,9 @@ class TaskEditForm(forms.ModelForm):
         fields = ['name','status','created_date','created_by','task_description','comments','priority','tat','assign']
         widgets ={
 #            'created_date' : TextInput(attrs={'class':'form-control','disabled':'true'}),
-            'created_by' : TextInput(attrs={'disabled':'true','class':'form-control'}),
+            'created_by' : TextInput(attrs={'class':'form-control'}),
+            'created_date' : TextInput(attrs={'class':'form-control'}),
+
             'name' : TextInput(attrs={'class':'form-control'}),
             'task_description':Textarea(attrs={'class':'form-control','style':'height: 3cm !important;overflow: hidden;max-width:100%;min-width:100%'}),#,style="height: 30px !important;overflow: hidden;resize: none;"
             'comments':Textarea(attrs={'class':'form-control','style':'height: 3cm !important;overflow: hidden;max-width:100%;min-width:100%'}),

@@ -91,7 +91,7 @@
             </td>
         </tr>
         <tr>
-<!--             <td>Created Date</td>
+             <td>Created Date</td>
             <td>
                 {{ form.created_date }}
             </td>
@@ -101,7 +101,7 @@
             <td>
                 {{ form.created_by }}
             </td>
-        </tr>-->
+        </tr>
         <tr>
             <td>Status</td>
             <td>
@@ -155,10 +155,11 @@
 <div>
     <h5><a href='/'> Workflow</a>>><a href="/project/{{pid.id}}">{{pid.name}}</a></h5>
 </div>
-<div>
+<!--<div>
     <h4 align='center'>Create a new Task</h4>
-</div>
+</div>-->
 {% if task %}
+<!--<h4 align='center'>Create a new Task</h4>-->
 <table class="table" id="table">
     <thead>
         <th> Name </th>
@@ -179,6 +180,36 @@
     </tr>
     {% endfor %}
 </table>
+
+{% elif project_c %}
+    {{ form.errors }}
+
+    <form id='prj-form' method="POST">
+        {% csrf_token %}
+        <table class='table'>
+            <tr>
+                <td>Name : </td>
+<!--                <td><input type='text' name='name' class='form-control'></td>-->
+                    <td>{{form.name}}</td>
+            </tr>
+            <tr>
+                <td>Description : </td>
+                <td>{{form.description}}</td>
+<!--                <td><textarea class='form-control' name='description' cols="30" rows="10"></textarea></td>-->
+            </tr> 
+            <tr>
+                <td>Head : </td>
+                <td>{{form.head}}</td>
+                <!--<td><input type='text' head='head' class='form-control'></td>-->
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type='submit' class='btn btn-block btn-primary' value='Create'/>
+            </tr>
+        </table>
+    </form>
+
+
 {% else %}
 <h3 align=center> There is no task </h3>
 
