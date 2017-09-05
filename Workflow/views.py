@@ -157,9 +157,9 @@ def Home_rest(request):
     user = request.user
     #t=Task.objects.filter(assign_id=user.id)
     t=Task.objects.all()
-    
+    pform=ProjectForm()
     form = TaskEditForm()
-    return render(request,'rest_home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+    return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
 def Home(request):
     p=Project.objects.all()
@@ -419,8 +419,12 @@ from django.http.response import HttpResponse,HttpResponseRedirect
 def SentView(request):
     d=Sent_item.objects.all()
     #return HttpResponse(d)
-    return render_to_response('email.html',{'email':d,'inbox':True,'user':request.user})
+    return render_to_response('email.html',{'email':d,'sent':True,'user':request.user})
     #return HttpResponse(serializers.serialize('json',d))
+
+def SentItem(request,pk):
+    d=Sent_item.objects.get(id=pk)
+    return render_to_response('email.html',{'mail':d,'sent_item':True,'user':request.user})
 
 
 def sending(request):
@@ -448,6 +452,56 @@ def CreateProject(request):
         form = ProjectForm()
         #project=True
         return render(request,'home.html',{'form':form,'user':request.user,'project_c':True})        
+
+
+def Searching(request,srchkey):
+    if request.method=='GET':
+        search_q=request.GET['search']
+        if(srchkey=='project'):
+            query=Task.objects.filter(name__contains=search_q)
+            project=Project.objects.filter(name__contains=search_q)
+        
+            context={
+                'task':query,
+                'keyword':search_q,
+                'project':project,
+                'user':request.user
+            }
+        else:
+            temp=[]
+            t1=Inbox.objects.filter(content__contains=search_q,subject__contains=search_q)
+            t2=Inbox.objects.filter(subject__contains=search_q)
+            t3=Inbox.objects.filter(content__contains=search_q)
+            t4=Inbox.objects.filter(sender_id__contains=search_q)
+            temp.extend(t1)
+            temp.extend(t2)
+            temp.extend(t3)
+            temp.extend(t4)
+            query=list(set(temp))
+            temp=[]
+            t1=Sent_item.objects.filter(content__contains=search_q,subject__contains=search_q)
+            t2=Sent_item.objects.filter(subject__contains=search_q)
+            t3=Sent_item.objects.filter(content__contains=search_q)
+            t4=Sent_item.objects.filter(sender_id__contains=search_q)
+            temp.extend(t1)
+            temp.extend(t2)
+            temp.extend(t3)
+            temp.extend(t4)
+            sent_query=list(set(temp))
+
+
+            temp=[]
+            sent=Sent_item.objects.filter()
+            context={
+                'inbox':query,
+                'sent':sent_query,
+                'keyword':search_q,
+                #'project':project,
+                'user':request.user
+            }            
+
+        return render_to_response('search_result.html',context)
+
 
 @login_required(login_url='/accounts/login')
 def Edit(request,pk):

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %} Result for {{ keyword }} {% endblock %}
+
+
+{% block content %}
+    {% if task %}
+        <div style="background-color: transparent">
+        <div style="font-size: 2em;height: 120px;padding-top: 10px;">
+        <table width="80%">
+        <tr>
+            <td>
+            <h3>There are <b>{{task.count}}</b> task matching keyword of <b>{{ keyword }}</b></h3>
+        </td>
+        </tr>
+        </table>
+
+    </div>
+    <div >
+
+    <div>
+        <table class="table" id="table">
+            <thead>
+                <th> Name </th>
+                <th> Created Date </th>
+                <th> Created By </th>
+                <th> Priority </th>
+                <th> Status </th>
+            </thead>
+        
+        
+            {% for i in task %}
+            <tr>
+                <td><a href="/task/{{ i.id }}">{{ i.name }}</a></td>
+                <td>{{ i.created_date }}</td>
+                <td>{{ i.created_by }}</td>
+                <td>{{ i.priority }}</td>
+                <td>{{ i.status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+    </div>
+
+    {% elif inbox%}
+    <div style="font-size: 2em;height: 120px;padding-top: 10px;">
+            <table width="80%">
+            <tr>
+                <td>
+                <h3>There are below Inbox matching keyword of <b>{{ keyword }}</b></h3>
+            </td>
+            </tr>
+            </table>
+        </div>
+        <table class="table" id="table">
+                <thead>
+                    <th><input type="checkbox" id="all"></th>
+                    <th> Name </th>
+                    <th> Subject </th>
+                    <th> Time </th>
+                    <th> Receiver </th>
+                </thead>
+                {% for i in inbox %} 
+                {% if i.is_read %}
+                <tr draggable="true">
+                    <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+                    <!--    <div onclick="window.document.location='{{ i.id }}'">-->
+                    <td onclick="window.document.location='/email/{{ i.id }}'" style="cursor:pointer">{{ i.sender_id }}</td>
+                    <td onclick="window.document.location='/email/{{ i.id }}'" style="cursor:pointer">{{ i.subject }}</td>
+                    <td onclick="window.document.location='/email/{{ i.id }}'" style="cursor:pointer">{{ i.date.date }}</td>
+                    <td onclick="window.document.location='/email/{{ i.id }}'" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+                </tr>
+                {% else %}
+                <tr id="{{ i.id }}" class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
+            
+                    <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+                    <!--    <div onclick="window.document.location='{{ i.id }}'">-->
+                    <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.sender_id }}</td>
+                    <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.subject }}</td>
+                    <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.date.date }}</td>
+                    <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
+            
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        <br>
+        <br>
+
+            <h3>There are below sent item matching keyword of <b>{{ keyword }}</b></h3>
+            <table class="table">
+                    <thead>
+                        <th><input type="checkbox" id="all"></th>
+                        <th> Name </th>
+                        <th> Subject </th>
+                        <th> Time </th>
+                        <th> Receiver </th>
+                    </thead>
+                    {% for i in sent %}
+                    <tr>
+                        <td><input class='check' type="checkbox"></td>
+                        <td onclick="window.document.location='/sent/{{ i.id }}'" style="cursor:pointer">{{i.sender_id}}</td>
+                        <td onclick="window.document.location='/sent/{{ i.id }}'" style="cursor:pointer">{{i.subject}}</td>
+                        <td onclick="window.document.location='/sent/{{ i.id }}'" style="cursor:pointer">{{i.date.date}}</td>
+                        <td onclick="window.document.location='/sent/{{ i.id }}'" style="cursor:pointer">{{i.receiver_id.first_name}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>             
+
+        
+            {% else %}
+    <h3>Sorry there is no keyword found <strong>{{keyword}}</strong></h1>
+    {% endif %}
+
+{% endblock %}
+{% block script%}
+<script type="text/javascript">
+$("#all").click(function() {
+    if ($("#all").is(':checked')) {
+        $(".check").prop("checked", true);
+    } else {
+        $(".check").prop("checked", false);
+    }
+});
+</script>
+{%endblock%}

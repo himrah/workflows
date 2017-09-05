@@ -67,6 +67,10 @@
         <td>TAT</td>
         <td>{{ task.tat}}</td>
     </tr>
+    <tr>
+        <td>Assign</td>
+        <td>{{ task.assign.get_full_name}}</td>
+    </tr>    
 </table>
 <a href='{{task.id}}/edit/'>
     <input type="button" class="btn-block green btn btn-primary" value="Edit"></a>

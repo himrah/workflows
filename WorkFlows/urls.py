@@ -67,7 +67,8 @@ urlpatterns = [
     url(r'^api/single_project/(?P<project>.*)/$',Single,name='single-project'),
     url(r'^api/employee/$',emp_data,name='emp-data'),
     url(r'^sending/',sending,name='sending'),
-    url(r'^sent/',SentView,name='sent-view'),
+    url(r'^sent/$',SentView,name='sent-view'),
+    url(r'^sent/(?P<pk>\d+)/$',SentItem,name='sent-item'),
     url(r'^project/create/$',CreateProject,name='create-project'),
     url(r'^isread/(?P<pk>\d+)$',Isread,name='isread'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
@@ -76,4 +77,5 @@ urlpatterns = [
     url(r'^auth/$',auth_view,name='auth'),
     url(r'^accounts/profile/',profile,name='profile'),
     url(r'^get_auth_token/$', authtoken_views.obtain_auth_token, name='get_auth_token'),
+    url(r'^search/(?P<srchkey>.*)/$',Searching,name='search'),
 ]

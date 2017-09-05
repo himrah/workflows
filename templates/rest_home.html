@@ -184,6 +184,7 @@
 <script type="text/template" id='project-form'>    
     <form id='prj-form'>
         {% csrf_token %}
+        <h3 align=center>Create New Project</h3>
         <table class='table'>
             <tr>
                 <td>Name : </td>
@@ -195,7 +196,7 @@
             </tr> 
             <tr>
                 <td>Head : </td>
-                <td><input type='text' head='head' class='form-control'></td>
+                <td><!--<input type='text' head='head' class='form-control'>-->{{pform.head}}</td>
             </tr>
             <tr>
                 <td></td>
@@ -526,7 +527,7 @@
                 var dt={
                         'name':$('input[name=name]').val(),
                         'description':$('textarea[name=description]').val(),
-                        'head':$('input[name=head]').val()
+                        'head':'http://localhost:8000/api/department/'+form.context.elements.head.value+'/'
                     }
                 $.ajax({
                     type:'POST',
@@ -559,8 +560,10 @@
                     that.project = new Project({id:option.id})
                     that.project.fetch({
                         success : function(e) {
+                            //console.log(e)
                         var data = e.attributes.task_set
                         var template = _.template($('#task-list-template').html())
+                        console.log(e)
                         $('.cont').html(template({'project':data}))
                             
                         }

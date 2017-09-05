@@ -37,7 +37,7 @@ class ProjectSeralizer(serializers.HyperlinkedModelSerializer):
     task_set = Taskserializer(required=False,many=True)
     class Meta:
         model = Project
-        fields=('id','name','task_set','description')
+        fields=('id','name','description','head','task_set')
 
 class SentItemSerializer(serializers.HyperlinkedIdentityField):
     class Meta:

@@ -1,4 +1,15 @@
-{% extends 'base.html' %} {% block title %} {% if compose %} Compose | WorkFlows {% endif %} {% if inbox %} Inbox | WorkFlows {% endif %} {% endblock %} {% block sidebar %}
+{% extends 'base.html' %} 
+{% block title %}
+ {% if compose %} Compose | WorkFlows 
+ {% endif %} 
+ {% if inbox %} Inbox | WorkFlows 
+ {% endif %} 
+ {% if sent %} Sent | WorkFlows 
+ {% endif %} 
+ {% if sent_item %} {{mail.subject}} | WorkFlows 
+ {% endif %}  
+ {% endblock %}
+  {% block sidebar %}
 <!--<div class="affix-top hidden-print bs-docs-slidebar hidden-xs">-->
 <div class="affix-top hidden-print bs-docs-slidebar">
     <h3>Email</h3>
@@ -7,27 +18,37 @@
         <div id="demo" class="collapse in">
             <!--  class="collapse in">-->
             {% if compose %}
-            <a class="list-group-item active" href="/compose">Compose</a> {% else %}
-
-            <a class="list-group-item" href="/compose">Compose</a> {% endif %} {% if inbox %}
-            <a class="list-group-item active" href="/email">Inbox</a> {% else %}
-            <a class="list-group-item" href="/email">Inbox</a> {% endif %} {% if sent %}
-            <a class="list-group-item action" href="/sent">Sent Items</a> {% else %}
-            <a class="list-group-item" href="/sent">Sent Items</a> {% endif %} {% if trans %}
-            <a class="list-group-item active" href="/trans">Trans</a> {% else %}
-            <a class="list-group-item" href="/trans">Trans</a> {% endif %}
+            <a class="list-group-item active" href="/compose">Compose</a> 
+            {% else %}
+            <a class="list-group-item" href="/compose">Compose</a>
+            {% endif %}
+            {% if inbox %}
+            <a class="list-group-item active" href="/email">Inbox</a>
+            {% else %}
+            <a class="list-group-item" href="/email">Inbox</a> 
+            {% endif %} 
+            {% if sent or sent_item %}
+            <a class="list-group-item active" href="/sent">Sent Items</a> 
+            {% else %}
+            <a class="list-group-item" href="/sent">Sent Items</a> 
+            {% endif %} 
+            {% if trans %}
+            <a class="list-group-item active" href="/trans">Trans</a>
+            {% else %}
+            <a class="list-group-item" href="/trans">Trans</a>
+            {% endif %}
         </div>
     </div>
 
 </div>
-{% endblock %} {% block content %} {% if mail %}
+{% endblock %} 
+{% block content %}
+{% if mail or sent_item %}
 <div class="cont">
     <div style="margin-top: 15px;">
         <h3>{{ mail.subject }}</h3>
     </div>
     <hr>
-
-
     <div>
         <div style="float: left">
             <span style="font-weight: bold">From : </span> {{ mail.sender_id }}
@@ -48,7 +69,29 @@
         background: yellow
     }
 </style>
-{% elif compose %} {% include 'ck.html' %}
+
+{% elif sent %}
+
+<table class="table">
+    <thead>
+        <th><input type="checkbox" id="all"></th>
+        <th> Name </th>
+        <th> Subject </th>
+        <th> Time </th>
+        <th> Receiver </th>
+    </thead>
+    {% for i in email %}
+    <tr>
+        <td><input class='check' type="checkbox"></td>
+        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{i.sender_id}}</td>
+        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{i.subject}}</td>
+        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{i.date.date}}</td>
+        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{i.receiver_id.first_name}}</td>
+    </tr>
+    {% endfor %}
+</table>        
+{% elif compose %}
+ {% include 'ck.html' %}
 <!--
         <div>
             <h3>New Message</h3>
