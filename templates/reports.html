@@ -37,23 +37,16 @@
 <div class="col-sm-12">
     <span class="coldata"></span>
 </div>
-<div class="col-sm-10">
+<div class="col-sm-7">
     <div class="ch1">
         <canvas id="myChart"></canvas>
     </div>
 </div>
-<!--<div class="col-sm-6">
-    <div class="ch2">
-        <canvas id="myChart2"></canvas>
-    </div>
-</div>-->
-
-<div class="col-sm-6">
+<div class="col-sm-5">
     <div class="ch3">
         <canvas id="myChart3"></canvas>
     </div>
 </div>
-
 
 
 {% endblock %} {% block script %}
@@ -68,7 +61,6 @@
                     dataType: 'text',
                     success: function(data) {
                         sch(data, par)
-                            //console.log(data)
                     }
                 })
         } else if (par == 'Project') {
@@ -89,7 +81,6 @@
                         stat.push(json.status[i])
                         option.push(json.option[i])
                     }
-
                     $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
                     $('canvas').remove()
                     html = '<canvas id="myChart"></canvas>'
@@ -128,29 +119,13 @@
                             //console.log(data)
                     }
                 })
-
-
         }
-
     }
     pont = '/api/project_data/Project'
     $.ajax({
         method: 'GET',
         url: pont,
         success: function(data) {
-            /*            project = []
-                        count = []
-                        console.log(data)
-
-                        var json = $.parseJSON(data);
-
-                        for (var i = 0; i < json.label.length; i++) {
-                            project.push(json.label[i].fields.name)
-                            count.push(json.count[i])
-                            showchart('Projects');
-
-                        }*/
-
             project = []
             count = []
             stat = []
@@ -183,31 +158,17 @@
         project = []
         count = []
         var json = $.parseJSON(data)
-            //    console.log(json.label)
-
-        //project=data.labesl
-        //count = data
-        // console.log(json.count)
         for (var i = 0; i < json.label.length; i++) {
-            //console.log(json[i].label.fields.name)
-
             nm = json.label[i].fields
             project.push(nm.first_name)
-                //console.log('sdfs')
-                //console.log(json.label[i].fields.name)
             count.push(json.count[i])
         }
-        //console.log(project)
-        //console.log(count)
-
-        //console.log(count.fields)
         $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
         $('canvas').remove()
         html = '<canvas id="myChart"></canvas>'
         html2 = '<canvas id="myChart2"></canvas>'
         $('.ch1').html(html)
         $('.ch2').html(html2)
-            //var ctx = document.getElementById("myChart").getContext('2d'); 
         showchart(par);
     }
 
@@ -364,23 +325,23 @@
                     html = '<canvas id="myChart3"></canvas>'
                         //html2='<canvas id="myChart2"></canvas>'
                     $('.ch3').html(html)
-                        //$('.ch2').html(html2)    
+                        //$('.ch2').html(html2) 
+                }   
                     singlechart(par, project, count)
-                }
+                
             }
         })
 
     }
-
-
     function singlechart(par, project, count) {
+        console.log(project)
+        console.log(count)
         var ctx2 = document.getElementById("myChart3").getContext('2d');
         var myChartss = new Chart(ctx2, {
             type: 'polarArea',
             data: {
                 labels: project,
-                //data: {
-                //labels: ["HTML/CSS","jQuery","PHP/MYSQL","PS/AI","PR/AE","Processing","Arduino"],
+                
                 datasets: [
                     {
                     label: project,
