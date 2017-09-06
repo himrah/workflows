@@ -121,6 +121,20 @@ def Logout(request):
     return render_to_response('registration/logout.html')
 #    request.user.logout()
 
+
+def task_by_emp(request,name):
+    option = [i[0] for i in Task.objects.all()[0].choices]
+    dataset={}
+    for i in option:
+        l=Task.objects.filter(assign_id=User.objects.get(username=name.lower()).id,status=i)
+        dataset.update({i:json.loads(serializers.serialize('json',l))})    
+    js={
+        'option':option,
+        'label':dataset
+    }
+    return JsonResponse(js)
+
+
 @login_required(login_url='/accounts/login')
 def Single(request,project):
     f=Task.objects.filter()

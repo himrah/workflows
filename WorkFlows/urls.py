@@ -65,6 +65,7 @@ urlpatterns = [
     url(r'^api/project_data$',project_data,name='project-data'),
     url(r'^api/project_data/(?P<what>.*)/$',prj_data,name='prj-data'),
     url(r'^api/single_project/(?P<project>.*)/$',Single,name='single-project'),
+    url(r'^api/task_by_emp/(?P<name>.*)/$',task_by_emp,name='emp-task'),
     url(r'^api/employee/$',emp_data,name='emp-data'),
     url(r'^sending/',sending,name='sending'),
     url(r'^sent/$',SentView,name='sent-view'),
@@ -78,4 +79,5 @@ urlpatterns = [
     url(r'^accounts/profile/',profile,name='profile'),
     url(r'^get_auth_token/$', authtoken_views.obtain_auth_token, name='get_auth_token'),
     url(r'^search/(?P<srchkey>.*)/$',Searching,name='search'),
+
 ]

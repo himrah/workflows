@@ -34,15 +34,24 @@
 </div>
 
 {% endblock %} {% block content %} {{project}}
+<!--
 <div class="col-sm-12">
+    <div class="col-sm-6">
     <span class="coldata"></span>
-</div>
+    </div>
+    <div class="col-sm-5">
+    <span class="coldata1" style='margin-right:1cm;float:right'></span>
+    </div>
+
+</div>-->
 <div class="col-sm-7">
+    <span class="coldata"></span>
     <div class="ch1">
         <canvas id="myChart"></canvas>
     </div>
 </div>
 <div class="col-sm-5">
+    <span class="coldata1"></span>
     <div class="ch3">
         <canvas id="myChart3"></canvas>
     </div>
@@ -81,13 +90,17 @@
                         stat.push(json.status[i])
                         option.push(json.option[i])
                     }
-                    $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+                    $('#sub-con').remove()
+                    var hh="<h3 id=rtype title="+par+">"+par.toUpperCase()+"<h3>"
+
+//                    $('.coldata').html('<h3 id="rtype" >' + par.toUpperCase() + '<h3>')
+                    $('.coldata').html(hh)
                     $('canvas').remove()
                     html = '<canvas id="myChart"></canvas>'
                     html2 = '<canvas id="myChart2"></canvas>'
                     $('.ch1').html(html)
                     $('.ch2').html(html2)
-                    showchart(par);
+                    showchart(par,'Task');
                 }
             })
 
@@ -105,17 +118,19 @@
                         for (i = 0; i < json.label.length; i++) {
                             project.push(json.label[i].fields.name)
                             count.push(json.count[i])
-
                         }
                         console.log(project)
                         console.log(count)
-                        $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+                        var hh="<h3 id=rtype title="+par+">"+par.toUpperCase()+"<h3>"
+                        //$('.coldata').html('<h3 id="rtype">' + par.toUpperCase() + '<h3>')
+                        $('.coldata').html(hh)
                         $('canvas').remove()
+                        $('#sub-con').remove()
                         html = '<canvas id="myChart"></canvas>'
                         html2 = '<canvas id="myChart2"></canvas>'
                         $('.ch1').html(html)
                         $('.ch2').html(html2)
-                        showchart(par)
+                        showchart(par,'Project')
                             //console.log(data)
                     }
                 })
@@ -138,14 +153,17 @@
                 stat.push(json.status[i])
                 option.push(json.option[i])
             }
-
-            $('.coldata').html('<h3>' + 'project'.toUpperCase() + '<h4>')
+            var par='Project'
+            var hh="<h3 id=rtype title="+par+">"+par.toUpperCase()+"<h3>"
+            //$('.coldata').html('<h3 id="rtype">' + 'project'.toUpperCase() + '<h3>')
+            $('.coldata').html(hh)
             $('canvas').remove()
+            $('#sub-con').remove()
             html = '<canvas id="myChart"></canvas>'
             html2 = '<canvas id="myChart2"></canvas>'
             $('.ch1').html(html)
             $('.ch2').html(html2)
-            showchart('Project');
+            showchart('Project','Project');
         },
         error: function(error_data) {
             console.log('errro')
@@ -163,20 +181,23 @@
             project.push(nm.first_name)
             count.push(json.count[i])
         }
-        $('.coldata').html('<h3>' + par.toUpperCase() + '<h4>')
+        //var hh="<h3 id=rtype title="+par//+par.toUpperCase()+"<h3>"
+        var hh="<h3 id=rtype title="+par+">"+par.toUpperCase()+"<h3>"
+            //var sn=">"+par.toUpperCase()+"</h3>"    
+        $('.coldata').html(hh)    
+        //$('.coldata').html('<h3 id="rtype">' + par.toUpperCase() + '<h3>')
         $('canvas').remove()
+        $('#sub-con').remove()
+
         html = '<canvas id="myChart"></canvas>'
         html2 = '<canvas id="myChart2"></canvas>'
         $('.ch1').html(html)
         $('.ch2').html(html2)
-        showchart(par);
+        showchart(par,'Task');
     }
-
-
 
     function dpt(department) {
         point = '/api/project_data/' + department + '/'
-
         $.ajax({
             method: 'GET',
             url: point,
@@ -184,16 +205,9 @@
                 console.log(data)
                 console.log(data.count)
                 console.log(data.label)
-
             }
-
         })
     }
-
-
-
-
-
     function showcharts(par) {
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
@@ -202,7 +216,6 @@
                 labels: project,
                 datasets: loop(),
             },
-
             options: {
                 scales: {
                     yAxes: [{
@@ -226,8 +239,6 @@
                 }
             }
         });
-
-
     }
 
 
@@ -241,17 +252,10 @@
             'rgba(255, 206, 86,',
             'rgba(120, 190, 80,'
         ]
-
-
         for (i = 0; i < option.length; i++) {
             nu = 'rgba(' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ','
-
-            //bnu='rgba('+randomNumberFromRange(1,255)+', 99, 132,'
             d.push({
                 label: option[i],
-                //backgroundColor:stat[i],
-                //highlightFill: "rgba(220,220,220,0.75)",
-
                 backgroundColor: co[i] + 0.2 + ')',
                 borderColor: co[i] + 1 + ')',
                 //backgroundColor:nu+0.5+')',
@@ -290,6 +294,7 @@
         var name = activePoints[0]._model.label
             //console.log(name)
             //console.log(theElement)
+        console.log(array)
         GetJsonByName(name)
     }
     /*
@@ -305,9 +310,20 @@
 
     function GetJsonByName(par) {
         //console.log(par)
+        console.log($('#rtype'))
+        if ($('#rtype').attr('title')=='Employees'){
+            var api='/api/task_by_emp/' + par
+        }
+        else if($('#rtype').attr('title')=='Project'){
+            var api='/api/single_project/' + par
+        }
+        else{
+            var api='/api/task_by_depatment/' + par
+        }
         $.ajax({
             method: 'GET',
-            url: '/api/single_project/' + par,
+            //url: '/api/single_project/' + par,
+            url:api,
             success: function(data) {
                 //console.log(data)
                 //console.log(data.Complete)
@@ -318,9 +334,7 @@
                 for (var i = 0; i < project.length; i++) {
                     count.push(data.label[project[i]].length)
                         //console.log(data.label[op[i]].length)
-
-
-                    //$('.coldata').html('<h3>'+par.toUpperCase()+'<h4>')
+                    
                     $('#myChart3').remove()
                     html = '<canvas id="myChart3"></canvas>'
                         //html2='<canvas id="myChart2"></canvas>'
@@ -334,6 +348,7 @@
 
     }
     function singlechart(par, project, count) {
+        $('.coldata1').html('<h3 id="sub-con" align=center>'+par.toUpperCase()+'<h3>')
         console.log(project)
         console.log(count)
         var ctx2 = document.getElementById("myChart3").getContext('2d');
@@ -379,71 +394,13 @@
                 }*/
             }
         });
-
-/*        var ctxx = document.getElementById("myChart3").getContext('2d');
-        myChartss = new Chart(ctxx, {
-            type: 'bar',
-            data: {
-                labels: project,
-                datasets: [{
-                    //                    xAxisID:'emp',
-                    //                  yAxisID:'task',
-                    label: 'sdf',
-                    data: count,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(120, 190, 80, 0.2)',
-                        'rgba(54, 216, 186, 0.2)',
-                        'rgba(100, 129, 100, 0.2)',
-                        'rgba(200, 109, 180, 0.2)',
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(120, 190, 80, 1)',
-                        'rgba(200, 216, 186, 1)',
-                        'rgba(100, 129, 100, 1)',
-                        'rgba(200, 109, 180, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-
-            options: {
-                //onClick : graphClickEvent,
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Task'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: par
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });*/
     };
 
 
 
     var myChart
 
-    function showchart(par) {
+    function showchart(par,vname) {
         var ctx = document.getElementById("myChart").getContext('2d');
         myChart = new Chart(ctx, {
             type: 'bar',
@@ -482,7 +439,7 @@
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Task'
+                            labelString: vname
                         },
                         ticks: {
                             beginAtZero: true
