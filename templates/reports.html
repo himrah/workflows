@@ -56,9 +56,40 @@
         <canvas id="myChart3"></canvas>
     </div>
 </div>
+<div>
+    <div class='cont'></div>
+</div>
 
+{% endblock %} 
 
-{% endblock %} {% block script %}
+{% block BackboneScript %}
+<script type="text/template" id="task-list-template">
+    
+   <!--<h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> -->
+   <br><br>
+   <hr/>
+    <table class='table'>
+        <thead>
+                <th> Name </th>
+                <th> Created Date </th>
+                <th> Created By </th>
+                <th> Priority </th>
+                <th> Status </th>
+        </thead>
+        <% _.each(project,function(p) { %>
+            <tr>
+                <td><a href="#task/<%=p.id %>"><%= p.fields.name %></a></td>
+                <td><%= p.fields.created_date %></td>
+                <td><%= p.fields.created_by %></td>
+                <td><%= p.fields.priority %></td>
+                <td><%= p.fields.status %></td>
+            </tr>
+        <% }); %>
+    </table>                
+</script>
+{% endblock %}
+
+{% block script %}
 <script type="text/javascript">
     function ajaxcl(par) {
         //console.log(par)
@@ -208,7 +239,7 @@
             }
         })
     }
-    function showcharts(par) {
+/*    function showcharts(par) {
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -283,7 +314,7 @@
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-
+    */
 
     function graphClickEvent(evt, array) {
         var activePoints = myChart.getElementAtEvent(evt);
@@ -329,6 +360,8 @@
                 //console.log(data.Complete)
                 //var json = $.parseJSON(data)
                 //var json = $.parseJSON(data)
+                //console.log(data)
+                sproject=data
                 var project = data.option
                 var count = []
                 for (var i = 0; i < project.length; i++) {
@@ -340,19 +373,40 @@
                         //html2='<canvas id="myChart2"></canvas>'
                     $('.ch3').html(html)
                         //$('.ch2').html(html2) 
-                }   
+                }
+                    //sproject=project
+                    //scount=count   
                     singlechart(par, project, count)
                 
             }
         })
 
     }
+
+    function AreaChartClick(e)
+    {
+        
+        var evn=myChartss.getElementAtEvent(e)
+        var op=evn[0]._model.label
+        console.log(evn[0]._model.label);
+        //console.log(sproject.label[op])
+        var data = sproject.label[op]
+        var template = _.template($('#task-list-template').html())
+        //$('.cont').html("htmlsdf")
+        console.log(data)
+        $('.cont').html(template({'project':data}))
+        //console.log(scount)
+    }
+
+    
+
+    var myChartss
     function singlechart(par, project, count) {
         $('.coldata1').html('<h3 id="sub-con" align=center>'+par.toUpperCase()+'<h3>')
         console.log(project)
         console.log(count)
         var ctx2 = document.getElementById("myChart3").getContext('2d');
-        var myChartss = new Chart(ctx2, {
+        myChartss = new Chart(ctx2, {
             type: 'polarArea',
             data: {
                 labels: project,
@@ -384,6 +438,7 @@
                 }]
             },
             options: {
+                onClick: AreaChartClick,
                 responsive : true,
 /*                scales: {
                     yAxes: [{
@@ -395,8 +450,6 @@
             }
         });
     };
-
-
 
     var myChart
 
