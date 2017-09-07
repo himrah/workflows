@@ -246,82 +246,8 @@
             }
         })
     }
-/*    function showcharts(par) {
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: project,
-                datasets: loop(),
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Task'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: par
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
 
 
-    function loop() {
-        var d = []
-        var min = 1
-        var max = 255
-
-        co = ['rgba(255, 99, 132,',
-            'rgba(54, 162, 235,',
-            'rgba(255, 206, 86,',
-            'rgba(120, 190, 80,'
-        ]
-        for (i = 0; i < option.length; i++) {
-            nu = 'rgba(' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ',' + randomNumberFromRange(1, 255) + ','
-            d.push({
-                label: option[i],
-                backgroundColor: co[i] + 0.2 + ')',
-                borderColor: co[i] + 1 + ')',
-                //backgroundColor:nu+0.5+')',
-                //borderColor:nu+1+')',
-                //fillColor:'rgba('+getRandomColor()+','+getRandomColor()+','+getRandomColor()+','+0.2+')',
-                borderWidth: 1,
-                data: stat[i]
-
-            })
-        }
-        return d
-    }
-
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-
-    function randomNumberFromRange(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
-    }
-
-    */
 
     function graphClickEvent(evt, array) {
         var activePoints = myChart.getElementAtEvent(evt);
@@ -519,50 +445,6 @@
             }
         });
 
-
-        /*var ctx2 = document.getElementById("myChart2").getContext('2d');
-        var myCharts = new Chart(ctx2, {
-            type: 'polarArea',
-            data: {
-                labels: project,
-                datasets: [{
-                    label: '#sd',
-                    data: count,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(120, 190, 80, 0.2)',
-                        'rgba(54, 216, 186, 0.2)',
-                        'rgba(100, 129, 100, 0.2)',
-                        'rgba(200, 109, 180, 0.2)',
-
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(120, 190, 80, 1)',
-                        'rgba(200, 216, 186, 1)',
-                        'rgba(100, 129, 100, 1)',
-                        'rgba(200, 109, 180, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                //onClick: graphClickEvent,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });*/
-
-
     }
     $(document).ready(function() {
         $('label.tree-toggler').click(function() {
@@ -570,6 +452,4 @@
         });
     });
 </script>
-
-
 {% endblock %}
