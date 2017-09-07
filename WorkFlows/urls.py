@@ -66,6 +66,7 @@ urlpatterns = [
     url(r'^api/project_data/(?P<what>.*)/$',prj_data,name='prj-data'),
     url(r'^api/single_project/(?P<project>.*)/$',Single,name='single-project'),
     url(r'^api/task_by_emp/(?P<name>.*)/$',task_by_emp,name='emp-task'),
+    url(r'^api/project_by_department/(?P<name>.*)/$',prj_by_dpt,name='prj-by-dpt'),
     url(r'^api/employee/$',emp_data,name='emp-data'),
     url(r'^sending/',sending,name='sending'),
     url(r'^sent/$',SentView,name='sent-view'),

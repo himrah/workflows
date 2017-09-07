@@ -184,7 +184,7 @@
             html2 = '<canvas id="myChart2"></canvas>'
             $('.ch1').html(html)
             $('.ch2').html(html2)
-            showchart('Project','Project');
+            showchart('Project','Task');
         },
         error: function(error_data) {
             console.log('errro')
@@ -258,16 +258,19 @@
 
     function GetJsonByName(par) {
         //console.log(par)
-        console.log($('#rtype'))
+        //console.log($('#rtype'))
         if ($('#rtype').attr('title')=='Employees'){
             var api='/api/task_by_emp/' + par
         }
         else if($('#rtype').attr('title')=='Project'){
             var api='/api/single_project/' + par
         }
+/*        else if($('#rtype').attr('title')=='Department'){
+            var api='/api/project_by_department/' + par
+        }*/
         else{
-            var api='/api/task_by_depatment/' + par
-        }
+            var api='/api/project_by_department/'+par
+            }
         $.ajax({
             method: 'GET',
             //url: '/api/single_project/' + par,
@@ -380,7 +383,7 @@
                 datasets: [{
                     //                    xAxisID:'emp',
                     //                  yAxisID:'task',
-                    label: 'sdf',
+                    label: vname,
                     data: count,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

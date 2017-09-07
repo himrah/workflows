@@ -47,6 +47,7 @@ class SentItemSerializer(serializers.HyperlinkedIdentityField):
 
 
 class DepartmentSerializer(serializers.HyperlinkedModelSerializer):
+    project_set = ProjectSeralizer(required=False,many=True)
     class Meta:
         model = Department
         fields = ('id','name','head','project_set')

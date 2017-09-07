@@ -122,6 +122,25 @@ def Logout(request):
 #    request.user.logout()
 
 
+def prj_by_dpt(request,name):
+    #option = [i.name for i in l]
+    d=Department.objects.get(name=name)
+    project_name=[i.name  for i in d.project_set.all()]
+    dataset={}
+    for i in project_name:
+        #data=serializers.serialize('json',d.project_set.all())
+        data=serializers.serialize('json',Project.objects.get(name=i).task_set.all())
+        dataset.update({i:json.loads(data)})
+    js={
+        'option':project_name,
+        'label':dataset
+    }
+    return JsonResponse(js)
+    #return render_to_response('home.html')
+
+
+
+
 def task_by_emp(request,name):
     option = [i[0] for i in Task.objects.all()[0].choices]
     dataset={}
