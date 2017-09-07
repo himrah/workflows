@@ -6,7 +6,7 @@
 
     <div class="list-group">
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
-        <div id="demo">
+        <div id="demo" style="cursor:pointer">
             <!--  class="collapse in">-->
             {% if project %}
 
@@ -44,20 +44,23 @@
     </div>
 
 </div>-->
-<div class="col-sm-7">
-    <span class="coldata"></span>
-    <div class="ch1">
-        <canvas id="myChart"></canvas>
+<div>
+    <div class="col-sm-7">
+        <span class="coldata"></span>
+        <div class="ch1">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
-</div>
-<div class="col-sm-5">
-    <span class="coldata1"></span>
-    <div class="ch3">
-        <canvas id="myChart3"></canvas>
+    <div class="col-sm-5">
+        <span class="coldata1"></span>
+        <div class="ch3">
+            <canvas id="myChart3"></canvas>
+        </div>
     </div>
 </div>
 <div>
-    <div class='cont'></div>
+    <br>
+    <div class='cont' style="margin-top:15px;"></div>
 </div>
 
 {% endblock %} 
@@ -66,9 +69,8 @@
 <script type="text/template" id="task-list-template">
     
    <!--<h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> -->
-   <br><br>
-   <hr/>
-    <table class='table'>
+<div id='t_record'>
+   <table class='table'>
         <thead>
                 <th> Name </th>
                 <th> Created Date </th>
@@ -78,14 +80,15 @@
         </thead>
         <% _.each(project,function(p) { %>
             <tr>
-                <td><a href="#task/<%=p.id %>"><%= p.fields.name %></a></td>
+                <td><a href="/rest/#task/<%=p.pk %>" target='_blank'><%= p.fields.name %></a></td>
                 <td><%= p.fields.created_date %></td>
                 <td><%= p.fields.created_by %></td>
                 <td><%= p.fields.priority %></td>
                 <td><%= p.fields.status %></td>
             </tr>
         <% }); %>
-    </table>                
+    </table> 
+</div>               
 </script>
 {% endblock %}
 
@@ -122,6 +125,7 @@
                         option.push(json.option[i])
                     }
                     $('#sub-con').remove()
+                    $('#t_record').remove()
                     var hh="<h3 id=rtype title="+par+">"+par.toUpperCase()+"<h3>"
 
 //                    $('.coldata').html('<h3 id="rtype" >' + par.toUpperCase() + '<h3>')
@@ -157,6 +161,7 @@
                         $('.coldata').html(hh)
                         $('canvas').remove()
                         $('#sub-con').remove()
+                        $('#t_record').remove()
                         html = '<canvas id="myChart"></canvas>'
                         html2 = '<canvas id="myChart2"></canvas>'
                         $('.ch1').html(html)
@@ -190,6 +195,7 @@
             $('.coldata').html(hh)
             $('canvas').remove()
             $('#sub-con').remove()
+            $('#t_record').remove()
             html = '<canvas id="myChart"></canvas>'
             html2 = '<canvas id="myChart2"></canvas>'
             $('.ch1').html(html)
@@ -219,6 +225,7 @@
         //$('.coldata').html('<h3 id="rtype">' + par.toUpperCase() + '<h3>')
         $('canvas').remove()
         $('#sub-con').remove()
+        $('#t_record').remove()
 
         html = '<canvas id="myChart"></canvas>'
         html2 = '<canvas id="myChart2"></canvas>'
@@ -402,6 +409,7 @@
 
     var myChartss
     function singlechart(par, project, count) {
+        $('#t_record').remove()
         $('.coldata1').html('<h3 id="sub-con" align=center>'+par.toUpperCase()+'<h3>')
         console.log(project)
         console.log(count)
