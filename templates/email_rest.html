@@ -295,23 +295,33 @@
 <script type="text/template" id='mail-here'>
 
 <table class="table">
+    <thead>
         <th><input type="checkbox" id="all"></th>
         <th> Name </th>
         <th> Subject </th>
         <th> Time </th>
+
          <% _.each(mail,function(i) { %>
-         <tr>
+         </thead>
+         <% if (!i.is_read){ %>                
+         <tr style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
              <td>
              <input onclick="not()" class="check" value="5" type="checkbox"></td>
              <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
              <td><%=i.subject%></td>
              <td><%=i.date%></td>
+        </tr>     
+             <% }else{%>
+        <tr style="draggable:true">
+                <td>
+                <input onclick="not()" class="check" value="5" type="checkbox"></td>
+                <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
+                <td><%=i.subject%></td>
+                <td><%=i.date%></td>
+            </tr>
           </td>      
         <% }); %>
-
 </table>
-
-
 </script>
 
 <!--    <table class="table" id="table">

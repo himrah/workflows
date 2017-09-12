@@ -71,7 +71,10 @@
 </style>
 
 {% elif sent %}
-
+<div>
+    <a class="btn">Trans</a>
+    <a class="btn">Mark as Under</a>
+</div>
 <table class="table">
     <thead>
         <th><input type="checkbox" id="all"></th>
@@ -166,10 +169,14 @@
 
 
 {% else %}
+<br>
 <div>
-    <a href="#" class="btn btn-primary">Trans</a>
-</div>
-<table class="table" id="table">/home/rahul
+    <input type='button' class=btn value='Delete'/>
+    <input type="button" class="btn" value='Marks as Under'>
+<!--        <a class="btn btn-primary">Trans</a>
+        <a class="btn btn-primary">Mark as Under</a>-->
+    </div>
+<table class="table" id="table">
     <thead>
         <th><input type="checkbox" id="all"></th>
         <th> Name </th>

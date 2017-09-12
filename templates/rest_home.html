@@ -137,8 +137,12 @@
 
 {% block BackboneScript %}
 <script type="text/template" id="task-list-template">
-    
-   <h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> 
+
+    {% if 'Workflow.add_task' in user.get_all_permissions %}
+<!--        <a class="list-group-item" href="#createproject">Create New</a>-->
+    <h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> 
+    {% endif %}
+ <!--  <h4 align='center'><a href='#createtask/'>Create a new Task</a></h4> -->
     <table class='table'>
         <thead>
                 <th> Name </th>
