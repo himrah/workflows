@@ -185,7 +185,7 @@
         <th> Receiver </th>
     </thead>
     {% for i in email %} {% if i.is_read %}
-    <tr draggable="true">
+    <tr draggable="true" id="{{ i.id }}" class='row_data' style="background: rgba(243,243,243,.85);draggable:true">
         <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.sender_id }}</td>
@@ -194,8 +194,7 @@
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
     </tr>
     {% else %}
-    <tr id="{{ i.id }}" class='row_data' style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
-
+    <tr draggable="true" style="font-weight: bold;">
         <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.sender_id }}</td>

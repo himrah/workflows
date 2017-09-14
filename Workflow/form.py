@@ -91,10 +91,6 @@ class TaskEditForm(forms.ModelForm):
             #,widget=forms.Select(attrs={'class':'hidden'})
         }
 
-
-
-
-
 class InboxForm(forms.ModelForm):
     content = Inbox
     content = forms.CharField(widget=CKEditorWidget())

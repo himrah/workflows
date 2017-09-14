@@ -320,7 +320,7 @@
                 <td><%=i.date%></td>
             </tr>
           </td>      
-        <% }); %>
+        <% }}); %>
 </table>
 </script>
 
@@ -470,19 +470,36 @@
 
 
     var EmailView = Backbone.View.extend({
+
         render:function(){
+            console.log('sdf')
             var that = this;
             var email = new Emails()
             email.fetch({
                 success:function(data){
-                    var d = data.attributes
-                    var template = _.template($('#mail-here').html())
-                    $('.cont-here').html(template({'mail':data.attributes}))                    
-                    
-                    console.log(d)
+                    //var d = data.attributes
+    //                var template = _.template($('#mail-here').html())
+  //                  var template = _.template($('#mail-here').html())
+//                    $('.cont-here').html(template({'mail':data.attributes}))
+
+                    var templates = _.template($('#mail-here').html())
+                    $('.cont-here').html(templates({'mail':data.attributes}))
+                    //console.log(d)
                 }
             })
         },
+
+/*        render:function(){
+            var email = new Emails();
+            email.fetch({
+                success : function (e) {
+                    var data = e.attributes
+                    var template = _.template($('#mail-here').html())
+                    $('.cont-here').html(template({'mail':e}))
+                }
+            })
+
+        },*/
         single:function(option){
             var that=this
             if(option.id){
