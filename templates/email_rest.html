@@ -466,7 +466,15 @@
 
     var Emails = Backbone.Model.extend({
         url:'/email/'
-    })    
+    }); 
+
+    var Sent = Backbone.Model.extend({
+        urlRoot:'/sent/'
+    });
+
+    var Sents = Backbone.Model.extend({
+        url:'/sent/'
+    })
 
 
     var EmailView = Backbone.View.extend({
@@ -518,8 +526,26 @@
                 var template = _.template($('#compose-msg').html())
                 $('.cont-here').html(template())                    
 
-        }
-    })
+        },
+        sent:function(){
+            var sent = new Sents();
+            sent.fetch({
+                success:function(data){
+                        console.log(data)
+                var template = _.template($('#mail-here').html())
+                $('.cont-here').html(template({'mail':data.attributes}))                                    
+                }
+                    
+//                var template = _.template($('#compose-msg').html())
+  //              $('.cont-here').html(template())                    
+
+                
+            })
+            //console.log('hsdjflkdjfsd')
+
+        },
+    });            
+   
 
     var eview = new EmailView()
     var Router = Backbone.Router.extend({
@@ -528,6 +554,7 @@
             'project/:id':'project',
             'email/:id':'email',
             'compose':'compose',
+            'sent':'sent',
             'task/edit/:id':'taskedit',
             'task/update/:id':'taskupdate',
             'createproject':'createproject',
@@ -553,6 +580,9 @@
         //console.log(id)
         //pview.taskedit({id:id})
         eview.compose()
+    });
+    router.on('route:sent',function(){
+        eview.sent()
     })
 /*        router.on('taskupdate',function(id){
         pview.taskupdate({id:id})

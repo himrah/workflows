@@ -188,8 +188,8 @@ def Home_rest(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
-    #t=Task.objects.filter(assign_id=user.id)
-    t=Task.objects.all()
+    t=Task.objects.filter(assign_id=user.id)
+    #t=Task.objects.all()
     pform=ProjectForm()
     form = TaskEditForm()
     return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
@@ -198,8 +198,8 @@ def Home(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
-    #t=Task.objects.filter(assign_id=user.id)
-    t=Task.objects.all()
+    t=Task.objects.filter(assign_id=user.id)
+    #t=Task.objects.all()
     
     form = TaskEditForm()
     return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
@@ -209,7 +209,7 @@ def Home(request):
 @login_required(login_url='/accounts/login')
 def TaskDetail(request,pk):
     p = Project.objects.all()
-    #pi = Project.objects.get(id=pid)
+    #p = Project.objects.get(id=pid)
     t=Task.objects.get(id=pk)
     user = request.user
     return render_to_response('home.html',{'task':t,'project':p,'work':'edit','user':user})
@@ -411,22 +411,22 @@ def ProjectTask(request,pk):
 
     p = Project.objects.all()
     pi = Project.objects.get(id=pk)
-    #t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
-    t=Task.objects.filter(project_id=pk)
+    t=Task.objects.filter(assign_id=request.user.id,project_id=pk)
+    #t=Task.objects.filter(project_id=pk)
     return render_to_response('home.html',{'project':p,'task':t,'pid':pi,'user':request.user})
 
 
 @login_required(login_url='/accounts/login')
 def Email_rest(request):
-    #e = Inbox.objects.filter(receiver_id_id=request.user.id)
-    e = Inbox.objects.all()
+    e = Inbox.objects.filter(receiver_id_id=request.user.id)
+    #e = Inbox.objects.all()
     cform = InboxForm()
 
     return render(request,'email_rest.html',{'email':e,'inbox':True,'cform':cform})
 
 def Email(request):
-    #e = Inbox.objects.filter(receiver_id_id=request.user.id)
-    e = Inbox.objects.all()
+    e = Inbox.objects.filter(receiver_id_id=request.user.id)
+    #e = Inbox.objects.all()
     cform = InboxForm()
 
     return render(request,'email.html',{'email':e,'inbox':True,'cform':cform})

@@ -131,6 +131,7 @@ class Sent_item(models.Model):
     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     subject = models.TextField(blank=True)
     content = RichTextField()
+    is_read = models.BooleanField(default=True)
     date = models.DateTimeField(default=datetime.now,blank=True)
     def __str__(self):
         return self.subject

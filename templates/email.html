@@ -72,8 +72,8 @@
 
 {% elif sent %}
 <div>
-    <a class="btn">Trans</a>
-    <a class="btn">Mark as Under</a>
+    <a class='btn tans' >Trans</a>
+    <a class='btn mark_unread'>Mark as Under</a>
 </div>
 <table class="table">
     <thead>
@@ -171,8 +171,8 @@
 {% else %}
 <br>
 <div>
-    <input type='button' class=btn value='Delete'/>
-    <input type="button" class="btn" value='Marks as Under'>
+    <input type='button' class='btn trans' value='Delete'/>
+    <input type="button" class='btn mark_unread' value='Mark as Under'>
 <!--        <a class="btn btn-primary">Trans</a>
         <a class="btn btn-primary">Mark as Under</a>-->
     </div>
@@ -186,7 +186,7 @@
     </thead>
     {% for i in email %} {% if i.is_read %}
     <tr draggable="true" id="{{ i.id }}" class='row_data' style="background: rgba(243,243,243,.85);draggable:true">
-        <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+        <td><input class="check" value="{{i.id}}" type="checkbox"></td>
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.sender_id }}</td>
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.subject }}</td>
@@ -195,7 +195,7 @@
     </tr>
     {% else %}
     <tr draggable="true" style="font-weight: bold;">
-        <td><input onclick="not()" class="check" value="5" type="checkbox"></td>
+        <td><input class="check" value={{i.id}} type="checkbox"></td>
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.sender_id }}</td>
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.subject }}</td>
@@ -302,6 +302,23 @@
     $(document).on('click', '.rowlink', function(e) {
         console.log($('.rowlink').attr('id'))
     });
+
+    $(document).on('click','.mark_unread',function(e){
+       //console.log('click'); 
+       var i;
+       var l=$('.check:checked');
+       var f=[];
+       $.each($('.check:checked'),function(){
+           f.push($(this).val());
+       })
+       
+       //for(i=0;i<l.length;i++){
+         //  console.log(l[i])
+       //}
+        //console.log($('.check:checked').val())
+    });
+
+
 
     function func(e) {
         console.log(e);

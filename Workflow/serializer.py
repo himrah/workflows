@@ -39,10 +39,10 @@ class ProjectSeralizer(serializers.HyperlinkedModelSerializer):
         model = Project
         fields=('id','name','description','head','task_set')
 
-class SentItemSerializer(serializers.HyperlinkedIdentityField):
+class SentItemSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Sent_item
-        fields = ('id','subject','content','sender_id','receiver_id','date')
+        fields = ('id','subject','content','sender_id','receiver_id','date','is_read')
 
 
 
