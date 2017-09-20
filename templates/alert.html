@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Alert
+{% endblock %}
+
+{% block sidebar %}
+
+<div class="affix-top hidden-print bs-docs-slidebar">
+    <h3>Alert</h3>
+    <div class="list-group">
+        <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
+        <div id="demo" class="collapse in">
+            <!--  class="collapse in">-->
+            <a class="list-group-item" href="#view">View</a>
+            <a class="list-group-item" href="#create">Create</a> 
+            <a class="list-group-item" href="#delete">Delete/update</a> 
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<table class="table">
+<thead>
+    <th>Name</th>
+    <th>Description</th>
+</thead>
+
+</table>
+
+
+{% endblock %}

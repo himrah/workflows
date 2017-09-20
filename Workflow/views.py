@@ -1,7 +1,6 @@
 from django.shortcuts import render,render_to_response,get_object_or_404
 from .models import *
 from .form import *
-#from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
 from rest_framework import viewsets
 from django.core.context_processors import csrf
@@ -139,6 +138,8 @@ def prj_by_dpt(request,name):
     #return render_to_response('home.html')
 
 
+def Alert(request):
+    return render_to_response('alert.html')
 
 
 def task_by_emp(request,name):
@@ -200,9 +201,10 @@ def Home(request):
     user = request.user
     t=Task.objects.filter(assign_id=user.id)
     #t=Task.objects.all()
-    
+    pform=ProjectForm()
     form = TaskEditForm()
-    return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+    return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+    #return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
 
 
@@ -238,10 +240,7 @@ def prj_data(request,what):
             'label':json.loads(p),
             'count':c
         }            
-
-
     else:    
-
         s_m=globals()[pp.capitalize()]
         option=[i[0] for i in s_m.objects.all()[0].choices]
         status=[]
@@ -256,18 +255,14 @@ def prj_data(request,what):
                 temp.append(cn.count(j))
             status.append(temp)    
 
-            #status.append([i['status'] for i in l])
-            #c.append(i.'project_set'.count())
-            #c.append(i.project_set.count())
-
-        js={
-        'label':json.loads(p),
-        'count':c,
-        'option':option,
-        'status':status
+            js={
+            'label':json.loads(p),
+            'count':c,
+            'option':option,
+            'status':status
 
 
-        }    
+            }    
     return JsonResponse(js)
 
 @login_required(login_url='/accounts/login')

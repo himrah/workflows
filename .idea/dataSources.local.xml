@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Sqlite (Xerial) - db.sqlite3" uuid="123e60e8-6e06-475c-9224-60bc7b32a5bc">
+      <secret-storage>master_key</secret-storage>
+      <auth-required>false</auth-required>
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Django default" uuid="518d53c8-e8d9-4fb9-8848-a71e4b4d6802">
+      <auth-required>false</auth-required>
+    </data-source>
+  </component>
+</project>
