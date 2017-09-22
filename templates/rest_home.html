@@ -258,8 +258,10 @@
                 <td><%=task.assign_name%></td>
             </tr>            
             <tr>
+                    {% if 'Workflow.delete_task' in user.get_all_permissions  %}
+                    <td><input type=submit class='btn btn-danger btn-block' value='Delete'/></td>
+                {% endif %}
                 <td colspan=2><a href='#task/edit/<%=task.id%>'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
-                
         </table>
 </script>
 
@@ -509,7 +511,6 @@
                         console.log('succ')
                         router.navigate('', {trigger:true});
                          //console.log("Success!"); 
-                    
                      },                    
                 })
 

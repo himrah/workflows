@@ -81,5 +81,6 @@ urlpatterns = [
     url(r'^accounts/profile/',profile,name='profile'),
     url(r'^get_auth_token/$', authtoken_views.obtain_auth_token, name='get_auth_token'),
     url(r'^search/(?P<srchkey>.*)/$',Searching,name='search'),
+    url(r'^export/$',export_csv,name='csv'),
 
 ]

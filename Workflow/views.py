@@ -560,3 +560,31 @@ def Edit(request,pk):
         form.save()
         return HttpResponseRedirect('/')
     return render(request,'home.html',{'form':form,'work':'taskedit','user':request.user})        """
+
+import csv
+def export_csv(requests):
+    from django.utils.encoding import smart_str
+    response=HttpResponse(content='text/csv')
+    row = csv.writer(response, csv.excel)
+    response.write(u'\ufeff'.encode('utf8'))
+    query=Task.objects.all()
+    response['Content-Disposition'] = 'attachment; filename="result.csv"'
+    #row=csv.writer(response)
+    #model=[]
+    header=['ID','Name','Task Description','Comments','Created By','Created Date','Modify By','Project Name','Priority','TAT','Status']
+    row.writerow(header)
+    for f in query:
+        row.writerow([
+            smart_str(f.id),
+            smart_str(f.name),
+            smart_str(f.task_description),
+            smart_str(f.comments),
+            smart_str(f.created_by),
+            smart_str(f.created_date),
+            smart_str(f.modify_by),
+            smart_str(f.project_id.name),
+            smart_str(f.priority),
+            smart_str(f.tat),
+            smart_str(f.status)
+        ])
+    return response
