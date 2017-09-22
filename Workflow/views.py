@@ -420,11 +420,11 @@ def Email_rest(request):
     return render(request,'email_rest.html',{'email':e,'inbox':True,'cform':cform})
 
 def Email(request):
-    e = Inbox.objects.filter(receiver_id_id=request.user.id)
-    #e = Inbox.objects.all()
+    #e = Inbox.objects.filter(receiver_id_id=request.user.id)
+    e = Inbox.objects.all()
     cform = InboxForm()
 
-    return render(request,'email.html',{'email':e,'inbox':True,'cform':cform})
+    return render(request,'email_rest.html',{'email':e,'inbox':True,'cform':cform})
 
 
 

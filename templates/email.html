@@ -190,7 +190,7 @@
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.sender_id }}</td>
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.subject }}</td>
-        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.date.date }}</td>
+        <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.date }}</td>
         <td onclick="window.document.location='{{ i.id }}'" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
     </tr>
     {% else %}
@@ -199,7 +199,7 @@
         <!--    <div onclick="window.document.location='{{ i.id }}'">-->
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.sender_id }}</td>
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.subject }}</td>
-        <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.date.date }}</td>
+        <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.date }}</td>
         <td onclick="myfunction({{ i.id }})" style="cursor:pointer">{{ i.receiver_id.first_name }}</td>
 
     </tr>
@@ -311,6 +311,8 @@
        $.each($('.check:checked'),function(){
            f.push($(this).val());
        })
+       
+
        
        //for(i=0;i<l.length;i++){
          //  console.log(l[i])

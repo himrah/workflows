@@ -66,7 +66,7 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             'name':TextInput(attrs={'class':'form-ctr'}),
             'description':Textarea(attrs={'class':'form-control'}),
-            'head':forms.Select(attrs={'class':'form-ctr'})
+            'head':forms.Select(attrs={'class':'form-control'})
         }
 
 

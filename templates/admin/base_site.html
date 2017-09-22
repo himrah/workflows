@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% block title %}Workflows Admin{% endblock %}
+{% block extrastyle %}
+<style>
+#header{
+    background-color:orange;
+    color:white;
+}
+#branding h1 a:link, #branding h1 a:visited{
+    color: white;
+}
+.module h2,.module caption,.inline-group h2 {
+    background: lightblue !important;
+}
+</style>
+{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Workflows administration</a></h1>
+{% endblock %}
+{% block nav-global %}{% endblock %}

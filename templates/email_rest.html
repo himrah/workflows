@@ -16,12 +16,12 @@
             <a class="list-group-item active" href="#compose">Compose</a> {% else %}
 
             <a class="list-group-item" href="#compose">Compose</a> {% endif %} {% if inbox %}
-            <a class="list-group-item active" href="#">Inbox</a> {% else %}
+            <a class="list-group-item " href="#">Inbox</a> {% else %}
             <a class="list-group-item" href="#">Inbox</a> {% endif %} {% if sent %}
             <a class="list-group-item action" href="#sent">Sent Items</a> {% else %}
             <a class="list-group-item" href="#sent">Sent Items</a> {% endif %} {% if trans %}
             <a class="list-group-item active" href="#trans">Trans</a> {% else %}
-            <a class="list-group-item" href="#trans">Trans</a> {% endif %}
+            <a class="list-group-item" href="#trans">Trash</a> {% endif %}
         </div>
     </div>
 
@@ -293,26 +293,32 @@
 {% block BackboneScript %}
 
 <script type="text/template" id='mail-here'>
-
+<div>
+    <input type='button' class='btn btn-default trans' value='Delete'/>
+    <input type="button" class='btn btn-default mark_unread' value='Mark as Under'>
+    <input type="button" class='btn btn-default Trash' value='Send to Trash'>
+<!--        <a class="btn btn-primary">Trans</a>
+        <a class="btn btn-primary">Mark as Under</a>-->
+    </div>
 <table class="table">
     <thead>
         <th><input type="checkbox" id="all"></th>
-        <th> Name </th>
+        <th> From </th>
         <th> Subject </th>
         <th> Time </th>
 
          <% _.each(mail,function(i) { %>
          </thead>
          <% if (!i.is_read){ %>                
-         <tr style="background: rgba(243,243,243,.85);font-weight: bold;draggable:true">
+         <tr style='font-weight: bold;'>
              <td>
              <input onclick="not()" class="check" value="5" type="checkbox"></td>
              <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
              <td><%=i.subject%></td>
-             <td><%=i.date%></td>
+             <td><%=i.date.date%></td>
         </tr>     
              <% }else{%>
-        <tr style="draggable:true">
+        <tr style="background: rgba(243,243,243,.85);draggable:true">
                 <td>
                 <input onclick="not()" class="check" value="5" type="checkbox"></td>
                 <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>

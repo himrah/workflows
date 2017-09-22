@@ -6,7 +6,7 @@
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
         <div id="demo" style="cursor:pointer">
             {% if pid == 'home' %}
-                <a class="list-group-item active" href="/">All</a>
+                <a class="list-group-item " href="/">All</a>
              {% else %}
                 <a class="list-group-item" href="/">All</a>
             {% endif %} 
@@ -28,11 +28,11 @@
 {% endblock %}
 
 {% block content %}
-
+<!--
 <div>
     <h5><a href='/'> Workflow</a>>><a href="/project/{{pid.id}}">{{pid.name}}</a></h5>
 </div>
-<div>
+<div>-->
     <div class='cont'></div>
 </div>
 <!--
@@ -199,7 +199,7 @@
                 <td><textarea class='form-control' name='description' cols="30" rows="10"></textarea></td>
             </tr> 
             <tr>
-                <td>Head : </td>
+                <td>Department : </td>
                 <td><!--<input type='text' head='head' class='form-control'>-->{{pform.head}}</td>
             </tr>
             <tr>

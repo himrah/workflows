@@ -137,7 +137,7 @@ class Sent_item(models.Model):
         return self.subject
 
 
-class Alert(models.Model):
+class Trash(models.Model):
     id = models.AutoField(primary_key=True)
     receiver_id = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     subject = models.TextField(blank=True)

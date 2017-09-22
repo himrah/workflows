@@ -4,28 +4,80 @@
 
             {% block content %}
             
-        <div class="col-md-6">
+        <div class="col-md-6" style="font-size:1.4em;">
             <div>
-            <h3>Welcome {{  user.first_name }} to you profile</h3>
+            <h2>Welcome {{  user.first_name }} to you profile</h2><br>
             </div>
             <div class="row1">
+
+<table class="table">
+    <tr>
+        <td>
+            Username :
+        </td>
+        <td>
+            {{ user.username }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Name :
+        </td>
+        <td>
+            {{ user.get_full_name }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Email :
+        </td>
+        <td>
+            {{ user.email }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Joining Date :
+        </td>
+        <td>
+            {{ join }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Group :
+        </td>
+        <td>
+            {{ user.groups.values_list.0.1 }}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><a class="btn btn-warning btn-block" href="/accounts/logout">Logout</a></td>
+    </tr>
+</table>            
+
+<!--
+                <table class=""><tr><td>
             <div>
                 Username : {{ user.username }}
-            </div>
+            </div></td><td>
+            <div>
+                Name : {{ user.get_full_name }}
+            </div></td><tr/><tr><td>     
             <div>
                 Email : {{ email }}
-            </div>
+            </div></td><tr/><tr><td>
             <div>
                 Joining Date : {{ join }}
-            </div>
+            </div></td><tr/><tr><td>
             <div>
-                Group : {{ group.name }}
-            </div>
+                Group : {{ user.groups.values_list.0.1 }}
+            </div></td><tr/><tr><td>
             <div>
                 {{ blog }}
-            </div>
-            <div>
-                <a href="/accounts/logout">Logout</a>
+            </div></td><tr/><table>
+            <div>-->
+                
             </div>
                 </div>
         </div>
