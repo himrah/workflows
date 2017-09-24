@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5bc76a6e-6bba-4c43-8a77-1f7725fcc6d6" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/css.html" afterPath="$PROJECT_DIR$/templates/css.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/js.html" afterPath="$PROJECT_DIR$/templates/js.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/rest_home.html" afterPath="$PROJECT_DIR$/templates/rest_home.html" />
     </list>
     <ignored path="WorkFlows.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,8 +47,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Workflow/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="986">
-              <caret line="77" column="29" selection-start-line="77" selection-start-column="29" selection-end-line="77" selection-end-column="29" />
+            <state relative-caret-position="170">
+              <caret line="516" column="22" selection-start-line="516" selection-start-column="22" selection-end-line="516" selection-end-column="22" />
               <folding>
                 <element signature="e#0#72#0" expanded="true" />
               </folding>
@@ -52,11 +56,51 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="rest_home.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/rest_home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="467">
+              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="css.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/css.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="js.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/js.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="105" selection-start-line="6" selection-start-column="105" selection-end-line="6" selection-end-column="105" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Workflow/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+            <state relative-caret-position="-1819">
+              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -67,43 +111,18 @@
       <file leaf-file-name="email.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/email.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1326">
-              <caret line="78" column="11" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
-              <folding>
-                <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#tr#1;n#table#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ck.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/ck.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="214">
+              <caret line="190" column="21" selection-start-line="190" selection-start-column="21" selection-end-line="190" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
-              <folding>
-                <element signature="e#618#659#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reports.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/reports.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="493">
+              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -113,8 +132,24 @@
         <entry file="file://$PROJECT_DIR$/WorkFlows/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="986">
-              <caret line="58" column="14" selection-start-line="58" selection-start-column="14" selection-end-line="58" selection-end-column="14" />
-              <folding />
+              <caret line="60" column="14" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
+              <folding>
+                <marker date="1506071828624" expanded="true" signature="0:308" placeholder="&quot;&quot;&quot;Django settings for WorkFlows project....&quot;&quot;&quot;" />
+                <marker date="1506071828624" expanded="true" signature="466:668" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="979:1261" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="996:1258" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="1315:1623" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="1680:2194" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2208:2336" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2225:2334" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2441:2577" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1506071828624" expanded="true" signature="2593:3164" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2599:3161" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2780:3154" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="2816:3143" placeholder="..." />
+                <marker date="1506071828624" expanded="true" signature="3216:3608" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1506071828624" expanded="true" signature="3628:3938" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,7 +171,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Workflow/admin.py" />
-        <option value="$PROJECT_DIR$/templates/css.html" />
         <option value="$PROJECT_DIR$/templates/nav.html" />
         <option value="$PROJECT_DIR$/Workflow/forms.py" />
         <option value="$PROJECT_DIR$/Workflow/form.py" />
@@ -148,10 +182,12 @@
         <option value="$PROJECT_DIR$/Workflow/models.py" />
         <option value="$PROJECT_DIR$/templates/ck.html" />
         <option value="$PROJECT_DIR$/templates/email.html" />
-        <option value="$PROJECT_DIR$/templates/js.html" />
         <option value="$PROJECT_DIR$/Workflow/views.py" />
         <option value="$PROJECT_DIR$/templates/reports.html" />
         <option value="$PROJECT_DIR$/WorkFlows/urls.py" />
+        <option value="$PROJECT_DIR$/templates/css.html" />
+        <option value="$PROJECT_DIR$/templates/js.html" />
+        <option value="$PROJECT_DIR$/templates/rest_home.html" />
       </list>
     </option>
   </component>
@@ -191,7 +227,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -234,27 +270,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Workflow" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WorkFlows" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WorkFlows" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="WorkFlows" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -608,16 +630,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Workflow/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="79" column="32" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/nav.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
@@ -629,10 +641,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#1;n#table#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -669,9 +678,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
           <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#659#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -706,10 +713,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#1;n#table#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -739,9 +743,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#659#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -806,7 +808,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1854">
           <caret line="103" column="23" selection-start-line="103" selection-start-column="23" selection-end-line="103" selection-end-column="23" />
-          <folding />
+          <folding>
+            <marker date="1506071828624" expanded="true" signature="0:308" placeholder="&quot;&quot;&quot;Django settings for WorkFlows project....&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="466:668" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="979:1261" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="996:1258" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="1315:1623" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="1680:2194" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2208:2336" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2225:2334" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2441:2577" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="2593:3164" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2599:3161" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2780:3154" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2816:3143" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="3216:3608" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="3628:3938" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -814,9 +832,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
-          <folding>
-            <element signature="e#618#659#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -899,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
@@ -922,13 +930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/css.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="74" selection-start-line="4" selection-start-column="74" selection-end-line="4" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Workflow/form.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -939,17 +940,23 @@
     <entry file="file://$PROJECT_DIR$/WorkFlows/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
-          <caret line="58" column="14" selection-start-line="58" selection-start-column="14" selection-end-line="58" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Workflow/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+          <caret line="60" column="14" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <marker date="1506071828624" expanded="true" signature="0:308" placeholder="&quot;&quot;&quot;Django settings for WorkFlows project....&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="466:668" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="979:1261" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="996:1258" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="1315:1623" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="1680:2194" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2208:2336" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2225:2334" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2441:2577" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="2593:3164" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2599:3161" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2780:3154" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="2816:3143" placeholder="..." />
+            <marker date="1506071828624" expanded="true" signature="3216:3608" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1506071828624" expanded="true" signature="3628:3938" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -960,34 +967,6 @@
         <state relative-caret-position="17">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/email.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
-          <caret line="78" column="11" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
-          <folding>
-            <element signature="n#style#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#tr#1;n#table#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/js.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="53" selection-start-line="2" selection-start-column="53" selection-end-line="2" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Workflow/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="77" column="29" selection-start-line="77" selection-start-column="29" selection-end-line="77" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#72#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1067,21 +1046,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/reports.html">
+    <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="493">
+          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WorkFlows/urls.py">
+    <entry file="file://$PROJECT_DIR$/Workflow/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+        <state relative-caret-position="-1819">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
-            <element signature="e#618#659#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Workflow/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="516" column="22" selection-start-line="516" selection-start-column="22" selection-end-line="516" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/reports.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="437" column="31" selection-start-line="437" selection-start-column="30" selection-end-line="437" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/js.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="105" selection-start-line="6" selection-start-column="105" selection-end-line="6" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/email.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="190" column="21" selection-start-line="190" selection-start-column="21" selection-end-line="190" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/css.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/rest_home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

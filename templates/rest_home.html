@@ -123,6 +123,37 @@
         }
     });
 
+    function delete_task(e){
+        var d=e;
+        console.log(e)
+        var csrftoken =  $('input[name=csrfmiddlewaretoken]').val()
+        $.confirm({
+        title: 'Confirm!',
+        content: 'Simple confirm!',
+        buttons: {
+
+        confirm: function () {
+            $.ajax({
+                type:'DELETE',
+                url:'/task/'+d,
+                data:d,
+                    beforeSend:function(xhr,settings){
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                    },
+                    crossDomain:false,
+                    contentType: "application/json; charset=utf-8",
+                success:function(e){
+               window.document.location='#'
+                $.alert('Confirmed!');
+                }
+            });
+        },
+        cancel: function () {
+        },
+    }
+});
+    }
+
     //$(document).click('')
 
     $(document).ready(function() {
@@ -258,8 +289,8 @@
                 <td><%=task.assign_name%></td>
             </tr>            
             <tr>
-                    {% if 'Workflow.delete_task' in user.get_all_permissions  %}
-                    <td><input type=submit class='btn btn-danger btn-block' value='Delete'/></td>
+                    {% if 'Workflow.delete_task' in user.get_all_permissions  %}{% csrf_token %}
+                    <td><input type=button class='btn btn-danger btn-block' onclick="delete_task(<%=task.id%>)" value='Delete'/></td>
                 {% endif %}
                 <td colspan=2><a href='#task/edit/<%=task.id%>'><input type=button class='btn btn-primary btn-block' value='Edit'/></a></td>
         </table>
@@ -361,41 +392,10 @@
                 <td colspan=2><input type=submit class='btn btn-primary btn-block' value='Update'/></a></td>
         </table>
     </form>
-    <script type='text/javascript'>
-        var $inputProduct = $("select[id='id_assign']")
-        
-        //document.getElementById("id_assign").append()
-//        $(inputProduct).each(function(i, v){ 
-            //$inputProduct.append($("<option>", { value: v, html: v }));
-  //              console.log(i)
-   //             console.log(v)
-        //});
-        
-        //$('#id_assign')    
-    </script>
-
-
 </script>
 
 
-
 <script>
-    $.fn.serializeObject = function() {
-        var o = {};
-        var a = this.serializeArray();
-        $.each(a, function() {
-            if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
-        };
-
 
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     
@@ -468,6 +468,7 @@
             {
                 ev.preventDefault()
                 console.log(project_id)
+//                console.log("sdfksdfhlsdhfjkshdfkjhsdlfk")
                 var api = '/task/'
                 var task = new Task()
                 this.form = $(ev.currentTarget)
@@ -488,7 +489,7 @@
                 dt['assign']='http://localhost:8000/api/user/'+this.form.context.elements.assign.value+'/'  
                 dt['id_created_date']=this.form.context.elements.created_date.value
                 dt['created_by']=this.form.context.elements.created_by.value 
-                dt['project_id']=project_id
+                dt['project_id']='http://localhost:8000/api/project/'+project_id+'/'
                 console.log(dt) 
 
                 $.ajax({
