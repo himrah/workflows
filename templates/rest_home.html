@@ -6,9 +6,9 @@
         <a class="list-group-item" href="#demo" data-toggle="collapse">Collapse</a>
         <div id="demo" style="cursor:pointer">
             {% if pid == 'home' %}
-                <a class="list-group-item " href="/">All</a>
+                <a class="list-group-item " href="#">All</a>
              {% else %}
-                <a class="list-group-item" href="/">All</a>
+                <a class="list-group-item" href="#">All</a>
             {% endif %} 
             {% for i in project %}            
             {% if i.id == pid.id or i.id == task.project_id_id %}
@@ -129,7 +129,7 @@
         var csrftoken =  $('input[name=csrfmiddlewaretoken]').val()
         $.confirm({
         title: 'Confirm!',
-        content: 'Simple confirm!',
+        content: 'Do You want to delete?',
         buttons: {
 
         confirm: function () {
@@ -144,7 +144,7 @@
                     contentType: "application/json; charset=utf-8",
                 success:function(e){
                window.document.location='#'
-                $.alert('Confirmed!');
+                $.alert('Deleted!');
                 }
             });
         },
