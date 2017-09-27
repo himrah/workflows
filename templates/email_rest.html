@@ -217,7 +217,8 @@
     }
 </style>
 
-{% endblock %} {% block script %}
+{% endblock %}
+{% block script %}
 {% include 'ck.html' %}
 <script type="text/javascript">
     $(window).on('resize', function() {
@@ -246,24 +247,28 @@
         console.log("sdlfkjs")
     });
 
-
-
-
-    $("#all").click(function() {
+    $(document).on('click','#all',function(e){
+        //console.log("sdfsdfdsfdsfsd")
         if ($("#all").is(':checked')) {
             $(".check").prop("checked", true);
         } else {
             $(".check").prop("checked", false);
-        }
-    });
+        } 
+        });    
 
-    $(document).on('click', '.rowlink', function(e) {
-        console.log($('.rowlink').attr('id'))
-    });
+        $(document).on('click', '.rowlink', function(e) {
+            console.log($('.rowlink').attr('id'))
+        });
 
-    function func(e) {
-        console.log(e);
-    }
+    $(document).on('click','.mark_unread',function(e){
+        var i;
+        var l=$('.check:checked');
+        var f=[];
+        $.each($('.check:checked'),function(){
+        f.push($(this).val());
+    })
+
+
 
 /*    function myfunction(e) {
         console.log(e)
@@ -295,15 +300,15 @@
 <script type="text/template" id='mail-here'>
 <div>
     <input type='button' class='btn btn-default trans' value='Delete'/>
-    <input type="button" class='btn btn-default mark_unread' value='Mark as Under'>
+    <input type="button" class='btn btn-default mark_unread' value='Mark as Unread'>
     <input type="button" class='btn btn-default Trash' value='Send to Trash'>
 <!--        <a class="btn btn-primary">Trans</a>
-        <a class="btn btn-primary">Mark as Under</a>-->
+        <a class="btn btn-primary" id="">Mark as Unread</a>-->
     </div>
 <table class="table">
     <thead>
         <th><input type="checkbox" id="all"></th>
-        <th> To </th>
+        <th> From </th>
         <th> Subject </th>
         <th> Time </th>
 
@@ -312,7 +317,7 @@
          <% if (!i.is_read){ %>                
          <tr style='font-weight: bold;'>
              <td>
-             <input onclick="not()" class="check" value="5" type="checkbox"></td>
+             <input class="check" value="5" type="checkbox"></td>
              <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
              <td><%=i.subject%></td>
              <td><%=i.date.date%></td>
@@ -320,7 +325,7 @@
              <% }else{%>
         <tr style="background: rgba(243,243,243,.85);draggable:true">
                 <td>
-                <input onclick="not()" class="check" value="5" type="checkbox"></td>
+                <input class="check" value="5" type="checkbox"></td>
                 <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
                 <td><%=i.subject%></td>
                 <td><%=i.date%></td>
