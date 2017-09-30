@@ -231,7 +231,22 @@
             $('#demo').addClass('collapse in')
         }
     });
-
+    
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
 
     $(document).ready(function() {
@@ -260,13 +275,39 @@
             console.log($('.rowlink').attr('id'))
         });
 
+
     $(document).on('click','.mark_unread',function(e){
         var i;
         var l=$('.check:checked');
+        //console.log(l)
         var f=[];
         $.each($('.check:checked'),function(){
-        f.push($(this).val());
+        console.log($(this))
+        var a=$(this).val()
+        //f.push($(this).val());
+        //var csrftoken =  $('input[name=csrfmiddlewaretoken]').val()        
+        var csrftoken = getCookie('csrftoken');
+        console.log(csrftoken)
+        $.ajax({
+            method:'PUT',
+            url:'/email/'+a,
+            data:{'is_read':'False'},
+            beforeSend:function(xhr,settings){
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken)
+                    },
+            crossDomain:false,
+            contentType: "application/json; charset=utf-8",
+            success:function(e){
+               console.log('done')
+               console.log(e)
+               //window.document.location='#'
+                //$.alert('Deleted!');
+                }            
+        })
+        //console.log(f)
     })
+    console.log(f)
+    });
 
 
 
@@ -317,7 +358,7 @@
          <% if (!i.is_read){ %>                
          <tr style='font-weight: bold;'>
              <td>
-             <input class="check" value="5" type="checkbox"></td>
+             <input class="check" value="<%=i.id%>" type="checkbox"></td>
              <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
              <td><%=i.subject%></td>
              <td><%=i.date.date%></td>
@@ -325,7 +366,7 @@
              <% }else{%>
         <tr style="background: rgba(243,243,243,.85);draggable:true">
                 <td>
-                <input class="check" value="5" type="checkbox"></td>
+                <input class="check" value="<%=i.id%>" type="checkbox"></td>
                 <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
                 <td><%=i.subject%></td>
                 <td><%=i.date%></td>
