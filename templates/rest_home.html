@@ -206,14 +206,28 @@
         </thead>
         <% _.each(task,function(p) { %>
             <tr>
-                <td><a href="#task/<%=p.attributes.id %>"><%= p.attributes.name %></a></td>
-                <td><%= p.attributes.created_date %></td>
-                <td><%= p.attributes.created_by %></td>
-                <td><%= p.attributes.priority %></td>
-                <td><%= p.attributes.status %></td>
+                <td><a href="#task/<%=p.id %>"><%= p.name %></a></td>
+                <td><%= p.created_date %></td>
+                <td><%= p.created_by %></td>
+                <td><%= p.priority %></td>
+                <td><%= p.status %></td>
             </tr>
         <% }); %>
-    </table>                
+    </table>
+
+    <ul class="pagination">
+    <% if(page.null){%>
+        <li><a href="<%=page.previous %>" >&laquo;</a></li>
+        <%} else {%>
+        <li class="disabled"><span>&laquo;</span></li>
+    <%}%>
+    <% if(page.next){%>
+    <li><a href="<%=page.next %>"> 
+    
+    </ul>
+    
+
+
 </script>
 
 <script type="text/template" id='project-form'>    
@@ -590,9 +604,12 @@
                 var task = new Tasks();
                 task.fetch({
                     success : function (e) {
-                        var data = e.models
+                        var data = e.models[0].attributes.results
+                        var op = e.models[0].attributes
+                        console.log(op)
+                        console.log(data)
                         var template = _.template($('#task-all-list-template').html())
-                        $('.cont').html(template({'task':data}))
+                        $('.cont').html(template({'task':data,'page':op}))
                     }
                 })
 
