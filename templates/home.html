@@ -174,7 +174,7 @@
     </thead>
 
 
-    {% for i in task %}
+    {% for i in task_page %}
     <tr>
         <td><a href="/task/{{ i.id }}">{{ i.name }}</a></td>
         <td>{{ i.created_date }}</td>
@@ -184,6 +184,28 @@
     </tr>
     {% endfor %}
 </table>
+{% if task_page.has_other_pages %}
+  <ul class="pagination">
+    {% if task_page.has_previous %}
+      <li><a href="?page={{ task_page.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in task_page.paginator.page_range %}
+      {% if task_page.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if task_page.has_next %}
+      <li><a href="?page={{ task_page.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
 
 {% elif project_c %}
     {{ form.errors }}

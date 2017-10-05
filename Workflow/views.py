@@ -184,6 +184,9 @@ def profile(request):
     return render_to_response('registration/profile.html',argus)    
 
 
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 @login_required(login_url='/accounts/login')
 def Home_rest(request):
     p=Project.objects.all()
@@ -193,18 +196,30 @@ def Home_rest(request):
     #t=Task.objects.all()
     pform=ProjectForm()
     form = TaskEditForm()
+
     return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
 def Home(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
-    t=Task.objects.filter(assign_id=user.id)
-    #t=Task.objects.all()
+    #t=Task.objects.filter(assign_id=user.id)
+    t=Task.objects.all()
     pform=ProjectForm()
     form = TaskEditForm()
-    return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
-    #return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(t, 10)
+
+    try:
+        task_page = paginator.page(page)
+    except PageNotAnInteger:
+        task_page = paginator.page(1)
+    except EmptyPage:
+        task_page = paginator.page(paginator.num_pages)        
+
+    #return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
+    return render(request,'home.html',{'taskform':form,'project':p,'task':t,'pid':'home','user':user,'task_page':task_page})
 
 
 
