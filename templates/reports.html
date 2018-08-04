@@ -65,7 +65,7 @@
         </thead>
         <% _.each(project,function(p) { %>
             <tr>
-                <td><a href="/rest/#task/<%=p.pk %>" target='_blank'><%= p.fields.name %></a></td>
+                <td><a href="/#task/<%=p.pk %>" target='_blank'><%= p.fields.name %></a></td>
                 <td><%= p.fields.created_date %></td>
                 <td><%= p.fields.created_by %></td>
                 <td><%= p.fields.priority %></td>
@@ -297,8 +297,7 @@
                 }
                     //sproject=project
                     //scount=count   
-                    singlechart(par, project, count)
-                
+                    singlechart(par, project, count) 
             }
         })
 

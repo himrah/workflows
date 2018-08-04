@@ -3,7 +3,9 @@ from .models import *
 from .form import *
 from django.views.generic import TemplateView
 from rest_framework import viewsets
-from django.core.context_processors import csrf
+from django.views.decorators import csrf
+#from django.core.context_processors import csrf
+from django.views.decorators.csrf import csrf_protect
 from django.http.response import HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
@@ -188,7 +190,7 @@ def profile(request):
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required(login_url='/accounts/login')
-def Home_rest(request):
+def Home(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
@@ -199,7 +201,7 @@ def Home_rest(request):
 
     return render(request,'rest_home.html',{'pform':pform,'taskform':form,'project':p,'task':t,'pid':'home','user':user})
 
-def Home(request):
+def Home_rest(request):
     p=Project.objects.all()
     #t=Task.objects.all()
     user = request.user
@@ -371,7 +373,7 @@ def login(request):
     else:
         form=LoginForm()
         c={'form':form}
-        c.update(csrf(request))
+        c.update((request))
         return render(request,'registration/login.html',c)
 @login_required(login_url='/accounts/login')
 def logout(request):

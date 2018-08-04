@@ -58,18 +58,21 @@ INSTALLED_APPS = (
     'Workflow',
     'rest_framework.authtoken',
     #'chartjs',
+    'corsheaders',
     'ckeditor_uploader',
     'ckeditor',
     'rest_framework',
 )
 #from middleware import *
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -130,8 +133,8 @@ REST_FRAMEWORK = {
 
 REST_FRAMEWORK = {
 
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
+#    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#    'PAGE_SIZE': 10,
     'DATETIME_FORMAT': "%Y-%m-%d",
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
