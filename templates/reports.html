@@ -89,7 +89,7 @@
                     dataType: 'text',
                     success: function(data) {
                         sch(data, par)
-                    }
+                    },
                 })
         } else if (par == 'Project') {
             point = '/api/project_data/' + par + '/'
@@ -97,6 +97,9 @@
                 method: 'GET',
                 url: point,
                 dataType: 'text',
+                beforeSend:function(){
+                        $('.coldata').html("<h3>Loading...</h3>")
+                    },
                 success: function(data) {
                     project = []
                     count = []
@@ -130,6 +133,9 @@
                     method: 'GET',
                     url: point,
                     dataType: 'text',
+                    beforeSend:function(){
+                        $('.coldata').html("<h3>Loading...</h3>")
+                    },                    
                     success: function(data) {
                         project = []
                         count = []
@@ -161,6 +167,9 @@
     $.ajax({
         method: 'GET',
         url: pont,
+        beforeSend:function(){
+            $('.coldata').html("<h3>Loading...</h3>")
+        },
         success: function(data) {
             project = []
             count = []
@@ -276,6 +285,9 @@
             method: 'GET',
             //url: '/api/single_project/' + par,
             url:api,
+            beforeSend:function(){
+                $('.coldata1').html("<h3>Loading...</h3>")
+            },            
             success: function(data) {
                 //console.log(data)
                 //console.log(data.Complete)

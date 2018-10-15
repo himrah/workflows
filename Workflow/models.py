@@ -113,7 +113,7 @@ class Email_msg(models.Model):
 
 class Inbox(models.Model):
     id = models.AutoField(primary_key=True)
-    sender_id = models.CharField(max_length=20,null=True)
+    sender_id = models.CharField(max_length=50,null=True)
     subject = models.CharField(max_length=150,null=True)
     
     #content = models.TextField()
@@ -127,7 +127,7 @@ class Inbox(models.Model):
 
 class Sent_item(models.Model):
     id = models.AutoField(primary_key=True)
-    sender_id = models.CharField(max_length=20)
+    sender_id = models.CharField(max_length=50)
     receiver_id = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     subject = models.TextField(blank=True)
     content = RichTextField()

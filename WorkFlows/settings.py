@@ -25,7 +25,7 @@ SECRET_KEY = 'a#ru=14f2nceeqp*&e-&#w)5hy53ew6-3bz_)0!-u8q3hvs0i0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 CKEDITOR_UPLOAD_PATH = "upload/"
 CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
@@ -39,7 +39,7 @@ CKEDITOR_CONFIGS = {
         'filebrowserWindowWidth': 940,
         'maxwidth':600,
         'width':'700',
-        
+
         'resize_maxWidth' :1000,
     },
 }
@@ -56,12 +56,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Workflow',
-    'rest_framework.authtoken',
+    'rest_framework',
+    #'rest_framework.authtoken',
     #'chartjs',
     'corsheaders',
     'ckeditor_uploader',
     'ckeditor',
-    'rest_framework',
+
 )
 #from middleware import *
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
@@ -108,7 +109,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                #'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.core.context_processors.request',
@@ -127,7 +128,7 @@ REST_FRAMEWORK = {
         #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
- 
+
     ]
 }"""
 
@@ -138,13 +139,15 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%Y-%m-%d",
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+    #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+    'rest_framework.authentication.SessionAuthentication',
 
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
+
+    #'DEFAULT_PERMISSION_CLASSES': (
+    #    'rest_framework.permissions.IsAuthenticated',
+    #)
 }
 
 

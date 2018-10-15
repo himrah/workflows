@@ -18,7 +18,7 @@ from django.contrib.auth.views import logout,login
 from django.views.generic import TemplateView
 from django.contrib import admin
 from rest_framework.authtoken import views as authtoken_views
-from Workflow.views import *    
+from Workflow.views import *
 from rest_framework import routers
 
 
@@ -41,13 +41,14 @@ router.register('permission',PermissionSet)
 #router.register('project',Projectset)
 
 #router.register('project',Projectset)
-
+#curl -X GET http://127.0.0.1:8000/api/ -H 'Authorization: Token 91cc538d16b88a1bd6161edea04797c31c00cae8'
 urlpatterns = [
 #    url(r'^api/',include('rest_framework.urls',namespace='rest_framework'))
     url(r'^api/',include(router.urls)),
 #    url(r'^api/task/',TaskSet.as_view({'put':'update','post':'post','get':'get'})),
-    #url(r'^api/user/',UserSet.as_view({'get':'get'})),    
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    #url(r'^api/user/',UserSet.as_view({'get':'get'})),
+    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'api-auth/',authtoken_views.obtain_auth_token,name="get_auth_token"),
     #url(r'^api-token-auth/', authtoken_views.obtain_auth_token),
     url(r'^accounts/logout/$',Logout,name='logout'),
 #    url(r'^accounts/logout/',logout,{'template_name':'registration/logout.html'}),

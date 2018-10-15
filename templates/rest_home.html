@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %} {{ pid.name }} Project | WorkFlow {% endblock %} {% block sidebar %}
+{% extends 'base.html' %} {% block title %} {{ pid.name }} Project | TeamWorks {% endblock %} {% block sidebar %}
 <!--<div class="affix-top hidden-print bs-docs-slidebar hidden-xs">-->
 <div class="affix-top hidden-print bs-docs-slidebar">
     <h3>Projects</h3>
@@ -399,9 +399,11 @@
 
 <script>
 
+        //server_url = "http://localhost:8000"
+        server_url = "http://7e74ca1d.ngrok.io"
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
     
-          options.url = 'http://localhost:8000/api' + options.url;
+          options.url = server_url+"/api" + options.url;
     
         });
     
@@ -423,10 +425,16 @@
 
         var ProjectView = Backbone.View.extend({
             el:'.cont',
+            initialize:function(){
+                this.loader();
+            },
             events:{
                 'submit .task-edit-form':'updateTask',
                 'submit #prj-form':'newproject',
                 'submit .task-creation':'createtask',
+            },
+            loader:function(){
+                $('.cont').html("<h3>Loading...</h3>")
             },
             updateTask:function(ev){
 //                var taskDetail = $(ev.currentTarget).serializeObject();
@@ -443,7 +451,7 @@
                     var key=$(this).attr('name')
                     dt[key]=val
                     })
-                dt['assign']='http://localhost:8000/api/user/'+($('#id_assign :selected').attr('value')).toString()+'/'
+                dt['assign']=server_url+'/api/user/'+($('#id_assign :selected').attr('value')).toString()+'/'
                 //dt['assign_id']=($('#id_assign :selected').attr('value')).toString();  
                 $.ajax({
                     type:'PUT',
@@ -488,10 +496,10 @@
                 dt['comments']=this.form.context.elements.comments.value
                 dt['priority']=this.form.context.elements.priority.value
                 dt['tat']=this.form.context.elements.tat.value
-                dt['assign']='http://localhost:8000/api/user/'+this.form.context.elements.assign.value+'/'  
+                dt['assign']=server_url+'/api/user/'+this.form.context.elements.assign.value+'/'  
                 dt['id_created_date']=this.form.context.elements.created_date.value
                 dt['created_by']=this.form.context.elements.created_by.value 
-                dt['project_id']='http://localhost:8000/api/project/'+project_id+'/'
+                dt['project_id']=server_url+'/api/project/'+project_id+'/'
                 console.log(dt) 
 
                 $.ajax({
@@ -535,7 +543,7 @@
                 var dt={
                         'name':$('input[name=name]').val(),
                         'description':$('textarea[name=description]').val(),
-                        'head':'http://localhost:8000/api/department/'+form.context.elements.head.value+'/'
+                        'head':server_url+'/api/department/'+form.context.elements.head.value+'/'
                     }
                 $.ajax({
                     type:'POST',

@@ -361,8 +361,8 @@
              <input class="check" value="<%=i.id%>" type="checkbox"></td>
              <td><a href='#email/<%=i.id%>'><%=i.sender_id%></a></td>
              <td><%=i.subject%></td>
-             <td><%=i.date.date%></td>
-        </tr>     
+             <td><%=i.date%></td>
+        </tr>
              <% }else{%>
         <tr style="background: rgba(243,243,243,.85);draggable:true">
                 <td>
@@ -506,9 +506,10 @@
 
 <script>
         //var pview = new ProjectView()
-
+    //server_url = 'http://localhost:8000'
+    server_url = "http://7e74ca1d.ngrok.io"
     $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
-        options.url = 'http://localhost:8000/api' + options.url;
+        options.url = server_url+'/api' + options.url;
     });
 
 
@@ -531,6 +532,9 @@
 
     var EmailView = Backbone.View.extend({
 
+        initialize:function(){
+            $('.cont-here').html("<h3>Loading...</h3>")          
+        },
         render:function(){
             console.log('sdf')
             var that = this;
@@ -569,6 +573,9 @@
                         console.log(data.attributes)
                         var template = _.template($('#msg-show').html())
                         $('.cont-here').html(template({'mail':data.attributes}))                    
+                    },
+                    beforeSend:function(){
+                        $('.cont-here').html("<h3>Loading...</h3>")
                     }
                 })
             }
